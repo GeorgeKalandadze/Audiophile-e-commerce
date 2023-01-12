@@ -5,6 +5,7 @@ import EarphoneProductImg from '../../assets/home/desktop/image-earphones-yx1.jp
 import PersonCard from '../../components/PersonCard/PersonCard';
 import Footer from '../../components/Footer/Footer';
 import CategoriesCards from '../../components/CategoriesCards/CategoriesCards';
+import { Link } from 'react-router-dom';
 
 const HomePage = () => {
   return (

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import TestImage from '../../assets/cart/image-xx99-mark-two-headphones.jpg'
 import { Button } from '../Button/Button'
@@ -18,7 +19,7 @@ const ItemCard = ({itemImage,productName,productText,isNew}: ItemsProps) => {
                 {isNew && <IsNewProduct>NEW PRODUCT</IsNewProduct>}
                 <ProductName>{productName}</ProductName>
                 <BigText>{productText}</BigText>
-                <Button bgColor='#d87d4a' pdng='15px 30px'>See Product</Button>
+                <Link to={`/${productName}`}><Button bgColor='#d87d4a' pdng='15px 30px'>See Product</Button></Link>
             </TextsContainer>
         </Container>
     </Container>
