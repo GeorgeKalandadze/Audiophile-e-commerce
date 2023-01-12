@@ -1,10 +1,8 @@
 import { useEffect } from "react";
 import { BrowserRouter as Router,Routes,Route } from "react-router-dom"
 import Navbar from "./components/navbar/Navbar"
-import Earphones from "./pages/Earphones/Earphones";
-import Headphones from "./pages/Headphones/Headphones";
 import HomePage from "./pages/HomePage/HomePage"
-import Speakers from "./pages/Speakers/Speakers";
+import ProductsPage from "./pages/ProductsPage/ProductsPage";
 
 function App() {
 
@@ -15,9 +13,9 @@ function App() {
       <Navbar/>
         <Routes>
           <Route path="/" element={<HomePage/>}/>
-          <Route path="/headphones" element={<Headphones/>}/>
-          <Route path="/speakers" element={<Speakers/>}/>
-          <Route path="/earphones" element={<Earphones/>}/>
+          <Route path="/headphones" element={<ProductsPage productType={'headphones'} />}/>
+          <Route path="/speakers" element={<ProductsPage productType={"speakers"}/>}/>
+          <Route path="/earphones" element={<ProductsPage productType={"earphones"}/>}/>
         </Routes>
       </Router>
     </div>

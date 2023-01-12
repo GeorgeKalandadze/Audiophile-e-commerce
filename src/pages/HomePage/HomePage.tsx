@@ -1,12 +1,10 @@
 import { Button } from '../../components/Button/Button';
-import CategoriesCard from '../../components/CategoriesCard/CategoriesCard';
 import './homePage.css';
-import HeadphoneImg from '../../assets/shared/desktop/image-category-thumbnail-headphones.png'
 import SpeakerImg from '../../assets/shared/desktop/image-category-thumbnail-speakers.png'
-import EarphoneImg from '../../assets/shared/desktop/image-category-thumbnail-earphones.png'
 import EarphoneProductImg from '../../assets/home/desktop/image-earphones-yx1.jpg'
 import PersonCard from '../../components/PersonCard/PersonCard';
 import Footer from '../../components/Footer/Footer';
+import CategoriesCards from '../../components/CategoriesCards/CategoriesCards';
 
 const HomePage = () => {
   return (
@@ -26,9 +24,7 @@ const HomePage = () => {
         </div>
       </div>
       <div>
-        <CategoriesCard categoryType={"HEADHPONES"} img={HeadphoneImg} page='/headphones'/>
-        <CategoriesCard categoryType={"SPEAKERS"} img={SpeakerImg} page='/speakers'/>
-        <CategoriesCard categoryType={"EARPHONES"} img={EarphoneImg} page='/earphones'/>
+        <CategoriesCards/>
       </div>
       <div className='products-container'>
         <div>

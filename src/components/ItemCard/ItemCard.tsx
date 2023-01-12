@@ -28,6 +28,7 @@ const ItemCard = ({itemImage,productName,productText,isNew}: ItemsProps) => {
 export default ItemCard
 
 const Container = styled.div`
+margin-top:30px;
 padding:10px;
 `
 
@@ -37,7 +38,7 @@ border-radius: 8px;
 `
 
 const TextsContainer = styled.div`
-margin-top:20px;
+margin-top:30px;
 display:flex;
 flex-direction:column;
 gap:20px;
@@ -68,5 +69,5 @@ color: #000000;
 `
 
 const BigText = styled.p`
-
+opacity: .5;
 `

@@ -2,20 +2,35 @@ import React from 'react'
 import styled from 'styled-components'
 import ArrowIcon from '../../assets/shared/desktop/icon-arrow-right.svg'
 import { Link } from 'react-router-dom'
+import HeadphoneImg from '../../assets/shared/desktop/image-category-thumbnail-headphones.png'
+import SpeakerImg from '../../assets/shared/desktop/image-category-thumbnail-speakers.png'
+import EarphoneImg from '../../assets/shared/desktop/image-category-thumbnail-earphones.png'
 
-type CategoryCardTypes = {
-    categoryType:string
-    img:string
-    page:string
-}
-const CategoriesCard = ({categoryType,img,page}:CategoryCardTypes) => {
+
+const CategoriesCards = () => {
   return (
     <MainDiv>
         <CardDiv>
-            <ProductImg src={img}/>
-            <ProductType>{categoryType}</ProductType>
+            <ProductImg src={HeadphoneImg}/>
+            <ProductType>HEADPHONES</ProductType>
             <ButtonContainer>
-                <StyledLink to={page}>SHOP</StyledLink>
+                <StyledLink to='/headphones'>SHOP</StyledLink>
+                <img src={ArrowIcon} alt=""/>
+            </ButtonContainer>
+        </CardDiv>
+        <CardDiv>
+            <ProductImg src={SpeakerImg}/>
+            <ProductType>SPEAKERS</ProductType>
+            <ButtonContainer>
+                <StyledLink to='/speakers'>SHOP</StyledLink>
+                <img src={ArrowIcon} alt=""/>
+            </ButtonContainer>
+        </CardDiv>
+        <CardDiv>
+            <ProductImg src={EarphoneImg}/>
+            <ProductType>EARPHONES</ProductType>
+            <ButtonContainer>
+                <StyledLink to='/earphones'>SHOP</StyledLink>
                 <img src={ArrowIcon} alt=""/>
             </ButtonContainer>
         </CardDiv>
@@ -23,15 +38,19 @@ const CategoriesCard = ({categoryType,img,page}:CategoryCardTypes) => {
   )
 }
 
-export default CategoriesCard
+export default CategoriesCards
 
 
 const MainDiv = styled.div`
 margin-top:70px;
 padding:20px;
+gap:80px;
+display:flex;
+flex-direction:column
 `
 
 const CardDiv = styled.div`
+
 position: relative;
 background: #F1F1F1;
 border-radius: 8px;
@@ -83,4 +102,3 @@ top:0;
 left:50%;
 transform:translate(-50%,-50%)
 `
-

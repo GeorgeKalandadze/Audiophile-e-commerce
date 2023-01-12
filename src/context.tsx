@@ -6,7 +6,7 @@ import React, { createContext,
     Dispatch, 
     SetStateAction 
 } from 'react'
-import data from './data.json';
+import productsData from './data.json';
 
 
 
@@ -29,7 +29,30 @@ interface MyContext {
             tablet: string;
         }
         new:boolean
-        description:string
+        description:string;
+        price:number;
+        features:string;
+        includes:{
+            quantity:number;
+            item:string;
+        }[];
+        gallery:{
+            first:{
+                mobile: string;
+                tablet: string;
+                desktop: string;
+            },
+            second:{
+                mobile: string;
+                tablet: string;
+                desktop: string;
+            },
+            third:{
+                mobile: string;
+                tablet: string;
+                desktop: string;
+            }
+        }
     }[]
     
 }
@@ -37,7 +60,7 @@ interface MyContext {
 const AppContext = createContext<MyContext>({
     isMenuClicked:true,
     setIsMenuClicked:() => (!Boolean),
-    productsData:data
+    productsData:productsData
     
 });
 
@@ -49,7 +72,6 @@ interface Props {
 
 export const AppProvider :FunctionComponent<Props> = ({children}) => {
     const [isMenuClicked, setIsMenuClicked] = useState<boolean>(false);
-    const [productsData, setProductsData] = useState(data)
 
 
     return <AppContext.Provider value={{isMenuClicked, setIsMenuClicked, productsData}}>
