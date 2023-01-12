@@ -1,0 +1,161 @@
+.home-page-main-conatiner{
+ 
+}
+
+.home-page{
+    width: 100%;
+    background-size: cover;
+    background-image: url(../../assets/home/mobile/image-header.jpg);
+    height: 100vh; /* You must set a specified height */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat;
+   
+    
+}
+
+.home-page-texts{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    gap: 35px;
+    padding: 0px 30px;
+    align-items: center;
+}
+
+.home-page-texts h2{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+    text-align: center;
+    letter-spacing: 10px;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    mix-blend-mode: normal;
+    opacity: 0.5;
+}
+
+.home-page-texts h1{
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 40px;
+    text-align: center;
+    letter-spacing: 1.28571px;
+    text-transform: uppercase;
+    color: #FFFFFF;
+}
+
+.home-page-texts p{
+    
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 25px;
+    text-align: center;
+    color: #FFFFFF;
+    mix-blend-mode: normal;
+    opacity: 0.75;
+}
+
+/** Products Container**/
+
+.products-container{
+    margin-top: 60px;
+    padding: 20px;
+}
+
+.products-container div{
+    border-radius: 8px;
+    padding: 30px;
+    margin-bottom: 30px;
+    
+}
+
+.products-container div:nth-child(1){
+    background: #D87D4A;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+}
+
+.products-container div:nth-child(1) img{
+    height: 207px;
+    width: 200px;
+}
+
+.products-container div:nth-child(1) h1{
+    font-style: normal;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 40px;
+    text-align: center;
+    letter-spacing: 1.28571px;
+    text-transform: uppercase;
+    color: #FFFFFF;
+}
+
+.products-container div:nth-child(1) p{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 25px;  
+    text-align: center;
+    color: #FFFFFF;
+    mix-blend-mode: normal;
+    opacity: 0.75;
+}
+
+
+.products-container div:nth-child(2){
+    background-image: url(../../assets/home/desktop/image-speaker-zx7.jpg);
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 100px 35px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    align-items: flex-start;
+    gap: 20px;
+
+}
+
+.products-container div:nth-child(2) h1{
+    font-style: normal;
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 38px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #000000;
+}
+
+/**earphone-product-img**/
+
+.earphone-product-img{
+   
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 25px;
+}
+
+.products-container div:nth-child(4) {
+  background-color: #F1F1F1;
+
+}
+
+.products-container div:nth-child(4) h1{
+    font-style: normal;
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 38px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #000000;
+    margin-bottom: 20px;
+  
+  }
