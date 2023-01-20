@@ -21,7 +21,7 @@ const HomePage = () => {
             passionate music enthusiast.
           </p>
           {/* <Button  bgColor="#D87D4A;" pdng="15px 20px">See Products</Button> */}
-          <Button  bgColor="#D87D4A;" pdng="15px 30px">See Products</Button>
+          <Link to = "xx99-mark-two-headphones"><Button  bgColor="#D87D4A;" pdng="15px 30px">See Products</Button></Link>
         </div>
       </div>
       <div>
@@ -36,10 +36,11 @@ const HomePage = () => {
             phenomenally built to deliver truly 
             remarkable sound.
           </p>
-          <Button pdng='15px 25px'>See Product</Button>
+          <Link to={"zx9-speaker"}><Button pdng='15px 25px'>See Product</Button></Link>
         </div>
         <div>
           <h1>ZX7 SPEAKER</h1>
+          <Link to={"zx7-speaker"}>
           <Button 
             pdng='15px 25px' 
             bgColor='transparent' 
@@ -48,10 +49,12 @@ const HomePage = () => {
           >
               See Product
             </Button>
+          </Link>
         </div>
         <img src={EarphoneProductImg} className="earphone-product-img"/>
         <div>
           <h1>YX1 EARPHONES</h1>
+          <Link to={"yx1-earphones"}>
           <Button 
             pdng='15px 25px' 
             bgColor='transparent' 
@@ -60,6 +63,7 @@ const HomePage = () => {
           >
               See Product
             </Button>
+          </Link>
         </div>
       </div>
       <PersonCard/>

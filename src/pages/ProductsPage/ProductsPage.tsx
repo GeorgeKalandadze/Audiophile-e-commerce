@@ -21,6 +21,7 @@ const ProductsPage = ({productType}:ProductPagePropTypes) => {
       {
         products.map((item) => (
           <ItemCard
+            slug={item.slug}
             isNew={item.new}
             key={item.id}
             itemImage={item.image.desktop}

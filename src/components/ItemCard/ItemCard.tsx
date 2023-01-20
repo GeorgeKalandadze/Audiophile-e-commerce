@@ -9,8 +9,9 @@ type ItemsProps = {
     productName:string
     productText:string
     isNew:boolean
+    slug:string
 }
-const ItemCard = ({itemImage,productName,productText,isNew}: ItemsProps) => {
+const ItemCard = ({itemImage,productName,productText,isNew,slug}: ItemsProps) => {
   return (
     <Container>
         <Container>
@@ -19,7 +20,7 @@ const ItemCard = ({itemImage,productName,productText,isNew}: ItemsProps) => {
                 {isNew && <IsNewProduct>NEW PRODUCT</IsNewProduct>}
                 <ProductName>{productName}</ProductName>
                 <BigText>{productText}</BigText>
-                <Link to={`/${productName}`}><Button bgColor='#d87d4a' pdng='15px 30px'>See Product</Button></Link>
+                <Link to={`/${slug}`}><Button bgColor='#d87d4a' pdng='15px 30px'>See Product</Button></Link>
             </TextsContainer>
         </Container>
     </Container>

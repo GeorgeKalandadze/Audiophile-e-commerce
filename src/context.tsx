@@ -12,8 +12,16 @@ import productsData from './data.json';
 
 
 interface MyContext {
-    isMenuClicked: boolean;
+    isMenuClicked: boolean
+    isShopCartOpen: boolean
+    getItemQuantity: (id: number) => number
     setIsMenuClicked:Dispatch<SetStateAction<boolean>>;
+    openShopCartModal:() => void
+    increaseCartQuantity:(id:number) => void
+    decreaseCartQuantity:(id:number) => void
+    removeAllItems:() => void
+    cartItems:CartItem[]
+    cartQuantity:number
     productsData: {
         id: number;
         slug: string;
@@ -57,24 +65,97 @@ interface MyContext {
     
 }
 
-const AppContext = createContext<MyContext>({
-    isMenuClicked:true,
-    setIsMenuClicked:() => (!Boolean),
-    productsData:productsData
+const AppContext = createContext<MyContext>({} as MyContext);
     
-});
+    
+
 
 
 interface Props {
     children: ReactNode
 }
 
+type CartItem = {
+    id:number
+    quantity:number
+}
+
 
 export const AppProvider :FunctionComponent<Props> = ({children}) => {
     const [isMenuClicked, setIsMenuClicked] = useState<boolean>(false);
+    const [isShopCartOpen, setIsShopCartOpen] = useState<boolean>(false);
+    const [cartItems, setCartItems] = useState<CartItem[]>([]);
+    
+
+    const openShopCartModal = () => {
+        setIsShopCartOpen(isOpen => !isOpen)
+        
+    }
+
+    const cartQuantity = cartItems.reduce(
+        (quantity, item) => item.quantity + quantity, 0
+    )
+
+    const getItemQuantity = (id:number) => {
+        return cartItems.find(item => item.id === id)?.quantity || 0
+    }
 
 
-    return <AppContext.Provider value={{isMenuClicked, setIsMenuClicked, productsData}}>
+    const increaseCartQuantity = (id:number) => {
+        setCartItems(currentItems => {
+            if(currentItems.find(item => item.id === id) == null){
+                console.log([...cartItems, {id, quantity:1}])
+                return [...cartItems, {id, quantity:1}]
+            } else {
+                return currentItems.map(item => {
+                    if(item.id === id){
+                        return {...item, quantity: item.quantity + 1}
+                    } else {
+                        return item
+                    }
+                })
+            }
+        })
+    }
+
+
+    const decreaseCartQuantity = (id:number) => {
+        setCartItems(currentItems => {
+            if(currentItems.find(item => item.id === id)?.quantity === 1){
+                return currentItems.filter(item => item.id !== id)
+            } else {
+                return currentItems.map(item => {
+                    if(item.id === id){
+                        return {...item, quantity: item.quantity - 1}
+                    } else {
+                        return item
+                    }
+                })
+            }
+        })
+    }
+
+
+    const removeAllItems = () => {
+        setCartItems([])
+    }
+
+
+
+
+    return <AppContext.Provider 
+    value={{isMenuClicked, 
+            setIsMenuClicked, 
+            productsData,
+            openShopCartModal,
+            isShopCartOpen,
+            increaseCartQuantity,
+            cartItems,
+            cartQuantity,
+            decreaseCartQuantity, 
+            getItemQuantity,
+            removeAllItems
+            }}>
     {children}
     </AppContext.Provider>
 }

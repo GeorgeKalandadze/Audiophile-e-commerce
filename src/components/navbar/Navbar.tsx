@@ -7,7 +7,7 @@ import CategoriesCards from "../CategoriesCards/CategoriesCards";
 
 const Navbar = () => {
    
-    const {isMenuClicked,setIsMenuClicked} = useGlobalContext();
+    const {isMenuClicked,setIsMenuClicked,openShopCartModal} = useGlobalContext();
     const className = isMenuClicked ? 'burger-bar clicked' : 'burger-bar';
 
     return(
@@ -19,7 +19,7 @@ const Navbar = () => {
                     <div className={className} ></div>
                 </div>
                 <img src={Logo} className="logo"/>
-                <img src={CartIcon} className="cart-icon"/>
+                <img src={CartIcon} className="cart-icon" onClick={() => openShopCartModal()}/>
             </nav>
             <div className={isMenuClicked ? 'sidebar-bar open' : 'side-bar'}>
                 <CategoriesCards/>

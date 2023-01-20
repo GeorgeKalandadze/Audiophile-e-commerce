@@ -5,10 +5,11 @@ interface ButtonStyleProps {
     pdng?:string
     border?:string
     color?:string
+    width?:string
 }
 
 const ButtonStyle = styled.button<ButtonStyleProps>`
-
+width:${prop => prop.width || null};
 background-color:${prop => prop.bgColor || "black"};
 color:${prop => prop.color || "white"};
 padding:${prop => prop.pdng || "10px 25px"};

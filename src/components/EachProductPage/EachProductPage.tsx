@@ -5,15 +5,14 @@ import { useGlobalContext } from '../../context'
 import { Button } from '../Button/Button'
 
 const EachProductPage = () => {
-  const [quantity, setQuantity] = useState<number>(0)
   const {ProductName} = useParams()
-  const {productsData} = useGlobalContext()
+  const {productsData, getItemQuantity, increaseCartQuantity, decreaseCartQuantity} = useGlobalContext()
 
   return (
     <MainContainer>
       {
-        productsData.filter((product) => product.name == ProductName).map((fullProduct) => (
-          <div>
+        productsData.filter((product) => product.slug == ProductName).map((fullProduct) => (
+          <div key={fullProduct.id}>
             <div>
               <ProductImage src={fullProduct.image.desktop}/>
               <AboutProduct>
@@ -22,11 +21,11 @@ const EachProductPage = () => {
                 <BigText>{fullProduct.description}</BigText>
                 <ButtonContainer>
                   <div>
-                    <ChangeQuantityButton onClick={() => setQuantity(quantity=> quantity - 1)}>-</ChangeQuantityButton>
-                    <QuantitySpan>{quantity}</QuantitySpan>
-                    <ChangeQuantityButton onClick={() => setQuantity(quantity=> quantity + 1)}>+</ChangeQuantityButton>
+                    <ChangeQuantityButton onClick={() => decreaseCartQuantity(fullProduct.id)}>-</ChangeQuantityButton>
+                    <QuantitySpan>{getItemQuantity(fullProduct.id)}</QuantitySpan>
+                    <ChangeQuantityButton onClick={() => increaseCartQuantity(fullProduct.id)}>+</ChangeQuantityButton>
                   </div>
-                  <Button bgColor='#D87D4A'>ADD TO CART</Button>
+                  <Button bgColor='#D87D4A' onClick={() => increaseCartQuantity(fullProduct.id)}>ADD TO CART</Button>
                 </ButtonContainer>
                 </AboutProduct>
                 <div>
@@ -36,8 +35,8 @@ const EachProductPage = () => {
                 <div>
                   <SectionHeader>in the box</SectionHeader>
                   <div>
-                  {fullProduct.includes.map((box) => (
-                    <Includes>
+                  {fullProduct.includes.map((box,index) => (
+                    <Includes key={index}>
                       <BoxSpan>{box.quantity}x</BoxSpan>
                       <BoxItems>{box.item}</BoxItems>
                     </Includes>
