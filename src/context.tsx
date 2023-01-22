@@ -14,8 +14,10 @@ import productsData from './data.json';
 interface MyContext {
     isMenuClicked: boolean
     isShopCartOpen: boolean
+    totalPrice:number
     getItemQuantity: (id: number) => number
     setIsMenuClicked:Dispatch<SetStateAction<boolean>>;
+    setIsShopCartOpen:Dispatch<SetStateAction<boolean>>;
     openShopCartModal:() => void
     increaseCartQuantity:(id:number) => void
     decreaseCartQuantity:(id:number) => void
@@ -104,7 +106,6 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
     const increaseCartQuantity = (id:number) => {
         setCartItems(currentItems => {
             if(currentItems.find(item => item.id === id) == null){
-                console.log([...cartItems, {id, quantity:1}])
                 return [...cartItems, {id, quantity:1}]
             } else {
                 return currentItems.map(item => {
@@ -117,6 +118,24 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
             }
         })
     }
+
+    
+    // const increaseCartQuantity = (id:number) => {
+    //     setCartItems(currentItems => {
+    //         if(currentItems.find(item => item.id === id)  !== null){
+    //             [...cartItems, {id, quantity:1}]
+    //             return currentItems.map(item => {
+    //                 if(item.id === id){
+    //                     return {...item, quantity: item.quantity + 1}
+    //                 } else {
+    //                     return item
+    //                 }
+    //             })
+    //         } else {
+    //             return currentItems
+    //         }
+    //     })
+    // }
 
 
     const decreaseCartQuantity = (id:number) => {
@@ -134,6 +153,26 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
             }
         })
     }
+
+
+    // const addToCart = (id:number) => {
+    //      setCartItems(currentItems => {
+    //         if(currentItems.find(item => item.id === id)?.quantity == null){
+    //             return [...cartItems, {id, quantity:1}]
+    //         }else {
+    //             return currentItems
+    //         }
+    //     }
+        
+    //      )
+            
+    // }
+
+
+    const totalPrice = cartItems.reduce((total, cartItem) => {
+        const item = productsData.find(i => i.id === cartItem.id)
+        return total + (item?.price || 0) * cartItem.quantity
+      },0)
 
 
     const removeAllItems = () => {
@@ -154,7 +193,9 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
             cartQuantity,
             decreaseCartQuantity, 
             getItemQuantity,
-            removeAllItems
+            removeAllItems,
+            totalPrice,
+            setIsShopCartOpen
             }}>
     {children}
     </AppContext.Provider>

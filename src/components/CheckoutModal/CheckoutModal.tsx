@@ -1,12 +1,13 @@
-import React from 'react'
 import styled from 'styled-components'
-import productImg from '../../assets/product-xx59-headphones/desktop/image-category-page-preview.jpg'
 import { useGlobalContext } from '../../context'
 import { Button } from '../Button/Button'
 import CheckoutProductEachItem from './CheckoutProductEachItem'
-import productsData from '../../data.json'
+import { Link} from 'react-router-dom'
 const CheckoutModal = () => {
-  const {cartItems,cartQuantity, removeAllItems} = useGlobalContext()
+  const {cartItems,totalPrice, removeAllItems} = useGlobalContext()
+
+
+
   return (
     <MainDiv >
         <CheckoutCard>
@@ -20,13 +21,9 @@ const CheckoutModal = () => {
          
           <CheckoutCardcontainers>
             <Total>TOTAL</Total>
-            <TotalPrice>{cartItems.reduce((total, cartItem) => {
-                          const item = productsData.find(i => i.id === cartItem.id)
-                          return total + (item?.price || 0) * cartItem.quantity
-                        },0)
-          } $</TotalPrice>
+            <TotalPrice>{totalPrice} $</TotalPrice>
           </CheckoutCardcontainers>
-          <Button bgColor='#D87D4A;' pdng='20px ' width='100%'>CHECKOUT</Button>
+          <Link to="/checkoutform"><Button bgColor='#D87D4A;' pdng='20px ' width='100%'>CHECKOUT</Button></Link>
         </CheckoutCard>
     </MainDiv >
   )
@@ -49,11 +46,10 @@ width:100%;
 `
 
 const CheckoutCardcontainers= styled.div`
-  
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:40px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:40px;
 `
 
 const CartQuantity = styled.h1`

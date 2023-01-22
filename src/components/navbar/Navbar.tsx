@@ -1,14 +1,20 @@
-import React, {useState} from "react";
+import React, {useState,useEffect} from "react";
 import './navbar.css'
 import Logo from '../../assets/shared/desktop/logo.svg'
 import CartIcon from '../../assets/shared/desktop/icon-cart.svg'
 import { useGlobalContext } from "../../context";
 import CategoriesCards from "../CategoriesCards/CategoriesCards";
+import { useLocation } from "react-router-dom";
 
 const Navbar = () => {
-   
     const {isMenuClicked,setIsMenuClicked,openShopCartModal} = useGlobalContext();
     const className = isMenuClicked ? 'burger-bar clicked' : 'burger-bar';
+
+    const location = useLocation();
+
+    useEffect(() => {
+        setIsMenuClicked(false);
+    }, [location.pathname]);
 
     return(
         <div style={{width: '100%'}}>
