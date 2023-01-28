@@ -18,6 +18,7 @@ function App() {
       <Router>
       <ScrollToTop/>
       <Navbar/>
+      
       {isShopCartOpen && <CheckoutModal/>}
         <Routes>
           <Route path="/" element={<HomePage/>}/>

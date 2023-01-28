@@ -1,16 +1,24 @@
-import React from 'react'
+import React, { RefObject } from 'react'
 import styled from 'styled-components'
 
 type InputProps = {
     inputType:string
     placeholder:string
     label:string
+    name:string
+    
 }
-const TextInput = ({inputType,placeholder,label}:InputProps) => {
+const TextInput = ({inputType,placeholder,label,name,}:InputProps) => {
   return (
     <InputDiv >
         <Label>{label}</Label>
-        <StyledInput placeholder={placeholder} type={inputType}/>
+        <StyledInput
+          placeholder={placeholder} 
+          type={inputType} 
+          name={name}
+          
+          
+        />
     </InputDiv >
   )
 }
@@ -35,8 +43,9 @@ color: #000000;
 const StyledInput = styled.input`
 margin-top:15px;
 margin-bottom:15px;
-border: 1px solid #CFCFCF;
+border:1px solid #CFCFCF;
 border-radius: 8px;
 width:100%;
 padding:15px 25px;
 `
+

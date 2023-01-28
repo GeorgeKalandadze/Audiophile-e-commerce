@@ -1,15 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
-
-import RameImg from '../../assets/product-xx59-headphones/desktop/image-category-page-preview.jpg'
 import { useGlobalContext } from '../../context'
 import productsData from '../../data.json'
 import { Button } from '../Button/Button'
+import PurchaseModal from '../PurchaseModal/PurchaseModal'
 const SummaryCard = () => {
   const {cartItems, totalPrice} = useGlobalContext()
+  const [purchaseModal, setPurchaseModal] = useState(false)
   
   return (
     <MainDiv>
+      {purchaseModal && <PurchaseModal/>}
       <Header>summary</Header>
       {
         cartItems.map((items) => {
@@ -45,7 +46,8 @@ const SummaryCard = () => {
         <GrayText>GRAND TOTAL</GrayText>
         <BoldText>$ {totalPrice + 50}</BoldText>
       </SummaryDiv>
-      <Button bgColor='#D87D4A;' pdng='20px ' width='100%'>CONTINUE & PAY</Button>
+      <Button bgColor='#D87D4A;' pdng='20px ' width='100%' onClick={() => setPurchaseModal(true)}>CONTINUE & PAY</Button>
+     
     </MainDiv>
   )
 }

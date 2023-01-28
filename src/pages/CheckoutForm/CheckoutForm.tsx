@@ -1,31 +1,103 @@
 import React from 'react'
+import { useForm } from 'react-hook-form'
 import styled from 'styled-components'
+import PurchaseModal from '../../components/PurchaseModal/PurchaseModal'
 import RadioInput from '../../components/RadioInput.tsx/RadioInput'
 import SummaryCard from '../../components/SummaryCard/SummaryCard'
 import TextInput from '../../components/TextInputs/TextInput'
 
+type FormData = {
+  name:string
+  email:string
+  phoneNumber:number
+  addres:string
+  zipCode:number
+  city:string
+  country:string
+  moneyNumber:number
+  pin:number
+}
+
 const CheckoutForm = () => {
+
+  const {register, handleSubmit, formState:{errors}} =useForm<FormData>()
+
   return (
     <MainDiv>
+      
       <InputForm>
         <FormHeader>CHECKOUT</FormHeader>
         <FormSectionHeader>Billing details</FormSectionHeader>
-        <TextInput placeholder='Alexei Ward' inputType='text' label='name'/>
-        <TextInput placeholder='alexei@mail.com' inputType='email' label='Email Address'/>
-        <TextInput placeholder='+1 202-555-0136' inputType='number' label='Phone Number'/>
-        <TextInput placeholder='Alexei Ward' inputType='text' label='name'/>
+        <TextInput 
+          placeholder='Alexei Ward' 
+          inputType='text' 
+          label='name'
+          name="name"
+          
+        />
+        <TextInput 
+          placeholder='alexei@mail.com' 
+          inputType='email' 
+          label='Email Address'
+          name='email'
+          
+        />
+        <TextInput 
+          placeholder='+1 202-555-0136' 
+          inputType='number' 
+          label='Phone Number'
+          name='phoneNumber'
+          
+        />
+       
 
         <FormSectionHeader>shipping info</FormSectionHeader>
 
-        <TextInput placeholder='1137 Williams Avenue' inputType='text' label='Your Address'/>
-        <TextInput placeholder='10001' inputType='number' label='ZIP Code'/>
-        <TextInput placeholder='New York' inputType='text' label='City'/>
-        <TextInput placeholder='United States' inputType='text' label='Country'/>
+        <TextInput 
+          placeholder='1137 Williams Avenue' 
+          inputType='text' 
+          label='Your Address'
+          name='addres'
+          
+        />
+        <TextInput 
+          placeholder='10001' 
+          inputType='number' 
+          label='ZIP Code'
+          name='zipCode'
+          
+        />
+        <TextInput 
+          placeholder='New York' 
+          inputType='text' 
+          label='City'
+          name='city'
+          
+        />
+        <TextInput 
+          placeholder='United States' 
+          inputType='text' 
+          label='Country'
+          name='country'
+          
+        />
 
         <FormSectionHeader>payment details</FormSectionHeader>
         <RadioInput/>
-        <TextInput placeholder='238521993' inputType='number' label='e-Money Number'/>
-        <TextInput placeholder='6891' inputType='number' label='e-Money PIN'/>
+        <TextInput 
+          placeholder='238521993' 
+          inputType='number' 
+          label='e-Money Number'
+          name='moneyNumber'
+         
+        />
+        <TextInput 
+          placeholder='6891' 
+          inputType='number' 
+          label='e-Money PIN'
+          name='pin'
+          
+        />
       </InputForm>
       <SummaryCard/>
     </MainDiv>

@@ -3,13 +3,15 @@ import { useGlobalContext } from '../../context'
 import { Button } from '../Button/Button'
 import CheckoutProductEachItem from './CheckoutProductEachItem'
 import { Link} from 'react-router-dom'
+import { useState } from 'react'
 const CheckoutModal = () => {
   const {cartItems,totalPrice, removeAllItems} = useGlobalContext()
-
+  const [purchaseModal, setPurchaseModal]  = useState(false)
 
 
   return (
     <MainDiv >
+     
         <CheckoutCard>
           <CheckoutCardcontainers>
               <CartQuantity >cart ({cartItems.length})</CartQuantity>
@@ -32,9 +34,11 @@ const CheckoutModal = () => {
 export default CheckoutModal
 
 const MainDiv = styled.div`
+z-index:10;
 padding:30px 10px;
 position:absolute;
 width:100%;
+
 `
 
 const CheckoutCard = styled.div`
@@ -42,7 +46,6 @@ padding: 20px;
 background: #FFFFFF;
 border-radius: 8px;
 width:100%;
-
 `
 
 const CheckoutCardcontainers= styled.div`

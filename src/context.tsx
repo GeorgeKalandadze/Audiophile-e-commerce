@@ -7,6 +7,7 @@ import React, { createContext,
     SetStateAction 
 } from 'react'
 import productsData from './data.json';
+import { useLocalStorage } from './hooks/UseLocalStorage';
 
 
 
@@ -86,7 +87,7 @@ type CartItem = {
 export const AppProvider :FunctionComponent<Props> = ({children}) => {
     const [isMenuClicked, setIsMenuClicked] = useState<boolean>(false);
     const [isShopCartOpen, setIsShopCartOpen] = useState<boolean>(false);
-    const [cartItems, setCartItems] = useState<CartItem[]>([]);
+    const [cartItems, setCartItems] = useLocalStorage<CartItem[]>('shoping-carts',[]);
     
 
     const openShopCartModal = () => {
