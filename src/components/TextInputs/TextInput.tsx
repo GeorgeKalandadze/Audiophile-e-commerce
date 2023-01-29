@@ -6,9 +6,12 @@ type InputProps = {
     placeholder:string
     label:string
     name:string
+    register:any
+    error:any
+    validation:any
     
 }
-const TextInput = ({inputType,placeholder,label,name,}:InputProps) => {
+const TextInput = ({inputType,placeholder,label,name,register,validation,error}:InputProps) => {
   return (
     <InputDiv >
         <Label>{label}</Label>
@@ -16,8 +19,8 @@ const TextInput = ({inputType,placeholder,label,name,}:InputProps) => {
           placeholder={placeholder} 
           type={inputType} 
           name={name}
-          
-          
+          {...register(name,validation)}
+          error={error}
         />
     </InputDiv >
   )
@@ -43,7 +46,7 @@ color: #000000;
 const StyledInput = styled.input`
 margin-top:15px;
 margin-bottom:15px;
-border:1px solid #CFCFCF;
+border:${(prop) => prop.error ? "1px solid red":"1px solid #CFCFCF"};
 border-radius: 8px;
 width:100%;
 padding:15px 25px;

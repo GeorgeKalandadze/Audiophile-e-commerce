@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { BrowserRouter as Router,Routes,Route} from "react-router-dom"
 import CheckoutModal from "./components/CheckoutModal/CheckoutModal";
 import EachProductPage from "./components/EachProductPage/EachProductPage";
@@ -11,10 +12,12 @@ import ProductsPage from "./pages/ProductsPage/ProductsPage";
 function App() {
   const {isShopCartOpen} = useGlobalContext()
 
+  
+
  
 
   return (
-    <div className="App">
+    <div >
       <Router>
       <ScrollToTop/>
       <Navbar/>

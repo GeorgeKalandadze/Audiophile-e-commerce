@@ -16,7 +16,7 @@ const ProductsPage = ({productType}:ProductPagePropTypes) => {
 
 
   return (
-    <div>
+    <div >
       <Header headerText={productType}/>
       {
         products.map((item) => (

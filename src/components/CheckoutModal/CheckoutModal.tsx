@@ -34,7 +34,7 @@ const CheckoutModal = () => {
 export default CheckoutModal
 
 const MainDiv = styled.div`
-z-index:10;
+z-index:30;
 padding:30px 10px;
 position:absolute;
 width:100%;

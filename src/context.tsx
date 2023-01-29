@@ -22,6 +22,7 @@ interface MyContext {
     openShopCartModal:() => void
     increaseCartQuantity:(id:number) => void
     decreaseCartQuantity:(id:number) => void
+    addToCart:(id:number) => void
     removeAllItems:() => void
     cartItems:CartItem[]
     cartQuantity:number
@@ -103,41 +104,33 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
         return cartItems.find(item => item.id === id)?.quantity || 0
     }
 
+    const increaseCartQuantity = (id: number) => {
+        setCartItems((currentItems) => {
+          const itemIndex = currentItems.findIndex((item) => item.id === id);
+      
+          if (itemIndex === -1) {
+            return currentItems;
+          } else {
+            const updatedItem = { ...currentItems[itemIndex], quantity: currentItems[itemIndex].quantity + 1 };
+            return [...currentItems.slice(0, itemIndex), updatedItem, ...currentItems.slice(itemIndex + 1)];
+          }
+        });
+      };
+      
 
-    const increaseCartQuantity = (id:number) => {
-        setCartItems(currentItems => {
-            if(currentItems.find(item => item.id === id) == null){
-                return [...cartItems, {id, quantity:1}]
-            } else {
-                return currentItems.map(item => {
-                    if(item.id === id){
-                        return {...item, quantity: item.quantity + 1}
-                    } else {
-                        return item
-                    }
-                })
-            }
-        })
-    }
-
-    
-    // const increaseCartQuantity = (id:number) => {
-    //     setCartItems(currentItems => {
-    //         if(currentItems.find(item => item.id === id)  !== null){
-    //             [...cartItems, {id, quantity:1}]
-    //             return currentItems.map(item => {
-    //                 if(item.id === id){
-    //                     return {...item, quantity: item.quantity + 1}
-    //                 } else {
-    //                     return item
-    //                 }
-    //             })
-    //         } else {
-    //             return currentItems
-    //         }
-    //     })
-    // }
-
+      const addToCart = (id: number) => {
+        setCartItems((currentItems) => {
+          const itemIndex = currentItems.findIndex((item) => item.id === id);
+      
+          if (itemIndex === -1) {
+            return [...currentItems, { id, quantity: 1 }];
+          } else {
+            return currentItems;
+          }
+        });
+      };
+      
+      
 
     const decreaseCartQuantity = (id:number) => {
         setCartItems(currentItems => {
@@ -156,18 +149,7 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
     }
 
 
-    // const addToCart = (id:number) => {
-    //      setCartItems(currentItems => {
-    //         if(currentItems.find(item => item.id === id)?.quantity == null){
-    //             return [...cartItems, {id, quantity:1}]
-    //         }else {
-    //             return currentItems
-    //         }
-    //     }
-        
-    //      )
-            
-    // }
+   
 
 
     const totalPrice = cartItems.reduce((total, cartItem) => {
@@ -196,7 +178,8 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
             getItemQuantity,
             removeAllItems,
             totalPrice,
-            setIsShopCartOpen
+            setIsShopCartOpen,
+            addToCart
             }}>
     {children}
     </AppContext.Provider>

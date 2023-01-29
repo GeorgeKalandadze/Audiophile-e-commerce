@@ -1,12 +1,23 @@
 import React, { useState } from 'react'
+import { UseFormHandleSubmit } from 'react-hook-form'
 import styled from 'styled-components'
 import { useGlobalContext } from '../../context'
 import productsData from '../../data.json'
 import { Button } from '../Button/Button'
 import PurchaseModal from '../PurchaseModal/PurchaseModal'
-const SummaryCard = () => {
+
+type HandleSubmitType = {
+  handleSubmit:any
+  errors:any
+}
+const SummaryCard = ({handleSubmit,errors}:HandleSubmitType) => {
+
   const {cartItems, totalPrice} = useGlobalContext()
   const [purchaseModal, setPurchaseModal] = useState(false)
+
+  const onFormSubmit = () => {
+    
+  }
   
   return (
     <MainDiv>
@@ -16,7 +27,7 @@ const SummaryCard = () => {
         cartItems.map((items) => {
           const item = productsData.find((item) => item.id === items.id)
           return(
-            <SummaryDiv>
+            <SummaryDiv key={item?.id}>
             <ProductDiv>
               <ProductImage src={item?.image.desktop}/>
               <div>
@@ -46,7 +57,7 @@ const SummaryCard = () => {
         <GrayText>GRAND TOTAL</GrayText>
         <BoldText>$ {totalPrice + 50}</BoldText>
       </SummaryDiv>
-      <Button bgColor='#D87D4A;' pdng='20px ' width='100%' onClick={() => setPurchaseModal(true)}>CONTINUE & PAY</Button>
+      <Button type='submit' bgColor='#D87D4A;' pdng='20px ' width='100%' onClick={handleSubmit(onFormSubmit)}>CONTINUE & PAY</Button>
      
     </MainDiv>
   )

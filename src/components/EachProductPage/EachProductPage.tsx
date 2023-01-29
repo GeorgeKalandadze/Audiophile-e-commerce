@@ -6,10 +6,10 @@ import { Button } from '../Button/Button'
 
 const EachProductPage = () => {
   const {ProductName} = useParams()
-  const {productsData, getItemQuantity, increaseCartQuantity, decreaseCartQuantity} = useGlobalContext()
+  const {productsData, getItemQuantity, increaseCartQuantity, decreaseCartQuantity,addToCart} = useGlobalContext()
 
   return (
-    <MainContainer>
+    <MainContainer >
       {
         productsData.filter((product) => product.slug == ProductName).map((fullProduct) => (
           <div key={fullProduct.id}>
@@ -25,7 +25,7 @@ const EachProductPage = () => {
                     <QuantitySpan>{getItemQuantity(fullProduct.id)}</QuantitySpan>
                     <ChangeQuantityButton onClick={() => increaseCartQuantity(fullProduct.id)}>+</ChangeQuantityButton>
                   </div>
-                  <Button bgColor='#D87D4A' onClick={() => increaseCartQuantity(fullProduct.id)}>ADD TO CART</Button>
+                  <Button bgColor='#D87D4A' onClick={() => addToCart(fullProduct.id)}>ADD TO CART</Button>
                 </ButtonContainer>
                 </AboutProduct>
                 <div>
@@ -60,7 +60,8 @@ const EachProductPage = () => {
 export default EachProductPage
 
 const MainContainer = styled.div`
-  padding:20px;
+
+padding:20px;
 `
 
 const ProductImage = styled.img`

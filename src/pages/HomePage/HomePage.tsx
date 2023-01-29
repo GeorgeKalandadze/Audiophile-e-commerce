@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 
 const HomePage = () => {
   return (
-    <div className={"home-page-main-conatiner"}
+    <div className={"home-page-main-conatiner "}
     >
       <div className="home-page">
         <div className='home-page-texts'>

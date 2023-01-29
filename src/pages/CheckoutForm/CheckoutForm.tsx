@@ -1,6 +1,7 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import styled from 'styled-components'
+import { Button } from '../../components/Button/Button'
 import PurchaseModal from '../../components/PurchaseModal/PurchaseModal'
 import RadioInput from '../../components/RadioInput.tsx/RadioInput'
 import SummaryCard from '../../components/SummaryCard/SummaryCard'
@@ -21,11 +22,12 @@ type FormData = {
 const CheckoutForm = () => {
 
   const {register, handleSubmit, formState:{errors}} =useForm<FormData>()
-
+  
+  
   return (
-    <MainDiv>
+    <MainDiv >
       
-      <InputForm>
+      <InputForm >
         <FormHeader>CHECKOUT</FormHeader>
         <FormSectionHeader>Billing details</FormSectionHeader>
         <TextInput 
@@ -33,6 +35,9 @@ const CheckoutForm = () => {
           inputType='text' 
           label='name'
           name="name"
+          register={register}
+          error={errors.name}
+          validation={{required:true}}
           
         />
         <TextInput 
@@ -40,6 +45,10 @@ const CheckoutForm = () => {
           inputType='email' 
           label='Email Address'
           name='email'
+          register={register}
+          error={errors.email}
+          validation={{required:true}}
+
           
         />
         <TextInput 
@@ -47,6 +56,10 @@ const CheckoutForm = () => {
           inputType='number' 
           label='Phone Number'
           name='phoneNumber'
+          register={register}
+          error={errors.phoneNumber}
+          validation={{required:true}}
+
           
         />
        
@@ -58,6 +71,10 @@ const CheckoutForm = () => {
           inputType='text' 
           label='Your Address'
           name='addres'
+          register={register}
+          error={errors.addres}
+          validation={{required:true}}
+
           
         />
         <TextInput 
@@ -65,6 +82,11 @@ const CheckoutForm = () => {
           inputType='number' 
           label='ZIP Code'
           name='zipCode'
+          register={register}
+          error={errors.zipCode}
+          validation={{required:true}}
+
+          
           
         />
         <TextInput 
@@ -72,6 +94,11 @@ const CheckoutForm = () => {
           inputType='text' 
           label='City'
           name='city'
+          register={register}
+          error={errors.city}
+          validation={{required:true}}
+
+
           
         />
         <TextInput 
@@ -79,6 +106,10 @@ const CheckoutForm = () => {
           inputType='text' 
           label='Country'
           name='country'
+          register={register}
+          error={errors.country}
+          validation={{required:true}}
+
           
         />
 
@@ -89,6 +120,10 @@ const CheckoutForm = () => {
           inputType='number' 
           label='e-Money Number'
           name='moneyNumber'
+          register={register}
+          error={errors.moneyNumber}
+          validation={{required:true}}
+
          
         />
         <TextInput 
@@ -96,10 +131,15 @@ const CheckoutForm = () => {
           inputType='number' 
           label='e-Money PIN'
           name='pin'
+          register={register}
+          error={errors.pin}
+          validation={{required:true}}
+
           
         />
+        
       </InputForm>
-      <SummaryCard/>
+      <SummaryCard handleSubmit={handleSubmit} errors={errors}/>
     </MainDiv>
   )
 }
