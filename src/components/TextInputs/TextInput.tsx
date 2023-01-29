@@ -8,8 +8,11 @@ type InputProps = {
     name:string
     register:any
     error:any
-    validation:any
-    
+    validation:any  
+}
+
+type InputStylePropType = {
+  error:boolean
 }
 const TextInput = ({inputType,placeholder,label,name,register,validation,error}:InputProps) => {
   return (
@@ -43,7 +46,7 @@ letter-spacing: -0.214286px;
 color: #000000;
 `
 
-const StyledInput = styled.input`
+const StyledInput = styled.input<InputStylePropType>`
 margin-top:15px;
 margin-bottom:15px;
 border:${(prop) => prop.error ? "1px solid red":"1px solid #CFCFCF"};
