@@ -27,4 +27,12 @@ color: #FFFFFF;
 background-color:black;
 padding:30px 20px; 
 
+@media only screen and (min-width: 768px){
+  padding:60px 20px;
+}
+
+@media only screen and (min-width: 1200px){
+  padding:120px 20px;
+}
+
 `

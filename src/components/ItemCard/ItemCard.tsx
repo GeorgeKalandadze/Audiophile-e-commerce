@@ -13,8 +13,8 @@ type ItemsProps = {
 }
 const ItemCard = ({itemImage,productName,productText,isNew,slug}: ItemsProps) => {
   return (
-    <Container>
-        <Container>
+    <Container className='some'>
+        
             <ItemImg src={itemImage} alt="" />
             <TextsContainer>
                 {isNew && <IsNewProduct>NEW PRODUCT</IsNewProduct>}
@@ -22,7 +22,7 @@ const ItemCard = ({itemImage,productName,productText,isNew,slug}: ItemsProps) =>
                 <BigText>{productText}</BigText>
                 <Link to={`/${slug}`}><Button bgColor='#d87d4a' pdng='15px 30px'>See Product</Button></Link>
             </TextsContainer>
-        </Container>
+        
     </Container>
   )
 }
@@ -30,13 +30,28 @@ const ItemCard = ({itemImage,productName,productText,isNew,slug}: ItemsProps) =>
 export default ItemCard
 
 const Container = styled.div`
-margin-top:30px;
-padding:10px;
+
+@media only screen and (min-width: 768px){
+  margin-top:10px;
+}
+
+@media only screen and (min-width: 1200px){
+     display:flex;
+     align-items:center;
+     gap:40px;
+
+}
+
+
 `
 
 const ItemImg = styled.img`
 width:100%;
 border-radius: 8px;
+@media only screen and (min-width: 1200px){
+  width:50%;
+  height:500px
+}
 `
 
 const TextsContainer = styled.div`
@@ -53,7 +68,7 @@ font-style: normal;
 font-weight: 400;
 font-size: 14px;
 line-height: 19px;
-text-align: center;
+
 letter-spacing: 10px;
 text-transform: uppercase;
 color: #D87D4A;
@@ -64,7 +79,7 @@ font-style: normal;
 font-weight: 700;
 font-size: 28px;
 line-height: 38px;
-text-align: center;
+
 letter-spacing: 1px;
 text-transform: uppercase;
 color: #000000;

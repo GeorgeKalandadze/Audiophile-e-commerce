@@ -70,10 +70,6 @@ interface MyContext {
 }
 
 const AppContext = createContext<MyContext>({} as MyContext);
-    
-    
-
-
 
 interface Props {
     children: ReactNode

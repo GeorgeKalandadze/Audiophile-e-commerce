@@ -15,7 +15,7 @@ const HomePage = () => {
         <div className='home-page-texts'>
           <h2>NEW PRODUCT</h2>
           <h1>XX99 Mark II HeadphoneS</h1>
-          <p>
+          <p className='description'>
             Experience natural, lifelike audio and 
             exceptional build quality made for the 
             passionate music enthusiast.
@@ -28,7 +28,7 @@ const HomePage = () => {
         <CategoriesCards/>
       </div>
       <div className='products-container'>
-        <div>
+        <div className='first-product'>
           <img src={SpeakerImg} alt="" />
           <h1>ZX9 SPEAKER</h1>
           <p>
@@ -38,7 +38,7 @@ const HomePage = () => {
           </p>
           <Link to={"zx9-speaker"}><Button pdng='15px 25px'>See Product</Button></Link>
         </div>
-        <div>
+        <div className='second-product'>
           <h1>ZX7 SPEAKER</h1>
           <Link to={"zx7-speaker"}>
           <Button 
@@ -51,8 +51,9 @@ const HomePage = () => {
             </Button>
           </Link>
         </div>
+        <div className='yx-earphone-cont'>
         <img src={EarphoneProductImg} className="earphone-product-img"/>
-        <div>
+        <div className='last-child'>
           <h1>YX1 EARPHONES</h1>
           <Link to={"yx1-earphones"}>
           <Button 
@@ -65,6 +66,8 @@ const HomePage = () => {
             </Button>
           </Link>
         </div>
+        </div>
+        
       </div>
       <PersonCard/>
       <Footer/>

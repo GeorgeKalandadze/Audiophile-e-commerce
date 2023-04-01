@@ -19,3 +19,21 @@
   width: 100%;
   z-index: 20;
 }
+
+.boxes{
+  padding: 20px;
+  margin-top:30px;
+}
+
+@media only screen and (min-width: 1200px){
+  .boxes .some:nth-child(even){
+   flex-direction: row-reverse;
+  }
+
+  .boxes .some{
+    padding-left: 150px;
+    padding-top: 20px;
+    padding-right: 150px;
+  }
+
+}

@@ -17,7 +17,7 @@ function App() {
  
 
   return (
-    <div >
+    <>
       <Router>
       <ScrollToTop/>
       <Navbar/>
@@ -32,7 +32,7 @@ function App() {
           <Route path="/checkoutform" element={<CheckoutForm/>}/>
         </Routes>
       </Router>
-    </div>
+    </>
   )
 }
 

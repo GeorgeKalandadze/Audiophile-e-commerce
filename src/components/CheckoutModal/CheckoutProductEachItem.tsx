@@ -36,6 +36,7 @@ const CheckoutCardcontainers= styled.div`
   justify-content:space-between;
   align-items:center;
   margin-bottom:40px;
+  
 `
 
 const Img = styled.img`

@@ -25,18 +25,43 @@ export default PersonCard
 
 const MainDiv = styled.div`
 padding:20px;
+margin-right:30px;
+@media only screen and (min-width: 1200px){
+    padding: 0px 150px;
+    margin-right:0px;
+    margin-top:70px;
+}
 `
 const PersonCardDiv = styled.div`
-
+@media only screen and (min-width: 1200px){
+    display:flex;
+    align-items:center;
+    gap:80px;
+}
 `
 
 const PersonImg = styled.img`
 width:100%;
 border-radius:8px;
+@media only screen and (min-width: 768px){
+    height:423px; 
+}
+
+@media only screen and (min-width: 1200px){
+    height:523px; 
+    width:50%;
+}
+
+
 `
 
 const TextsDiv = styled.div`
+text-align: center;
 margin-top:30px;
+@media only screen and (min-width: 1200px){
+    width:50%;
+    text-align:left;
+}
 
 `
 
@@ -45,7 +70,7 @@ font-style: normal;
 font-weight: 700;
 font-size: 28px;
 line-height: 38px;
-text-align: center;
+
 letter-spacing: 1px;
 text-transform: uppercase;
 color: #000000;
@@ -60,7 +85,7 @@ font-style: normal;
 font-weight: 500;
 font-size: 15px;
 line-height: 25px;
-text-align: center;
+
 color: #000000;
 mix-blend-mode: normal;
 opacity: 0.5;

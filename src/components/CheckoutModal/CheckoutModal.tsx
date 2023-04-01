@@ -3,16 +3,27 @@ import { useGlobalContext } from '../../context'
 import { Button } from '../Button/Button'
 import CheckoutProductEachItem from './CheckoutProductEachItem'
 import { Link} from 'react-router-dom'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
+import UseOnClickOutside from '../../hooks/UseOnClickOutside'
+
+type IsShopCartOpenType = {
+  show:boolean
+}
 const CheckoutModal = () => {
-  const {cartItems,totalPrice, removeAllItems} = useGlobalContext()
+  const {cartItems,totalPrice, removeAllItems,isShopCartOpen,setIsShopCartOpen} = useGlobalContext()
   const [purchaseModal, setPurchaseModal]  = useState(false)
+
+  const ref = useRef<HTMLDivElement>(null);
+
+  UseOnClickOutside(ref, () => {
+    setIsShopCartOpen(false)
+  });
 
 
   return (
-    <MainDiv >
+    <MainDiv show={isShopCartOpen}>
      
-        <CheckoutCard>
+        <CheckoutCard ref={ref}>
           <CheckoutCardcontainers>
               <CartQuantity >cart ({cartItems.length})</CartQuantity>
               <RemoveAllButton onClick={removeAllItems}>Remove all</RemoveAllButton>
@@ -33,11 +44,18 @@ const CheckoutModal = () => {
 
 export default CheckoutModal
 
-const MainDiv = styled.div`
+const MainDiv = styled.div<IsShopCartOpenType>`
 z-index:30;
-padding:30px 10px;
-position:absolute;
+position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: ${props => props.show ? 'block' : 'none'};
+padding:120px 10px;
 width:100%;
+
 
 `
 
@@ -46,6 +64,14 @@ padding: 20px;
 background: #FFFFFF;
 border-radius: 8px;
 width:100%;
+
+@media only screen and (min-width: 768px){
+   width:400PX; 
+   position: fixed;
+    left: 70%;
+   
+  }
+
 `
 
 const CheckoutCardcontainers= styled.div`
@@ -77,6 +103,7 @@ color: #000000;
 mix-blend-mode: normal;
 opacity: 0.5;
 background-color:transparent;
+cursor: pointer;
 `
 
 

@@ -1,7 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import styled from 'styled-components'
-import { Button } from '../../components/Button/Button'
 import PurchaseModal from '../../components/PurchaseModal/PurchaseModal'
 import RadioInput from '../../components/RadioInput.tsx/RadioInput'
 import SummaryCard from '../../components/SummaryCard/SummaryCard'
@@ -20,16 +19,17 @@ type FormData = {
 }
 
 const CheckoutForm = () => {
-
+  const [isOpenPurchase, setOpenPurchase] = useState(false)
   const {register, handleSubmit, formState:{errors}} =useForm<FormData>()
-  
+
   
   return (
     <MainDiv >
-      
-      <InputForm >
+      <PurchaseModal isShow={isOpenPurchase}/>
+      <InputForm onSubmit={() => setOpenPurchase(true)}>
         <FormHeader>CHECKOUT</FormHeader>
         <FormSectionHeader>Billing details</FormSectionHeader>
+        <InputContainers>
         <TextInput 
           placeholder='Alexei Ward' 
           inputType='text' 
@@ -38,7 +38,6 @@ const CheckoutForm = () => {
           register={register}
           error={errors.name}
           validation={{required:true}}
-          
         />
         <TextInput 
           placeholder='alexei@mail.com' 
@@ -48,9 +47,9 @@ const CheckoutForm = () => {
           register={register}
           error={errors.email}
           validation={{required:true}}
-
           
         />
+        </InputContainers>
         <TextInput 
           placeholder='+1 202-555-0136' 
           inputType='number' 
@@ -77,6 +76,7 @@ const CheckoutForm = () => {
 
           
         />
+        <InputContainers>
         <TextInput 
           placeholder='10001' 
           inputType='number' 
@@ -96,11 +96,9 @@ const CheckoutForm = () => {
           name='city'
           register={register}
           error={errors.city}
-          validation={{required:true}}
-
-
-          
+          validation={{required:true}} 
         />
+        </InputContainers>
         <TextInput 
           placeholder='United States' 
           inputType='text' 
@@ -115,6 +113,8 @@ const CheckoutForm = () => {
 
         <FormSectionHeader>payment details</FormSectionHeader>
         <RadioInput/>
+
+        <InputContainers>
         <TextInput 
           placeholder='238521993' 
           inputType='number' 
@@ -134,9 +134,8 @@ const CheckoutForm = () => {
           register={register}
           error={errors.pin}
           validation={{required:true}}
-
-          
         />
+        </InputContainers>
         
       </InputForm>
       <SummaryCard handleSubmit={handleSubmit} errors={errors}/>
@@ -148,7 +147,13 @@ export default CheckoutForm
 
 const MainDiv = styled.div`
 padding:20px 10px;
-background-color:#F1F1F1;
+background-color:#f2f2f2;
+@media only screen and (min-width: 1200px){
+   display:flex;
+   gap:20px;
+   padding:70px 180px;
+   
+  }
 `
 
 const InputForm = styled.form`
@@ -180,5 +185,13 @@ letter-spacing: 0.928571px;
 text-transform: uppercase;
 color: #D87D4A;
 margin-bottom:10px;
+`
+
+const InputContainers = styled.div`
+  display:block;
+  @media only screen and (min-width: 768px){
+    display:flex;
+    justify-content:space-between
+}
 `
 

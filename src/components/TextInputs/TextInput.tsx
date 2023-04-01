@@ -8,11 +8,14 @@ type InputProps = {
     name:string
     register:any
     error:any
-    validation:any  
+    validation:any
+    
+    
 }
 
 type InputStylePropType = {
   error:boolean
+  
 }
 const TextInput = ({inputType,placeholder,label,name,register,validation,error}:InputProps) => {
   return (
@@ -24,6 +27,7 @@ const TextInput = ({inputType,placeholder,label,name,register,validation,error}:
           name={name}
           {...register(name,validation)}
           error={error}
+          
         />
     </InputDiv >
   )

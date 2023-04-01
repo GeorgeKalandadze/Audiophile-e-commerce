@@ -1,6 +1,4 @@
-.home-page-main-conatiner{
- 
-}
+
 
 .home-page{
     width: 100%;
@@ -9,8 +7,6 @@
     height: 100vh; /* You must set a specified height */
     background-position: center; /* Center the image */
     background-repeat: no-repeat;
-   
-    
 }
 
 .home-page-texts{
@@ -68,12 +64,12 @@
 
 .products-container div{
     border-radius: 8px;
-    padding: 30px;
+    
     margin-bottom: 30px;
     
 }
 
-.products-container div:nth-child(1){
+.first-product{
     background: #D87D4A;
     display: flex;
     flex-direction: column;
@@ -82,12 +78,12 @@
     gap: 25px;
 }
 
-.products-container div:nth-child(1) img{
+.first-product img{
     height: 207px;
     width: 200px;
 }
 
-.products-container div:nth-child(1) h1{
+.first-product h1{
     font-style: normal;
     font-weight: 700;
     font-size: 36px;
@@ -98,7 +94,7 @@
     color: #FFFFFF;
 }
 
-.products-container div:nth-child(1) p{
+.first-product p{
     font-style: normal;
     font-weight: 500;
     font-size: 15px;
@@ -110,12 +106,12 @@
 }
 
 
-.products-container div:nth-child(2){
+.second-product{
     background-image: url(../../assets/home/desktop/image-speaker-zx7.jpg);
     background-position: 50%;
     background-repeat: no-repeat;
     background-size: cover;
-    padding: 100px 35px;
+    padding: 100px 55px;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
@@ -124,7 +120,7 @@
 
 }
 
-.products-container div:nth-child(2) h1{
+.second-product h1{
     font-style: normal;
     font-weight: 700;
     font-size: 28px;
@@ -132,6 +128,7 @@
     letter-spacing: 2px;
     text-transform: uppercase;
     color: #000000;
+    
 }
 
 /**earphone-product-img**/
@@ -143,12 +140,12 @@
     margin-bottom: 25px;
 }
 
-.products-container div:nth-child(4) {
+.last-child {
   background-color: #F1F1F1;
 
 }
 
-.products-container div:nth-child(4) h1{
+.last-child h1{
     font-style: normal;
     font-weight: 700;
     font-size: 28px;
@@ -159,3 +156,73 @@
     margin-bottom: 20px;
   
   }
+
+
+  /**Responsive**/
+
+@media only screen and (min-width: 768px){
+
+    .products-container{
+        margin-top: 30px;
+        
+    }
+
+    .products-container div:nth-child(1){
+        padding: 50px 150px;
+    }
+}
+
+@media only screen and (min-width: 1200px){
+
+   .products-container{
+    padding: 30px 150px 0px 150px ;
+   }
+
+   .home-page{
+    display: flex;
+    align-self: flex-start;
+    background-image: url(../../assets/home/desktop/image-hero.jpg);
+    text-align: left;
+   
+}
+.home-page-texts{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    gap: 25px;
+    padding: 0px 150px;
+    align-items: flex-start;
+    text-align: left;
+}
+
+.home-page-texts p{
+   text-align: left;
+   width: 400px;
+   line-height: 30px;
+}
+
+.yx-earphone-cont{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 30px;
+    padding: 0;
+}
+
+.yx-earphone-cont img{
+    width: 50%;
+}
+
+.last-child{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+}
+
+

@@ -16,12 +16,14 @@ const SummaryCard = ({handleSubmit,errors}:HandleSubmitType) => {
   const [purchaseModal, setPurchaseModal] = useState(false)
 
   const onFormSubmit = () => {
-    
+    if(errors = {}){
+      setPurchaseModal(true)
+    }
   }
   
   return (
     <MainDiv>
-      {purchaseModal && <PurchaseModal/>}
+      {purchaseModal && <PurchaseModal isShow={purchaseModal}/>}
       <Header>summary</Header>
       {
         cartItems.map((items) => {
@@ -82,6 +84,11 @@ margin-top:30px;
 padding:15px;
 background: #FFFFFF;
 border-radius: 8px;
+@media only screen and (min-width: 1200px){
+   padding:70px;
+  height:612px;
+  }
+
 `
 
 const SummaryDiv = styled.div`
@@ -89,6 +96,9 @@ display:flex;
 align-items:center;
 justify-content:space-between;
 margin-bottom:20px;
+@media only screen and (min-width: 1200px){
+   padding:5px;
+  }
 `
 
 const ProductDiv = styled.div`

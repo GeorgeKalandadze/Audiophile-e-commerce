@@ -1,9 +1,15 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import IconConfirmation from '../../assets/checkout/icon-order-confirmation.svg'
 import { useGlobalContext } from '../../context'
 import productsData from '../../data.json'
-const PurchaseModal = () => {
+import { Button } from '../Button/Button'
+
+type IsShowPurchaseModal = {
+    isShow:boolean
+}
+const PurchaseModal = ({isShow}:IsShowPurchaseModal) => {
   const {cartItems, totalPrice} = useGlobalContext();
   const [visibleAllCard, setVisibleAllCard] = useState<number>(1);
 
@@ -12,7 +18,7 @@ const PurchaseModal = () => {
   }
 
   return (
-    <MainDiv>
+    <MainDiv isShow={isShow}>
         <PurchaseCard>
             <img src={IconConfirmation}/>
             <BigText>THANK YOU FOR YOUR ORDER</BigText>
@@ -36,12 +42,13 @@ const PurchaseModal = () => {
                     )
                 })
             }
-            <ShowAllBtn onClick={() => showAllItems()}>and {cartItems.length - 1} other item(s)</ShowAllBtn>
+            <ShowAllBtn onClick={() => showAllItems()}>and {cartItems.length !== 0 ? cartItems.length - 1:0} other item(s)</ShowAllBtn>
             </AllProductContainer>
             <TotalPriceContainer>
                 <GrandTotal>GRAND TOTAL</GrandTotal>
                 <TotalPrice>${totalPrice}</TotalPrice>
             </TotalPriceContainer>
+            <Link to="/"><Button width='100%' pdng='15px 25px' bgColor='#D87D4A'>BACK TO HOME</Button></Link>
         </PurchaseCard>
     </MainDiv>
   )
@@ -50,13 +57,24 @@ const PurchaseModal = () => {
 export default PurchaseModal
 
 
-const MainDiv = styled.div`
+const MainDiv = styled.div<IsShowPurchaseModal>`
 
-position:absolute;
-padding:20px;
-left:0;
-max-width:100%;
-z-index:20;
+z-index:30;
+position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: ${props => props.isShow ? 'block' : 'none'};
+padding:20px 10px;
+width:100%;
+
+@media only screen and (min-width: 768px){
+   display:flex;
+   align-items:center;
+   justify-content:center;
+  }
 `
 
 const PurchaseCard = styled.div`
@@ -67,7 +85,13 @@ max-width:100%;
 display:flex;
 flex-direction:column;
 align-items:flex-start;
+margin-bottom:50px;
 
+@media only screen and (min-width: 768px){
+   width:400PX; 
+   position: fixed;
+   margin:auto;
+  }
 `
 
 const BigText = styled.h1`
@@ -169,6 +193,7 @@ width:100%;
 background: #000000;
 border-radius: 0px 0px 8px 8px;
 padding:15px;
+margin-bottom:15px;
 `
 
 const GrandTotal = styled.h1`

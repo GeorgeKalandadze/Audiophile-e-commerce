@@ -9,6 +9,7 @@ import EarphoneImg from '../../assets/shared/desktop/image-category-thumbnail-ea
 
 const CategoriesCards = () => {
   return (
+    <CategoriesCardMainDiv>
     <MainDiv>
         <CardDiv>
             <ProductImg src={HeadphoneImg}/>
@@ -35,18 +36,32 @@ const CategoriesCards = () => {
             </ButtonContainer>
         </CardDiv>
     </MainDiv>
+    </CategoriesCardMainDiv>
   )
 }
 
 export default CategoriesCards
 
+const CategoriesCardMainDiv = styled.div`
+
+`
 
 const MainDiv = styled.div`
 margin-top:70px;
 padding:20px;
 gap:80px;
 display:flex;
-flex-direction:column
+flex-direction:column;
+
+@media only screen and (min-width: 768px){
+    flex-direction:row;
+    justify-content:space-between;
+    gap:20px;
+}
+
+@media only screen and (min-width: 1200px){
+    padding: 0px 150px;
+}
 `
 
 const CardDiv = styled.div`
@@ -60,6 +75,15 @@ flex-direction:column;
 align-items:center;
 justify-content:flex-end;
 padding:15px;
+
+@media only screen and (min-width: 768px){
+    width:223px;
+}
+
+@media only screen and (min-width: 1200px){
+    width:323px;
+    height:200px;
+}
 `
 
 const ProductType = styled.h2`

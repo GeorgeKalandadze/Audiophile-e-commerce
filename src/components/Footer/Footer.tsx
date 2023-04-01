@@ -19,7 +19,7 @@ const Footer = () => {
         <StyledLink to="/speakers">SPEAKERS</StyledLink>
         <StyledLink to="/earphones">EARPHONES</StyledLink>
       </LinksContainer>
-      <div>
+      <TextsDiv>
         <Text>
           Audiophile is an all in one stop to fulfill your audio needs. 
           We're a small team of music lovers and sound specialists who 
@@ -29,7 +29,7 @@ const Footer = () => {
         <Text>
           Copyright 2021. All Rights Reserved
         </Text>
-      </div>
+        </TextsDiv>
       <IconsContainer>
         <img src={FaceBookIcon}/>
         <img src={TwitterIcon}/>
@@ -50,6 +50,13 @@ const FooterContainer = styled.div`
   align-items:center;
   justify-content:center;
   gap:30px;
+  @media only screen and (min-width: 768px){
+    align-items:flex-start
+  }
+
+  @media only screen and (min-width: 120px){
+    padding: 70px 150px;
+  }
 `
 
 const StyledLink = styled(Link)`
@@ -61,6 +68,16 @@ letter-spacing: 2px;
 text-transform: uppercase;
 color: #FFFFFF;
 text-decoration:none;
+
+`
+
+const TextsDiv = styled.div`
+  display:flex;
+  flex-direction:column;
+  @media only screen and (min-width: 768px){
+    height:100%;
+    justify-content:space-between;
+  }
 `
 
 const Text = styled.p`
@@ -73,6 +90,10 @@ text-align: center;
 color: #FFFFFF;
 mix-blend-mode: normal;
 opacity: 0.5;
+
+@media only screen and (min-width: 768px){
+    text-align:left;
+}
 `
 
 const LinksContainer = styled.div`
@@ -80,9 +101,17 @@ display:flex;
 flex-direction:column;
 text-align:center;
 gap:20px;
+@media only screen and (min-width: 768px){
+    flex-direction:row
+}
 `
 
 const IconsContainer = styled.div`
   display:flex;
   gap:20px;
+  
+  @media only screen and (min-width: 768px){
+    width:100%;
+    justify-content:flex-end
+}
 `

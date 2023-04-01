@@ -9,6 +9,7 @@ interface ButtonStyleProps {
 }
 
 const ButtonStyle = styled.button<ButtonStyleProps>`
+cursor: pointer;
 width:${prop => prop.width || null};
 background-color:${prop => prop.bgColor || "black"};
 color:${prop => prop.color || "white"};
