@@ -15,7 +15,7 @@ function App() {
   const {isShopCartOpen} = useGlobalContext()
 
   
-
+  
  
 
   return (
