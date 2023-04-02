@@ -25,7 +25,7 @@ const CheckoutForm = () => {
   
   return (
     <MainDiv >
-      <PurchaseModal isShow={isOpenPurchase}/>
+      {isOpenPurchase && <PurchaseModal isShow={isOpenPurchase}/>}
       <InputForm onSubmit={() => setOpenPurchase(true)}>
         <FormHeader>CHECKOUT</FormHeader>
         <FormSectionHeader>Billing details</FormSectionHeader>

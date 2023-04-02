@@ -21,14 +21,14 @@ function App() {
   return (
     <>
       <Router>
-      {/* <ScrollToTop/>
+      <ScrollToTop/>
       <Navbar/>
-      {isShopCartOpen && <CheckoutModal/>} */}
+      {isShopCartOpen && <CheckoutModal/>}
         <Routes>
           
-          <Route path="/" element={<SignIn/>}/>
-          <Route path="/signup" element={<SignUp/>}/>
-          <Route path="/home" element={<HomePage/>}/>
+          {/* <Route path="/" element={<SignIn/>}/>
+          <Route path="/signup" element={<SignUp/>}/> */}
+          <Route path="/" element={<HomePage/>}/>
           <Route path="/headphones" element={<ProductsPage productType={'headphones'} />}/>
           <Route path="/speakers" element={<ProductsPage productType={"speakers"}/>}/>
           <Route path="/earphones" element={<ProductsPage productType={"earphones"}/>}/>
