@@ -24,6 +24,12 @@ interface MyContext {
     decreaseCartQuantity:(id:number) => void
     addToCart:(id:number) => void
     removeAllItems:() => void
+    currentUser: null
+    token: null
+    notification: null
+    setUser: () => void
+    setToken: () => void
+    setNotification: () => void
     cartItems:CartItem[]
     cartQuantity:number
     productsData: {
@@ -82,6 +88,29 @@ type CartItem = {
 
 
 export const AppProvider :FunctionComponent<Props> = ({children}) => {
+    const [user, setUser] = useState({
+        name: "john"
+      });
+      const [token, _setToken] = useState(localStorage.getItem('ACCESS_TOKEN'));
+        const [notification, _setNotification] = useState('');
+    
+      const setToken = (token:string) => {
+        _setToken(token);
+        if(token){
+            localStorage.setItem('ACCESS_TOKEN', token);
+        }else{
+            localStorage.removeItem('ACCESS_TOKEN');
+        }
+      }
+    
+        const setNotification = (message:string) => {
+            _setNotification(message);
+    
+            setTimeout(() => {
+                _setNotification('')
+            }, 5000)
+        }
+
     const [isMenuClicked, setIsMenuClicked] = useState<boolean>(false);
     const [isShopCartOpen, setIsShopCartOpen] = useState<boolean>(false);
     const [cartItems, setCartItems] = useLocalStorage<CartItem[]>('shoping-carts',[]);
@@ -175,7 +204,7 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
             removeAllItems,
             totalPrice,
             setIsShopCartOpen,
-            addToCart
+            addToCart,
             }}>
     {children}
     </AppContext.Provider>
