@@ -13,27 +13,27 @@ import { useLocalStorage } from './hooks/UseLocalStorage';
 
 
 interface MyContext {
-    isMenuClicked?: boolean;
-    isShopCartOpen?: boolean;
-    totalPrice?: number;
-    getItemQuantity?: (id: number) => number;
-    setIsMenuClicked?: Dispatch<SetStateAction<boolean>>;
-    setIsShopCartOpen?: Dispatch<SetStateAction<boolean>>;
-    openShopCartModal?: () => void;
-    increaseCartQuantity?: (id: number) => void;
-    decreaseCartQuantity?: (id: number) => void;
-    addToCart?: (id: number) => void;
-    removeAllItems?: () => void;
-    currentUser?: null;
-    token?: null | string;
-    notification?: null | string;
-    setUser?: (arg: null | {}) => void;
+    isMenuClicked: boolean;
+    isShopCartOpen: boolean;
+    totalPrice: number;
+    getItemQuantity: (id: number) => number;
+    setIsMenuClicked: Dispatch<SetStateAction<boolean>>;
+    setIsShopCartOpen: Dispatch<SetStateAction<boolean>>;
+    openShopCartModal: () => void;
+    increaseCartQuantity: (id: number) => void;
+    decreaseCartQuantity: (id: number) => void;
+    addToCart: (id: number) => void;
+    removeAllItems: () => void;
+    
+    token: null | string;
+    notification: null | string;
+    setUser: (arg: null | {}) => void;
     user:null | {}
-    setToken?: (token: string) => void;
-    setNotification?: Dispatch<SetStateAction<string>>;
-    cartItems?: CartItem[];
-    cartQuantity?: number;
-    productsData?: {
+    setToken: (token: string) => void;
+    setNotification: Dispatch<SetStateAction<string>>;
+    cartItems: CartItem[];
+    cartQuantity: number;
+    productsData: {
       id: number;
       slug: string;
       name: string;
@@ -214,8 +214,7 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
             token,
             setToken,
             notification,
-            setNotification
-            
+            setNotification,
             }}>
     {children}
     </AppContext.Provider>

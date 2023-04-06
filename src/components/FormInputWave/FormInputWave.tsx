@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { RefObject, useState } from 'react';
 
 
 interface FormInputWaveProps {
   id: string;
   label: string;
   type: string;
+  reference:any
 }
 
-const FormInputWave: React.FC<FormInputWaveProps> = ({ id, label, type }) => {
+const FormInputWave: React.FC<FormInputWaveProps> = ({ id, label, type, reference }) => {
   const [isFocused, setIsFocused] = useState<boolean>(false);
 
   const handleFocus = (): void => {
@@ -30,6 +31,7 @@ const FormInputWave: React.FC<FormInputWaveProps> = ({ id, label, type }) => {
         type={type}
         onFocus={handleFocus}
         onBlur={handleBlur}
+        ref={reference}
       />
     </div>
   );
