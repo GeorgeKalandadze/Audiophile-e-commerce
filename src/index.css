@@ -141,8 +141,12 @@
   transform: translateY(-40px) scale(0.8);
 }
 
-.auth-error{
-  bottom: -25px;
-  position: absolute;
-  color: brown;
+
+.alert {
+  width: 100%;
+  padding: 1rem;
+  background-color: #ff4040;
+  color: white;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
 }

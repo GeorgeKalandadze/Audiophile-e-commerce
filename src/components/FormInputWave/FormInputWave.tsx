@@ -6,10 +6,10 @@ interface FormInputWaveProps {
   label: string;
   type: string;
   reference:any;
-  errorMessage: string | string[];
+  
 }
 
-const FormInputWave: React.FC<FormInputWaveProps> = ({  label, type, reference,errorMessage }) => {
+const FormInputWave: React.FC<FormInputWaveProps> = ({  label, type, reference}) => {
   const [isFocused, setIsFocused] = useState<boolean>(false);
 
   const handleFocus = (): void => {
@@ -33,7 +33,6 @@ const FormInputWave: React.FC<FormInputWaveProps> = ({  label, type, reference,e
         onBlur={handleBlur}
         ref={reference}
       />
-      <p className='auth-error'>{errorMessage}</p>
     </div>
   );
 };

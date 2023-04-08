@@ -53,10 +53,17 @@ const SignUp = () => {
     <div className='form'>
     <form onSubmit={onSubmit}>
         <h1>Sign Up</h1>
-        <FormInputWave  label="Name" type="text" reference={nameRef} errorMessage={errors?.name}/>
-        <FormInputWave  label="Gmail" type="email" reference={emailRef} errorMessage={errors?.email}/>
-        <FormInputWave  label="Password" type="text" reference={passwordRef} errorMessage={errors?.password}/>
-        <FormInputWave  label="Repeat password" type="text" reference={passwordConfirmationRef} errorMessage={errors?.password_confirmation}/>
+        {errors &&
+            <div className="alert">
+                {Object.keys(errors).map(key => (
+                    <p key={key}>{errors[key][0]}</p>
+                ))}
+            </div>
+        }
+        <FormInputWave  label="Name" type="text" reference={nameRef} />
+        <FormInputWave  label="Gmail" type="email" reference={emailRef} />
+        <FormInputWave  label="Password" type="text" reference={passwordRef} />
+        <FormInputWave  label="Repeat password" type="text" reference={passwordConfirmationRef} />
         <Button width='100%' bgColor='#D87D4A' pdng='15px 25px' type='submit'>Create An Account</Button>
         <p onClick={() => navigate(-1)}  className='form-type-text'>Already have an account? <span style={{color:"#D87D4A"}}>Login</span></p>
     </form>
