@@ -2,13 +2,14 @@ import React, { RefObject, useState } from 'react';
 
 
 interface FormInputWaveProps {
-  id: string;
+  
   label: string;
   type: string;
-  reference:any
+  reference:any;
+  errorMessage: string | string[];
 }
 
-const FormInputWave: React.FC<FormInputWaveProps> = ({ id, label, type, reference }) => {
+const FormInputWave: React.FC<FormInputWaveProps> = ({  label, type, reference,errorMessage }) => {
   const [isFocused, setIsFocused] = useState<boolean>(false);
 
   const handleFocus = (): void => {
@@ -23,16 +24,16 @@ const FormInputWave: React.FC<FormInputWaveProps> = ({ id, label, type, referenc
 
   return (
     <div className="form-input-wave-container">
-      <label htmlFor={id} className={isFocused ? 'focused' : ''}>
+      <label  className={isFocused ? 'focused' : ''}>
         {label}
       </label>
       <input
-        id={id}
         type={type}
         onFocus={handleFocus}
         onBlur={handleBlur}
         ref={reference}
       />
+      <p className='auth-error'>{errorMessage}</p>
     </div>
   );
 };

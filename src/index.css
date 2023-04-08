@@ -140,3 +140,9 @@
   color: #06c;
   transform: translateY(-40px) scale(0.8);
 }
+
+.auth-error{
+  bottom: -25px;
+  position: absolute;
+  color: brown;
+}
