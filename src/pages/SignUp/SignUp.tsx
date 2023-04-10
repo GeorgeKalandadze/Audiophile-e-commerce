@@ -63,8 +63,8 @@ const SignUp = () => {
         }
         <FormInputWave  label="Name" type="text" reference={nameRef} />
         <FormInputWave  label="Gmail" type="email" reference={emailRef} />
-        <FormInputWave  label="Password" type="text" reference={passwordRef} />
-        <FormInputWave  label="Repeat password" type="text" reference={passwordConfirmationRef} />
+        <FormInputWave  label="Password" type="Password" reference={passwordRef} />
+        <FormInputWave  label="Repeat password" type="Password" reference={passwordConfirmationRef} />
         <div className='image-upload'>
           
           <div className="styled-input-div">

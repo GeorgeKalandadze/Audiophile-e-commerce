@@ -20,11 +20,14 @@ interface MyContext {
     setIsMenuClicked: Dispatch<SetStateAction<boolean>>;
     setIsShopCartOpen: Dispatch<SetStateAction<boolean>>;
     openShopCartModal: () => void;
+    openLogoutModal:() => void;
+    isLogoutModal:boolean;
     increaseCartQuantity: (id: number) => void;
     decreaseCartQuantity: (id: number) => void;
     addToCart: (id: number) => void;
     removeAllItems: () => void;
-    
+    userInfo:UserInfo
+    setUserInfo:Dispatch<SetStateAction<UserInfo>>
     token: null | string;
     notification: null | string;
     setUser: (arg: null | {}) => void;
@@ -87,14 +90,22 @@ type CartItem = {
 }
 
 
+interface UserInfo  {
+  name:string
+  avatar_image:string
+}
+
 export const AppProvider :FunctionComponent<Props> = ({children}) => {
     const [isMenuClicked, setIsMenuClicked] = useState<boolean>(false);
     const [isShopCartOpen, setIsShopCartOpen] = useState<boolean>(false);
+    const [isLogoutModal, setIsLogoutModal] = useState<boolean>(false);
     const [cartItems, setCartItems] = useLocalStorage<CartItem[]>('shoping-carts',[]);
     const [user, setUser] = useState<null | {}>({});
     const [token, _setToken] = useState<string|null>(localStorage.getItem('ACCESS_TOKEN'));
     const [notification, _setNotification] = useState('');
+    const [userInfo, setUserInfo] = useState<UserInfo>({name:"", avatar_image:""});
     
+    //working with authentication authorization token
     const setToken = (token: string) => {
         _setToken(token);
         if (token) {
@@ -110,6 +121,11 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
         setTimeout(() => {
             _setNotification('')
         }, 5000)
+    }
+
+    //open Logout modal
+    const openLogoutModal = () => {
+      setIsLogoutModal(isopen => !isopen)
     }
 
     //open shop cart modal
@@ -215,6 +231,10 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
             setToken,
             notification,
             setNotification,
+            userInfo,
+            setUserInfo,
+            openLogoutModal,
+            isLogoutModal
             }}>
     {children}
     </AppContext.Provider>

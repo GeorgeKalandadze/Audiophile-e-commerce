@@ -11,7 +11,6 @@ type IsShopCartOpenType = {
 }
 const CheckoutModal = () => {
   const {cartItems,totalPrice, removeAllItems,isShopCartOpen,setIsShopCartOpen} = useGlobalContext()
-  const [purchaseModal, setPurchaseModal]  = useState(false)
 
   const ref = useRef<HTMLDivElement>(null);
 
