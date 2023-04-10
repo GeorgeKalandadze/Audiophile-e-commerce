@@ -1,11 +1,25 @@
 import styled from 'styled-components'
 import { useGlobalContext } from '../../context'
 import { Button } from '../Button/Button'
+import axiosClient from '../../axios-client'
+import {FormEvent} from 'react'
+import { useNavigate } from 'react-router-dom'
 type IsLogoutModalOpen = {
     show:boolean
   }
 const LogoutModal = () => {
-const {isLogoutModal,userInfo} = useGlobalContext();
+const {isLogoutModal,userInfo,setToken,setIsLogoutModal} = useGlobalContext();
+const navigate = useNavigate()
+const onLogout = (ev:any) => {
+    ev.preventDefault()
+
+    axiosClient.post('/logout')
+    .then(() => {
+        setToken('')
+        navigate('/')
+        setIsLogoutModal(false)
+    })
+}
   return (
     <MainDiv show={isLogoutModal}>
         <LogoutDiv>
@@ -13,7 +27,7 @@ const {isLogoutModal,userInfo} = useGlobalContext();
                 <UserImage src={userInfo.avatar_image}/>
             </UserImageDiv>
             <Name>{userInfo.name}</Name>
-            <Button bgColor='#D87D4A' width='100%'>Log Out</Button>
+            <Button bgColor='#D87D4A' width='100%' onClick={onLogout}>Log Out</Button>
         </LogoutDiv>
     </MainDiv>
   )

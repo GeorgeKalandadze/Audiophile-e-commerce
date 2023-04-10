@@ -22,6 +22,7 @@ interface MyContext {
     openShopCartModal: () => void;
     openLogoutModal:() => void;
     isLogoutModal:boolean;
+    setIsLogoutModal:Dispatch<SetStateAction<boolean>>;
     increaseCartQuantity: (id: number) => void;
     decreaseCartQuantity: (id: number) => void;
     addToCart: (id: number) => void;
@@ -234,7 +235,8 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
             userInfo,
             setUserInfo,
             openLogoutModal,
-            isLogoutModal
+            isLogoutModal,
+            setIsLogoutModal
             }}>
     {children}
     </AppContext.Provider>
