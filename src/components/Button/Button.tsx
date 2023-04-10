@@ -6,6 +6,7 @@ interface ButtonStyleProps {
     border?:string
     color?:string
     width?:string
+    brdRadius?:string
 }
 
 const ButtonStyle = styled.button<ButtonStyleProps>`
@@ -18,6 +19,7 @@ font-size:16px;
 font-weight:500;
 outline:none;
 border:${prop => prop.border || "none"};
+border-radius:${prop => prop.brdRadius || "0px"};
 font-size: 13px;
 font-weight: 700;
 letter-spacing: 1px;

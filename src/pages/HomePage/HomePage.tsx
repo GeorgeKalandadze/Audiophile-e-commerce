@@ -8,6 +8,8 @@ import CategoriesCards from '../../components/CategoriesCards/CategoriesCards';
 import { Link } from 'react-router-dom';
 
 const HomePage = () => {
+  
+  
   return (
     <div className={"home-page-main-conatiner "}
     >

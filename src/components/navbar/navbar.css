@@ -107,6 +107,27 @@ color: #FFFFFF;
     display: none;
 }
 
+
+/*user image*/
+.navbar-right{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.profile-photo{
+    width: 2.3rem;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid #fff;
+    cursor: pointer;
+}
+
+.profile-photo img{
+    display: block;
+    width: 100%;
+}
+
 @media screen and (min-width:1320px){
     .burger-menu{
         display: none;

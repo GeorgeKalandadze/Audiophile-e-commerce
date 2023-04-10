@@ -16,35 +16,35 @@ const SignUp = () => {
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
     const passwordConfirmationRef = useRef<HTMLInputElement>(null);
-    const {setUser, setToken,token} = useGlobalContext();
+    const avatarImage = useRef<HTMLInputElement>(null);
+    const {setUser, setToken,token,user} = useGlobalContext();
     const [errors, setErrors] = useState<FormErrors>({})
 
-   
     const onSubmit = (ev:FormEvent<HTMLFormElement>) => {
         ev.preventDefault()
 
-        const payload = {
-          name: nameRef.current?.value || '',
-          email: emailRef.current?.value || '',
-          password: passwordRef.current?.value || '',
-          password_confirmation: passwordConfirmationRef.current?.value || '',
-        }
+        const formData = new FormData()
+        formData.append('name', nameRef.current?.value || '')
+        formData.append('email', emailRef.current?.value || '')
+        formData.append('password', passwordRef.current?.value || '')
+        formData.append('password_confirmation', passwordConfirmationRef.current?.value || '')
+        formData.append('avatar_image', avatarImage.current?.files?.[0] || '')
 
-        axiosClient.post('/signup', payload)
-            .then(({data}) => {
-                setUser(data.user)
-                setToken(data.token);
-                navigate('/home')
-            })
-            .catch(err => {
-                const response = err.response;
-              if (response && response.status === 422) {
-                  console.log(response.data.errors)
-                  setErrors(response.data.errors)
-              } else {
-                  setErrors({});
-              }
-            })
+        console.log(formData)
+        axiosClient.post('/signup', formData)
+          .then(({data}) => {
+            setUser(data.user)
+            setToken(data.token)
+            navigate('/home')
+          })
+          .catch(err => {
+            const response = err.response
+            if (response && response.status === 422) {
+              setErrors(response.data.errors)
+            } else {
+              setErrors({})
+            }
+          })
     }
 
   
@@ -53,18 +53,27 @@ const SignUp = () => {
     <div className='form'>
     <form onSubmit={onSubmit}>
         <h1>Sign Up</h1>
-        {errors &&
-            <div className="alert">
+        {Object.keys(errors).length > 0 && 
+        (<div className="alert">
                 {Object.keys(errors).map(key => (
                     <p key={key}>{errors[key][0]}</p>
                 ))}
-            </div>
+          </div>)
+
         }
         <FormInputWave  label="Name" type="text" reference={nameRef} />
         <FormInputWave  label="Gmail" type="email" reference={emailRef} />
         <FormInputWave  label="Password" type="text" reference={passwordRef} />
         <FormInputWave  label="Repeat password" type="text" reference={passwordConfirmationRef} />
-        <Button width='100%' bgColor='#D87D4A' pdng='15px 25px' type='submit'>Create An Account</Button>
+        <div className='image-upload'>
+          
+          <div className="styled-input-div">
+            <input type='file' ref={avatarImage}/>
+            <Button bgColor='#D87D4A' brdRadius='4px'>Upload</Button>
+          </div>
+          <label>Upload Image</label>
+        </div>
+        <Button width='100%' brdRadius='4px' bgColor='#D87D4A' pdng='15px 25px' type='submit'>Create An Account</Button>
         <p onClick={() => navigate(-1)}  className='form-type-text'>Already have an account? <span style={{color:"#D87D4A"}}>Login</span></p>
     </form>
     </div>

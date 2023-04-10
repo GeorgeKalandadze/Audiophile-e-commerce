@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { BrowserRouter as Router,Routes,Route} from "react-router-dom"
 import CheckoutModal from "./components/CheckoutModal/CheckoutModal";
 import EachProductPage from "./components/EachProductPage/EachProductPage";
@@ -21,21 +20,24 @@ function App() {
   return (
     <>
       <Router>
-      {/* <ScrollToTop/>
-      <Navbar/>
-      {isShopCartOpen && <CheckoutModal/>} */}
+        
+      {(window.location.pathname !== '/' && window.location.pathname !== '/signup') && (
+          <>
+            <ScrollToTop/>
+            <Navbar/>
+            {isShopCartOpen && <CheckoutModal/>}
+          </>
+        )}
+
         <Routes>
-          
           <Route path="/" element={<SignIn/>}/>
           <Route path="/signup" element={<SignUp/>}/>
           <Route path="/home" element={<HomePage/>}/>
-          <Route path="/headphones" element={<ProductsPage productType={'headphones'} />}/>
-          <Route path="/speakers" element={<ProductsPage productType={"speakers"}/>}/>
-          <Route path="/earphones" element={<ProductsPage productType={"earphones"}/>}/>
-          <Route path="/:ProductName" element={<EachProductPage/>}/>
-          <Route path="/checkoutform" element={<CheckoutForm/>}/>
-      
-
+          <Route path="headphones" element={<ProductsPage productType={'headphones'} />} />
+          <Route path="speakers" element={<ProductsPage productType={"speakers"} />} />
+          <Route path="earphones" element={<ProductsPage productType={"earphones"} />} />
+          <Route path=":ProductName" element={<EachProductPage />} />
+          <Route path="checkoutform" element={<CheckoutForm />} />
         </Routes>
       </Router>
     </>
