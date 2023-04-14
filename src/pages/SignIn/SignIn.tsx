@@ -2,7 +2,7 @@ import {Navigate, useNavigate} from "react-router-dom"
 import { Button } from '../../components/Button/Button';
 import FormInputWave from "../../components/FormInputWave/FormInputWave";
 import axiosClient from "../../axios-client";
-import { FormEvent, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { useGlobalContext } from "../../context";
 
 interface FormErrors {
@@ -41,10 +41,10 @@ const SignIn = () => {
         })
 }
 
-
   
   return (
     <div className='form-container'>
+      
     <div className='form'>
     <form onSubmit={onSubmit}>
         <h1>Login</h1>

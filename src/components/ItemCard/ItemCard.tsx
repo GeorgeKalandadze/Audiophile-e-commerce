@@ -15,7 +15,7 @@ const ItemCard = ({itemImage,productName,productText,isNew,slug}: ItemsProps) =>
   return (
     <Container className='some'>
         
-            <ItemImg src={itemImage} alt="" />
+            <ItemImg src={`${import.meta.env.VITE_API_BASE_URL}/${itemImage}`} alt="" />
             <TextsContainer>
                 {isNew && <IsNewProduct>NEW PRODUCT</IsNewProduct>}
                 <ProductName>{productName}</ProductName>

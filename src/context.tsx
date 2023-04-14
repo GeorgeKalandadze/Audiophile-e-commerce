@@ -4,10 +4,12 @@ import React, { createContext,
     useContext, 
     useState, 
     Dispatch, 
-    SetStateAction 
+    SetStateAction, 
+    useEffect
 } from 'react'
 import productsData from './data.json';
 import { useLocalStorage } from './hooks/UseLocalStorage';
+import axiosClient from './axios-client';
 
 
 
@@ -77,7 +79,27 @@ interface MyContext {
         };
       };
     }[];
+    products:Product
   }
+
+  type Product = {
+    id: number;
+    name: string;
+    slug:string;
+    description: string;
+    features: string;
+    cart_image: string;
+    price: string;
+    new: boolean;
+    category: string;
+    includes: {
+      item: string;
+      quantity: number;
+    }[];
+    product_images: {
+      image_path: string;
+    }[];
+  }[];
 
 const AppContext = createContext<MyContext>({} as MyContext);
 
@@ -105,6 +127,7 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
     const [token, _setToken] = useState<string|null>(localStorage.getItem('ACCESS_TOKEN'));
     const [notification, _setNotification] = useState('');
     const [userInfo, setUserInfo] = useState<UserInfo>({name:"", avatar_image:""});
+    const [products, setNewProducts] = useState<Product>([]);
     
     //working with authentication authorization token
     const setToken = (token: string) => {
@@ -209,6 +232,20 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
     }
 
 
+    useEffect(() => {
+      axiosClient.get('/products')
+    .then(({data}) => {
+      // handle success
+      setNewProducts(data.data)
+      
+    })
+    .catch((error) => {
+      // handle error
+      console.error(error);
+    });
+    },[])
+
+
 
 
     return <AppContext.Provider 
@@ -236,7 +273,9 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
             setUserInfo,
             openLogoutModal,
             isLogoutModal,
-            setIsLogoutModal
+            setIsLogoutModal,
+            products
+            
             }}>
     {children}
     </AppContext.Provider>

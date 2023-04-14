@@ -12,22 +12,23 @@ type ProductPagePropTypes = {
 
 
 const ProductsPage = ({productType}:ProductPagePropTypes) => {
-  const {productsData} = useGlobalContext()
-  const products = productsData.filter((product) =>product.category === productType )
+  const {productsData,products} = useGlobalContext()
+  const productsList = products.filter((product) =>product.category === productType )
 
+  
 
   return (
     <>
       <Header headerText={productType}/>
       <div className='boxes'>
       {
-        products.map((item) => (
+       productsList.map((item) => (
           
           <ItemCard
             slug={item.slug}
             isNew={item.new}
             key={item.id}
-            itemImage={item.image.desktop}
+            itemImage={item.cart_image}
             productName={item.name}
             productText={item.description}
           />

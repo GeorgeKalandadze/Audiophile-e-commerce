@@ -10,18 +10,18 @@ type quantityType = {
 
 const EachProductPage = () => {
   const {ProductName} = useParams()
-  const {productsData, getItemQuantity, increaseCartQuantity, decreaseCartQuantity,addToCart} = useGlobalContext()
+  const {productsData, getItemQuantity, increaseCartQuantity, decreaseCartQuantity,addToCart,products} = useGlobalContext()
 
   return (
     <MainContainer >
       <Link to="/"><GoBackButton>Go Back</GoBackButton></Link>
       {
-        productsData.filter((product) => product.slug == ProductName).map((fullProduct) => (
+        products.filter((product) => product.slug == ProductName).map((fullProduct) => (
           <div key={fullProduct.id}>
             <div>
               <ProductDiv>
                 <div>
-                <MainProductImage src={fullProduct.image.desktop}/>
+                <MainProductImage src={`${import.meta.env.VITE_API_BASE_URL}/${fullProduct.cart_image}`}/>
                 </div>
                 <AboutProduct>
                   {fullProduct.new && <IsNewProduct>NEW PRODUCT</IsNewProduct>}
@@ -52,10 +52,11 @@ const EachProductPage = () => {
                   ))}
                   </div>
                 </BoxDiv>
+                
                 <Images>
-                      <ProductImage src={fullProduct.gallery.first.desktop}/>
-                      <ProductImage src={fullProduct.gallery.second.desktop}/>
-                      <ProductImage src={fullProduct.gallery.third.desktop}/>
+                    {fullProduct.product_images.map((image) => (
+                       <ProductImage src={`${import.meta.env.VITE_API_BASE_URL}/${image.image_path}`}/>
+                    ))}
                 </Images>
             </div>
           </div>
