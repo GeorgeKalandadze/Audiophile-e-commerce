@@ -1,8 +1,8 @@
-
 import { Link, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { useGlobalContext } from '../../context'
 import { Button } from '../Button/Button'
+import axiosClient from '../../axios-client'
 
 type quantityType = {
   quantity:number
@@ -10,7 +10,20 @@ type quantityType = {
 
 const EachProductPage = () => {
   const {ProductName} = useParams()
-  const {productsData, getItemQuantity, increaseCartQuantity, decreaseCartQuantity,addToCart,products} = useGlobalContext()
+  const {getItemQuantity, increaseCartQuantity, decreaseCartQuantity,addToCart,products} = useGlobalContext()
+
+  const addCartItem = (id:number) => {
+    axiosClient.post('/cart/add', {
+      product_id: id,
+      quantity: 1
+  })
+  .then(response => {
+      console.log(response.data);
+  })
+  .catch(error => {
+      console.error(error);
+  })
+  }
 
   return (
     <MainContainer >
@@ -33,7 +46,7 @@ const EachProductPage = () => {
                       <QuantitySpan>{getItemQuantity(fullProduct.id)}</QuantitySpan>
                       <ChangeQuantityButton onClick={() => increaseCartQuantity(fullProduct.id)} quantity={getItemQuantity(fullProduct.id)}>+</ChangeQuantityButton>
                     </div>
-                    <Button bgColor='#D87D4A' width='200px'  onClick={() => addToCart(fullProduct.id)}>ADD TO CART</Button>
+                    <Button bgColor='#D87D4A' width='200px'  onClick={() => addCartItem(fullProduct.id)}>ADD TO CART</Button>
                   </ButtonContainer>
                   </AboutProduct>
                 </ProductDiv>

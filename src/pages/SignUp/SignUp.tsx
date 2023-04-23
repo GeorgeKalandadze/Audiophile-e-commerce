@@ -1,5 +1,5 @@
 import React, { FormEvent, RefObject, createRef, useEffect, useRef, useState } from 'react'
-import {Navigate, useNavigate} from "react-router-dom"
+import {Link, Navigate, useNavigate} from "react-router-dom"
 import { Button } from '../../components/Button/Button';
 import FormInputWave from '../../components/FormInputWave/FormInputWave';
 import { useGlobalContext } from '../../context';
@@ -47,6 +47,7 @@ const SignUp = () => {
           })
     }
 
+    
   
   return (
     <div className='form-container'>
@@ -74,7 +75,7 @@ const SignUp = () => {
           <label>Upload Image</label>
         </div>
         <Button width='100%' brdRadius='4px' bgColor='#D87D4A' pdng='15px 25px' type='submit'>Create An Account</Button>
-        <p onClick={() => navigate(-1)}  className='form-type-text'>Already have an account? <span style={{color:"#D87D4A"}}>Login</span></p>
+        <Link to={'/'} className='form-type-text'>Already have an account? <span style={{color:"#D87D4A"}}>Login</span></Link>
     </form>
     </div>
     </div>

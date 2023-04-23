@@ -1,4 +1,4 @@
-import {Navigate, useNavigate} from "react-router-dom"
+import {Link, Navigate, useNavigate} from "react-router-dom"
 import { Button } from '../../components/Button/Button';
 import FormInputWave from "../../components/FormInputWave/FormInputWave";
 import axiosClient from "../../axios-client";
@@ -41,6 +41,8 @@ const SignIn = () => {
         })
 }
 
+
+
   
   return (
     <div className='form-container'>
@@ -58,7 +60,7 @@ const SignIn = () => {
         <FormInputWave   label="Email" type="email" reference={emailRef} />
         <FormInputWave  label="Password" type="password" reference={passwordRef} />
         <Button width='100%' brdRadius='4px' bgColor='#D87D4A' pdng='15px 25px'>Log In</Button>
-        <p onClick={() => navigate('/signup')}  className='form-type-text'>Don’t have an account? <span style={{color:"#D87D4A"}}>Sign Up</span></p>
+        <Link to={'/signup'}  className='form-type-text'>Don’t have an account? <span style={{color:"#D87D4A"}}>Sign Up</span></Link>
     </form>
     </div>
     </div>

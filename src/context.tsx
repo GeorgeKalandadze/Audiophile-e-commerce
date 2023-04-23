@@ -246,8 +246,6 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
     },[])
 
 
-
-
     return <AppContext.Provider 
     value={{isMenuClicked, 
             setIsMenuClicked, 

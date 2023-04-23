@@ -1,7 +1,5 @@
-import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import TestImage from '../../assets/cart/image-xx99-mark-two-headphones.jpg'
 import { Button } from '../Button/Button'
 
 type ItemsProps = {

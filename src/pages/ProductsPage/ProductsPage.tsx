@@ -12,10 +12,8 @@ type ProductPagePropTypes = {
 
 
 const ProductsPage = ({productType}:ProductPagePropTypes) => {
-  const {productsData,products} = useGlobalContext()
+  const {products} = useGlobalContext()
   const productsList = products.filter((product) =>product.category === productType )
-
-  
 
   return (
     <>
@@ -32,7 +30,6 @@ const ProductsPage = ({productType}:ProductPagePropTypes) => {
             productName={item.name}
             productText={item.description}
           />
-          
         ))
       }
       </div>
