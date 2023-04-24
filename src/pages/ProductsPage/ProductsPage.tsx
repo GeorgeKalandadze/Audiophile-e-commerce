@@ -29,6 +29,7 @@ const ProductsPage = ({productType}:ProductPagePropTypes) => {
             itemImage={item.cart_image}
             productName={item.name}
             productText={item.description}
+            categoryName={item.category}
           />
         ))
       }

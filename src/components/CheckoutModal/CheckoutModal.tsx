@@ -36,24 +36,22 @@ const CheckoutModal = () => {
     setIsShopCartOpen(false)
   });
 
-  useEffect(() => {
-    axiosClient.get('/cart/get-carts')
+
+  axiosClient.get('/cart/get-carts')
   .then(({data}) => {
-    setCartItems(data)
-    
-    
+    console.log(data)
+    setCartItems(data.data)
   })
   .catch((error) => {
     // handle error
     console.error(error);
   });
-  },[])
 
-  console.log(cartItems)
+
+
 
   return (
     <MainDiv show={isShopCartOpen}>
-     
         <CheckoutCard ref={ref}>
           <CheckoutCardcontainers>
               <CartQuantity >cart ({cartItems.length})</CartQuantity>

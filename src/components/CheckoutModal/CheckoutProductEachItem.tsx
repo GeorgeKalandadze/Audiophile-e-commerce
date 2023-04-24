@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useGlobalContext } from '../../context'
-import productsData from '../../data.json'
-import axiosClient from '../../axios-client'
+
 
 type CartItemProps = {
     id:number
@@ -12,41 +10,13 @@ type CartItemProps = {
     cartImage: string
 }
 
-interface CartItem {
-  id: number;
-  quantity: number;
-  // other properties of a cart item
-}
-
 
 
 const CheckoutProductEachItem = ({price,cartImage,name,id,quantity}:CartItemProps) => {
-  const {increaseCartQuantity, decreaseCartQuantity} = useGlobalContext()
-  const [cart, setCart] = useState<CartItem[]>([])
+  const {handleDecrement,handleIncrement} = useGlobalContext()
   // const item = productsData.find(i => i.id === id)
 
-  const handleDecrement = (cart_id:number) => {
-    setCart(cart => 
-      cart.map((item) => 
-      cart_id === item.id ? {...item, quantity:item.quantity - (item.quantity > 1 ? 1:0)}:item)
-      )
-      updateCartQuantity(cart_id,"dec")
-  }
-
-  const handleIncrement= (cart_id:number) => {
-    setCart(cart => 
-      cart.map((item) => 
-      cart_id === item.id ? {...item, quantity:item.quantity + 1}:item)
-      )
-      updateCartQuantity(cart_id,"inc")
-  }
-
-  const updateCartQuantity = (cart_id: number, scope: string) => {
-    axiosClient.put(`/cart/update-quantity/${cart_id}/${scope}`)
-    .then(response => {
-      console.log(response.data);
-    })
-  }
+ 
 
 
   return (

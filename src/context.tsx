@@ -25,9 +25,9 @@ interface MyContext {
     openLogoutModal:() => void;
     isLogoutModal:boolean;
     setIsLogoutModal:Dispatch<SetStateAction<boolean>>;
-    increaseCartQuantity: (id: number) => void;
-    decreaseCartQuantity: (id: number) => void;
-    addToCart: (id: number) => void;
+    handleDecrement: (id: number) => void;
+    handleIncrement: (id: number) => void;
+    addCartItem: (id: number) => void;
     removeAllItems: () => void;
     userInfo:UserInfo
     setUserInfo:Dispatch<SetStateAction<UserInfo>>
@@ -128,6 +128,7 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
     const [notification, _setNotification] = useState('');
     const [userInfo, setUserInfo] = useState<UserInfo>({name:"", avatar_image:""});
     const [products, setNewProducts] = useState<Product>([]);
+    const [cart, setCart] = useState<CartItem[]>([])
     
     //working with authentication authorization token
     const setToken = (token: string) => {
@@ -170,50 +171,50 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
 
 
     //increase cart quantity
-    const increaseCartQuantity = (id: number) => {
-        setCartItems((currentItems) => {
-          const itemIndex = currentItems.findIndex((item) => item.id === id);
+    // const increaseCartQuantity = (id: number) => {
+    //     setCartItems((currentItems) => {
+    //       const itemIndex = currentItems.findIndex((item) => item.id === id);
       
-          if (itemIndex === -1) {
-            return currentItems;
-          } else {
-            const updatedItem = { ...currentItems[itemIndex], quantity: currentItems[itemIndex].quantity + 1 };
-            return [...currentItems.slice(0, itemIndex), updatedItem, ...currentItems.slice(itemIndex + 1)];
-          }
-        });
-      };
+    //       if (itemIndex === -1) {
+    //         return currentItems;
+    //       } else {
+    //         const updatedItem = { ...currentItems[itemIndex], quantity: currentItems[itemIndex].quantity + 1 };
+    //         return [...currentItems.slice(0, itemIndex), updatedItem, ...currentItems.slice(itemIndex + 1)];
+    //       }
+    //     });
+    //   };
       
 
       //add to cart function
-      const addToCart = (id: number) => {
-        setCartItems((currentItems) => {
-          const itemIndex = currentItems.findIndex((item) => item.id === id);
+      // const addToCart = (id: number) => {
+      //   setCartItems((currentItems) => {
+      //     const itemIndex = currentItems.findIndex((item) => item.id === id);
       
-          if (itemIndex === -1) {
-            return [...currentItems, { id, quantity: 1 }];
-          } else {
-            return currentItems;
-          }
-        });
-      };
+      //     if (itemIndex === -1) {
+      //       return [...currentItems, { id, quantity: 1 }];
+      //     } else {
+      //       return currentItems;
+      //     }
+      //   });
+      // };
       
       
     // decrease cart quantity
-    const decreaseCartQuantity = (id:number) => {
-        setCartItems(currentItems => {
-            if(currentItems.find(item => item.id === id)?.quantity === 1){
-                return currentItems.filter(item => item.id !== id)
-            } else {
-                return currentItems.map(item => {
-                    if(item.id === id){
-                        return {...item, quantity: item.quantity - 1}
-                    } else {
-                        return item
-                    }
-                })
-            }
-        })
-    }
+    // const decreaseCartQuantity = (id:number) => {
+    //     setCartItems(currentItems => {
+    //         if(currentItems.find(item => item.id === id)?.quantity === 1){
+    //             return currentItems.filter(item => item.id !== id)
+    //         } else {
+    //             return currentItems.map(item => {
+    //                 if(item.id === id){
+    //                     return {...item, quantity: item.quantity - 1}
+    //                 } else {
+    //                     return item
+    //                 }
+    //             })
+    //         }
+    //     })
+    // }
 
 
    
@@ -232,10 +233,12 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
     }
 
 
+    //get all products from server
     useEffect(() => {
       axiosClient.get('/products')
     .then(({data}) => {
       // handle success
+    
       setNewProducts(data.data)
       
     })
@@ -246,21 +249,58 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
     },[])
 
 
+    const addCartItem = (id:number) => {
+      axiosClient.post('/cart/add', {
+        product_id: id,
+        quantity: 1
+    })
+    .then(response => {
+        console.log(response.data);
+    })
+    .catch(error => {
+        console.error(error);
+    })
+    }
+  
+    const handleDecrement = (cart_id:number) => {
+      setCart(cart => 
+        cart.map((item) => 
+        cart_id === item.id ? {...item, quantity:item.quantity - (item.quantity > 1 ? 1:0)}:item)
+        )
+        updateCartQuantity(cart_id,"dec")
+    }
+  
+    const handleIncrement= (cart_id:number) => {
+      setCart(cart => 
+        cart.map((item) => 
+        cart_id === item.id ? {...item, quantity:item.quantity + 1}:item)
+        )
+        updateCartQuantity(cart_id,"inc")
+    }
+  
+    const updateCartQuantity = (cart_id: number, scope: string) => {
+      axiosClient.put(`/cart/update-quantity/${cart_id}/${scope}`)
+      .then(response => {
+        console.log(response.data);
+      })
+    }
+
+
     return <AppContext.Provider 
     value={{isMenuClicked, 
             setIsMenuClicked, 
             productsData,
             openShopCartModal,
             isShopCartOpen,
-            increaseCartQuantity,
             cartItems,
             cartQuantity,
-            decreaseCartQuantity, 
             getItemQuantity,
             removeAllItems,
             totalPrice,
             setIsShopCartOpen,
-            addToCart,
+            addCartItem,
+            handleDecrement,
+            handleIncrement,
             user,
             setUser,
             token,

@@ -36,7 +36,7 @@ function App() {
           <Route path="headphones" element={<ProductsPage productType={'headphones'} />} />
           <Route path="speakers" element={<ProductsPage productType={"speakers"} />} />
           <Route path="earphones" element={<ProductsPage productType={"earphones"} />} />
-          <Route path="/:ProductName" element={<EachProductPage />} />
+          <Route path=":categoryName/:ProductName" element={<EachProductPage />} />
           <Route path="checkoutform" element={<CheckoutForm />} />
         </Routes>
       </Router>

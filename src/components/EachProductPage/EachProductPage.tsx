@@ -5,9 +5,7 @@ import { Button } from '../Button/Button'
 import axiosClient from '../../axios-client'
 import { useEffect, useState } from 'react'
 
-type quantityType = {
-  quantity:number
-}
+
 
 interface CartItem {
   id: number;
@@ -19,43 +17,10 @@ const EachProductPage = () => {
   const [quantity, setQuantity] = useState(0)
   const [cart, setCart] = useState<CartItem[]>([])
   const {ProductName} = useParams()
-  const {getItemQuantity, increaseCartQuantity, decreaseCartQuantity,products} = useGlobalContext()
+  const {products,addCartItem,handleDecrement,handleIncrement} = useGlobalContext()
 
-  const addCartItem = (id:number) => {
-    axiosClient.post('/cart/add', {
-      product_id: id,
-      quantity: 1
-  })
-  .then(response => {
-      console.log(response.data);
-  })
-  .catch(error => {
-      console.error(error);
-  })
-  }
 
-  const handleDecrement = (cart_id:number) => {
-    setCart(cart => 
-      cart.map((item) => 
-      cart_id === item.id ? {...item, quantity:item.quantity - (item.quantity > 1 ? 1:0)}:item)
-      )
-      updateCartQuantity(cart_id,"dec")
-  }
-
-  const handleIncrement= (cart_id:number) => {
-    setCart(cart => 
-      cart.map((item) => 
-      cart_id === item.id ? {...item, quantity:item.quantity + 1}:item)
-      )
-      updateCartQuantity(cart_id,"inc")
-  }
-
-  const updateCartQuantity = (cart_id: number, scope: string) => {
-    axiosClient.put(`/cart/update-quantity/${cart_id}/${scope}`)
-    .then(response => {
-      console.log(response.data);
-    })
-  }
+  
 
 
   useEffect(() => {
@@ -142,9 +107,6 @@ margin-top:30px;
    gap:50px;
   }
 
- 
-
-  
 `
 const MainProductImage = styled.img`
   width:100%;
