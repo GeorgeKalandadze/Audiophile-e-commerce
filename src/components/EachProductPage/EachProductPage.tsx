@@ -3,14 +3,23 @@ import styled from 'styled-components'
 import { useGlobalContext } from '../../context'
 import { Button } from '../Button/Button'
 import axiosClient from '../../axios-client'
+import { useEffect, useState } from 'react'
 
 type quantityType = {
   quantity:number
 }
 
+interface CartItem {
+  id: number;
+  quantity: number;
+  // other properties of a cart item
+}
+
 const EachProductPage = () => {
+  const [quantity, setQuantity] = useState(0)
+  const [cart, setCart] = useState<CartItem[]>([])
   const {ProductName} = useParams()
-  const {getItemQuantity, increaseCartQuantity, decreaseCartQuantity,addToCart,products} = useGlobalContext()
+  const {getItemQuantity, increaseCartQuantity, decreaseCartQuantity,products} = useGlobalContext()
 
   const addCartItem = (id:number) => {
     axiosClient.post('/cart/add', {
@@ -24,6 +33,43 @@ const EachProductPage = () => {
       console.error(error);
   })
   }
+
+  const handleDecrement = (cart_id:number) => {
+    setCart(cart => 
+      cart.map((item) => 
+      cart_id === item.id ? {...item, quantity:item.quantity - (item.quantity > 1 ? 1:0)}:item)
+      )
+      updateCartQuantity(cart_id,"dec")
+  }
+
+  const handleIncrement= (cart_id:number) => {
+    setCart(cart => 
+      cart.map((item) => 
+      cart_id === item.id ? {...item, quantity:item.quantity + 1}:item)
+      )
+      updateCartQuantity(cart_id,"inc")
+  }
+
+  const updateCartQuantity = (cart_id: number, scope: string) => {
+    axiosClient.put(`/cart/update-quantity/${cart_id}/${scope}`)
+    .then(response => {
+      console.log(response.data);
+    })
+  }
+
+
+  useEffect(() => {
+    axiosClient.get('/cart/get-carts')
+  .then(({data}) => {
+    // console.log(data)
+    
+    
+  })
+  .catch((error) => {
+    // handle error
+    console.error(error);
+  });
+  },[])
 
   return (
     <MainContainer >
@@ -42,9 +88,9 @@ const EachProductPage = () => {
                   <BigText>{fullProduct.description}</BigText>
                   <ButtonContainer>
                     <div>
-                      <ChangeQuantityButton onClick={() => decreaseCartQuantity(fullProduct.id)} quantity={getItemQuantity(fullProduct.id)}>-</ChangeQuantityButton>
-                      <QuantitySpan>{getItemQuantity(fullProduct.id)}</QuantitySpan>
-                      <ChangeQuantityButton onClick={() => increaseCartQuantity(fullProduct.id)} quantity={getItemQuantity(fullProduct.id)}>+</ChangeQuantityButton>
+                      <ChangeQuantityButton onClick={() => handleDecrement(fullProduct.id)}>-</ChangeQuantityButton>
+                      <QuantitySpan>{quantity}</QuantitySpan>
+                      <ChangeQuantityButton onClick={() => handleIncrement(7)}>+</ChangeQuantityButton>
                     </div>
                     <Button bgColor='#D87D4A' width='200px'  onClick={() => addCartItem(fullProduct.id)}>ADD TO CART</Button>
                   </ButtonContainer>
@@ -149,7 +195,7 @@ mix-blend-mode: normal;
 opacity: 0.5;
 `
 
-const ChangeQuantityButton = styled.button<quantityType>`
+const ChangeQuantityButton = styled.button`
 background: #F1F1F1;
 
 border:none;
@@ -164,7 +210,7 @@ letter-spacing: 1px;
 text-transform: uppercase;
 color: #000000;
 mix-blend-mode: normal;
-opacity: ${prop => prop.quantity > 0? 1:0.25};
+
 `
 
 const QuantitySpan = styled.span`

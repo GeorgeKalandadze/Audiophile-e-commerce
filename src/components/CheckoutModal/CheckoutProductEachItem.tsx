@@ -1,29 +1,67 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useGlobalContext } from '../../context'
 import productsData from '../../data.json'
+import axiosClient from '../../axios-client'
 
 type CartItemProps = {
     id:number
     quantity:number
+    name:string
+    price: number
+    cartImage: string
 }
 
-const CheckoutProductEachItem = ({id, quantity}:CartItemProps) => {
+interface CartItem {
+  id: number;
+  quantity: number;
+  // other properties of a cart item
+}
+
+
+
+const CheckoutProductEachItem = ({price,cartImage,name,id,quantity}:CartItemProps) => {
   const {increaseCartQuantity, decreaseCartQuantity} = useGlobalContext()
-  const item = productsData.find(i => i.id === id)
+  const [cart, setCart] = useState<CartItem[]>([])
+  // const item = productsData.find(i => i.id === id)
+
+  const handleDecrement = (cart_id:number) => {
+    setCart(cart => 
+      cart.map((item) => 
+      cart_id === item.id ? {...item, quantity:item.quantity - (item.quantity > 1 ? 1:0)}:item)
+      )
+      updateCartQuantity(cart_id,"dec")
+  }
+
+  const handleIncrement= (cart_id:number) => {
+    setCart(cart => 
+      cart.map((item) => 
+      cart_id === item.id ? {...item, quantity:item.quantity + 1}:item)
+      )
+      updateCartQuantity(cart_id,"inc")
+  }
+
+  const updateCartQuantity = (cart_id: number, scope: string) => {
+    axiosClient.put(`/cart/update-quantity/${cart_id}/${scope}`)
+    .then(response => {
+      console.log(response.data);
+    })
+  }
+
+
   return (
     <CheckoutCardcontainers>
         <ProductDiv>
-        <Img src={item?.image.desktop}/>
+        <Img src={`${import.meta.env.VITE_API_BASE_URL}/${cartImage}`}/>
         <div>
-            <Title>{item?.name}</Title>
-            <Price>{item?.price}</Price>
+            <Title>{name}</Title>
+            <Price>{price}</Price>
         </div>
         </ProductDiv>
         <div>
-            <ChangeQuantityButton onClick={() => decreaseCartQuantity(id)}>-</ChangeQuantityButton>
+            <ChangeQuantityButton onClick={() => handleDecrement(id)}>-</ChangeQuantityButton>
             <QuantitySpan>{quantity}</QuantitySpan>
-            <ChangeQuantityButton onClick={() => increaseCartQuantity(id)}>+</ChangeQuantityButton>
+            <ChangeQuantityButton onClick={() => handleIncrement(id)}>+</ChangeQuantityButton>
         </div>
     </CheckoutCardcontainers>
   )

@@ -154,6 +154,8 @@
 .styled-input-div {
   position: relative;
   max-width: 50%;
+  
+
 }
 .styled-input-div input[type="file"] {
   position: absolute;
@@ -162,10 +164,12 @@
   width: 100%;
   height: 100%;
   opacity: 0;
+  cursor: pointer;
 }
 .styled-input-div button {
   max-width: 100%;
   font-size: smaller;
+  cursor: pointer;
 }
 
 .image-upload{

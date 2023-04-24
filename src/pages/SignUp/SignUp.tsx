@@ -17,7 +17,7 @@ const SignUp = () => {
     const passwordRef = useRef<HTMLInputElement>(null);
     const passwordConfirmationRef = useRef<HTMLInputElement>(null);
     const avatarImage = useRef<HTMLInputElement>(null);
-    const {setUser, setToken,token,user} = useGlobalContext();
+    const {setUser, setToken} = useGlobalContext();
     const [errors, setErrors] = useState<FormErrors>({})
 
     const onSubmit = (ev:FormEvent<HTMLFormElement>) => {
@@ -74,7 +74,7 @@ const SignUp = () => {
           </div>
           <label>Upload Image</label>
         </div>
-        <Button width='100%' brdRadius='4px' bgColor='#D87D4A' pdng='15px 25px' type='submit'>Create An Account</Button>
+        <Button width='100%' brdRadius='4px' bgColor='#D87D4A' pdng='15px 25px' type='submit' >Create An Account</Button>
         <Link to={'/'} className='form-type-text'>Already have an account? <span style={{color:"#D87D4A"}}>Login</span></Link>
     </form>
     </div>

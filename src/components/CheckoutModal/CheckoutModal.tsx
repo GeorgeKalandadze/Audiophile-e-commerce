@@ -3,21 +3,53 @@ import { useGlobalContext } from '../../context'
 import { Button } from '../Button/Button'
 import CheckoutProductEachItem from './CheckoutProductEachItem'
 import { Link} from 'react-router-dom'
-import { useRef, useState } from 'react'
+import { useRef, useState,useEffect } from 'react'
 import UseOnClickOutside from '../../hooks/UseOnClickOutside'
+import axiosClient from '../../axios-client'
+
 
 type IsShopCartOpenType = {
   show:boolean
 }
-const CheckoutModal = () => {
-  const {cartItems,totalPrice, removeAllItems,isShopCartOpen,setIsShopCartOpen} = useGlobalContext()
 
+interface CartProps {
+  id: number
+  quantity: number
+  product:{
+    name:string
+    price: number
+    cart_image: string
+  }
+}
+
+
+
+
+
+
+const CheckoutModal = () => {
+  const {totalPrice, removeAllItems,isShopCartOpen,setIsShopCartOpen} = useGlobalContext()
+  const [cartItems, setCartItems] = useState<CartProps[]>([]);
   const ref = useRef<HTMLDivElement>(null);
 
   UseOnClickOutside(ref, () => {
     setIsShopCartOpen(false)
   });
 
+  useEffect(() => {
+    axiosClient.get('/cart/get-carts')
+  .then(({data}) => {
+    setCartItems(data)
+    
+    
+  })
+  .catch((error) => {
+    // handle error
+    console.error(error);
+  });
+  },[])
+
+  console.log(cartItems)
 
   return (
     <MainDiv show={isShopCartOpen}>
@@ -28,7 +60,15 @@ const CheckoutModal = () => {
               <RemoveAllButton onClick={removeAllItems}>Remove all</RemoveAllButton>
           </CheckoutCardcontainers>
             {cartItems.map((item) => (
-              <CheckoutProductEachItem key={item.id} {...item}/>
+              <CheckoutProductEachItem 
+                key={item.id} 
+                id={item.id}
+                quantity={item.quantity} 
+                name={item.product.name}
+                price={item.product.price}
+                cartImage={item.product.cart_image}
+                
+              />
             ))}
          
           <CheckoutCardcontainers>
