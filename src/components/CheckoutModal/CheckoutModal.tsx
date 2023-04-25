@@ -28,7 +28,7 @@ interface CartProps {
 
 
 const CheckoutModal = () => {
-  const { removeAllItems,isShopCartOpen,setIsShopCartOpen,products} = useGlobalContext()
+  const {isShopCartOpen,setIsShopCartOpen} = useGlobalContext()
   const [cartItems, setCartItems] = useState<CartProps[]>([]);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -52,6 +52,16 @@ const CheckoutModal = () => {
 
   const totalPrice = () => {
     return cartItems.reduce((accum, next) => accum + next.product.price * next.quantity, 0).toFixed(2)
+  }
+
+  const removeAllItems = () => {
+    axiosClient.delete('/cart/delete-cart')
+      .then(({data}) => {
+       console.log(data)
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
 
