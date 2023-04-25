@@ -14,27 +14,19 @@ interface CartItem {
 }
 
 const EachProductPage = () => {
-  const [quantity, setQuantity] = useState(0)
-  const [cart, setCart] = useState<CartItem[]>([])
+
   const {ProductName} = useParams()
   const {products,addCartItem,handleDecrement,handleIncrement} = useGlobalContext()
 
 
-  
-
-
-  useEffect(() => {
-    axiosClient.get('/cart/get-carts')
-  .then(({data}) => {
-    // console.log(data)
-    
-    
-  })
-  .catch((error) => {
-    // handle error
-    console.error(error);
-  });
-  },[])
+  // useEffect(() => {
+  //   // find the cart item for the current product
+  //   const cartItem = cartAddedItems.find(item => item.product.slug === ProductName)
+  //   if (cartItem) {
+  //     setQuantity(cartItem.quantity)
+  //     setCartItemId(cartItem.id)
+  //   }
+  // }, [ProductName, cartAddedItems])
 
   return (
     <MainContainer >
@@ -52,11 +44,11 @@ const EachProductPage = () => {
                   <EachProductName>{fullProduct.name}</EachProductName>
                   <BigText>{fullProduct.description}</BigText>
                   <ButtonContainer>
-                    <div>
+                    {/* <div>
                       <ChangeQuantityButton onClick={() => handleDecrement(fullProduct.id)}>-</ChangeQuantityButton>
                       <QuantitySpan>{quantity}</QuantitySpan>
                       <ChangeQuantityButton onClick={() => handleIncrement(7)}>+</ChangeQuantityButton>
-                    </div>
+                    </div> */}
                     <Button bgColor='#D87D4A' width='200px'  onClick={() => addCartItem(fullProduct.id)}>ADD TO CART</Button>
                   </ButtonContainer>
                   </AboutProduct>

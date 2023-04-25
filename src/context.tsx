@@ -1,6 +1,5 @@
 import React, { createContext, 
     FunctionComponent, 
-    ReactNode, 
     useContext, 
     useState, 
     Dispatch, 
@@ -10,126 +9,23 @@ import React, { createContext,
 import productsData from './data.json';
 import { useLocalStorage } from './hooks/UseLocalStorage';
 import axiosClient from './axios-client';
+import { CartItem, MyContext, Product, Props, UserInfo } from './types/types';
 
-
-
-
-interface MyContext {
-    isMenuClicked: boolean;
-    isShopCartOpen: boolean;
-    totalPrice: number;
-    getItemQuantity: (id: number) => number;
-    setIsMenuClicked: Dispatch<SetStateAction<boolean>>;
-    setIsShopCartOpen: Dispatch<SetStateAction<boolean>>;
-    openShopCartModal: () => void;
-    openLogoutModal:() => void;
-    isLogoutModal:boolean;
-    setIsLogoutModal:Dispatch<SetStateAction<boolean>>;
-    handleDecrement: (id: number) => void;
-    handleIncrement: (id: number) => void;
-    addCartItem: (id: number) => void;
-    removeAllItems: () => void;
-    userInfo:UserInfo
-    setUserInfo:Dispatch<SetStateAction<UserInfo>>
-    token: null | string;
-    notification: null | string;
-    setUser: (arg: null | {}) => void;
-    user:null | {}
-    setToken: (token: string) => void;
-    setNotification: Dispatch<SetStateAction<string>>;
-    cartItems: CartItem[];
-    cartQuantity: number;
-    productsData: {
-      id: number;
-      slug: string;
-      name: string;
-      image: {
-        mobile: string;
-        tablet: string;
-        desktop: string;
-      };
-      category: string;
-      categoryImage: {
-        mobile: string;
-        tablet: string;
-      };
-      new: boolean;
-      description: string;
-      price: number;
-      features: string;
-      includes: {
-        quantity: number;
-        item: string;
-      }[];
-      gallery: {
-        first: {
-          mobile: string;
-          tablet: string;
-          desktop: string;
-        };
-        second: {
-          mobile: string;
-          tablet: string;
-          desktop: string;
-        };
-        third: {
-          mobile: string;
-          tablet: string;
-          desktop: string;
-        };
-      };
-    }[];
-    products:Product
-  }
-
-  type Product = {
-    id: number;
-    name: string;
-    slug:string;
-    description: string;
-    features: string;
-    cart_image: string;
-    price: string;
-    new: boolean;
-    category: string;
-    includes: {
-      item: string;
-      quantity: number;
-    }[];
-    product_images: {
-      image_path: string;
-    }[];
-  }[];
 
 const AppContext = createContext<MyContext>({} as MyContext);
 
-interface Props {
-    children: ReactNode
-}
-
-type CartItem = {
-    id:number
-    quantity:number
-}
-
-
-interface UserInfo  {
-  name:string
-  avatar_image:string
-}
 
 export const AppProvider :FunctionComponent<Props> = ({children}) => {
     const [isMenuClicked, setIsMenuClicked] = useState<boolean>(false);
     const [isShopCartOpen, setIsShopCartOpen] = useState<boolean>(false);
     const [isLogoutModal, setIsLogoutModal] = useState<boolean>(false);
-    const [cartItems, setCartItems] = useLocalStorage<CartItem[]>('shoping-carts',[]);
-    const [user, setUser] = useState<null | {}>({});
     const [token, _setToken] = useState<string|null>(localStorage.getItem('ACCESS_TOKEN'));
     const [notification, _setNotification] = useState('');
     const [userInfo, setUserInfo] = useState<UserInfo>({name:"", avatar_image:""});
     const [products, setNewProducts] = useState<Product>([]);
+    const [user, setUser] = useState<null | {}>({});
+    const [cartItems, setCartItems] = useLocalStorage<CartItem[]>('shoping-carts',[]);
     const [cart, setCart] = useState<CartItem[]>([])
-    
     //working with authentication authorization token
     const setToken = (token: string) => {
         _setToken(token);
@@ -229,7 +125,7 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
 
     
     const removeAllItems = () => {
-        setCartItems([])
+        
     }
 
 
@@ -278,6 +174,7 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
         updateCartQuantity(cart_id,"inc")
     }
   
+    //update cart item quantity
     const updateCartQuantity = (cart_id: number, scope: string) => {
       axiosClient.put(`/cart/update-quantity/${cart_id}/${scope}`)
       .then(response => {
@@ -289,7 +186,6 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
     return <AppContext.Provider 
     value={{isMenuClicked, 
             setIsMenuClicked, 
-            productsData,
             openShopCartModal,
             isShopCartOpen,
             cartItems,
@@ -312,8 +208,7 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
             openLogoutModal,
             isLogoutModal,
             setIsLogoutModal,
-            products
-            
+            products,
             }}>
     {children}
     </AppContext.Provider>

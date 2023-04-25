@@ -36,16 +36,18 @@ const CheckoutModal = () => {
     setIsShopCartOpen(false)
   });
 
-
-  axiosClient.get('/cart/get-carts')
-  .then(({data}) => {
-    console.log(data)
-    setCartItems(data.data)
-  })
-  .catch((error) => {
-    // handle error
-    console.error(error);
-  });
+  const itemQuantities = cartItems.map(item => item.quantity);
+  useEffect(() => {
+    
+    axiosClient.get('/cart/get-carts')
+      .then(({data}) => {
+        console.log(data);
+        setCartItems(data.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [itemQuantities])
 
 
 
