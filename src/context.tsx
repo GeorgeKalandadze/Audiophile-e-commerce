@@ -6,7 +6,6 @@ import React, { createContext,
     SetStateAction, 
     useEffect
 } from 'react'
-import productsData from './data.json';
 import { useLocalStorage } from './hooks/UseLocalStorage';
 import axiosClient from './axios-client';
 import { CartItem, MyContext, Product, Props, UserInfo } from './types/types';
@@ -116,10 +115,10 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
    
 
     // function which calculate total price of cart items
-    const totalPrice = cartItems.reduce((total, cartItem) => {
-        const item = productsData.find(i => i.id === cartItem.id)
-        return total + (item?.price || 0) * cartItem.quantity
-      },0)
+    // const totalPrice = cartItems.reduce((total, cartItem) => {
+    //     const item = productsData.find(i => i.id === cartItem.id)
+    //     return total + (item?.price || 0) * cartItem.quantity
+    //   },0)
 
 
 
@@ -192,7 +191,6 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
             cartQuantity,
             getItemQuantity,
             removeAllItems,
-            totalPrice,
             setIsShopCartOpen,
             addCartItem,
             handleDecrement,

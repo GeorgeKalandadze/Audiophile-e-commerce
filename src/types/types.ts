@@ -19,7 +19,6 @@ export interface UserInfo  {
 export interface MyContext {
     isMenuClicked: boolean;
     isShopCartOpen: boolean;
-    totalPrice: number;
     getItemQuantity: (id: number) => number;
     setIsMenuClicked: Dispatch<SetStateAction<boolean>>;
     setIsShopCartOpen: Dispatch<SetStateAction<boolean>>;
@@ -51,7 +50,7 @@ export interface MyContext {
     description: string;
     features: string;
     cart_image: string;
-    price: string;
+    price: number;
     new: boolean;
     category: string;
     includes: {

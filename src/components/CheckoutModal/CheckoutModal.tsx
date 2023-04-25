@@ -28,7 +28,7 @@ interface CartProps {
 
 
 const CheckoutModal = () => {
-  const {totalPrice, removeAllItems,isShopCartOpen,setIsShopCartOpen} = useGlobalContext()
+  const { removeAllItems,isShopCartOpen,setIsShopCartOpen,products} = useGlobalContext()
   const [cartItems, setCartItems] = useState<CartProps[]>([]);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -50,6 +50,9 @@ const CheckoutModal = () => {
   }, [itemQuantities])
 
 
+  const totalPrice = () => {
+    return cartItems.reduce((accum, next) => accum + next.product.price * next.quantity, 0).toFixed(2)
+  }
 
 
   return (
@@ -73,7 +76,7 @@ const CheckoutModal = () => {
          
           <CheckoutCardcontainers>
             <Total>TOTAL</Total>
-            <TotalPrice>{totalPrice} $</TotalPrice>
+            <TotalPrice>{totalPrice()} $</TotalPrice>
           </CheckoutCardcontainers>
           <Link to="/checkoutform"><Button bgColor='#D87D4A;' pdng='20px ' width='100%'>CHECKOUT</Button></Link>
         </CheckoutCard>
