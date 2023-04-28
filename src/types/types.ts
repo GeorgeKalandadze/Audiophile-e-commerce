@@ -1,4 +1,4 @@
-import { ReactNode, Dispatch, SetStateAction, } from "react"
+import { ReactNode, Dispatch, SetStateAction,ChangeEvent } from "react"
     
 
 export interface Props {
@@ -29,8 +29,8 @@ export interface MyContext {
     handleDecrement: (id: number) => void;
     handleIncrement: (id: number) => void;
     addCartItem: (id: number) => void;
-    removeAllItems: () => void;
-    userInfo:UserInfo
+    makeOrder:() => void;
+    userInfo:UserInfo;
     setUserInfo:Dispatch<SetStateAction<UserInfo>>
     token: null | string;
     notification: null | string;
@@ -40,7 +40,10 @@ export interface MyContext {
     setNotification: Dispatch<SetStateAction<string>>;
     cartItems: CartItem[];
     cartQuantity: number;
-    products:Product
+    products:Product;
+    customerErrors:ResponseErrorTypes
+    handleCustomersData:(event: ChangeEvent<HTMLInputElement>) => void
+    customer:CustomerTypes
   }
 
   export type Product = {
@@ -61,3 +64,22 @@ export interface MyContext {
       image_path: string;
     }[];
   }[];
+
+
+export type CustomerTypes = {
+  name?:string
+  email?:string
+  phone_number?:number
+  address?:string
+  zip_code?:number
+  city?:string
+  country?:string
+  e_money_number?:number
+  e_money_pin?:number
+}
+
+
+export interface ResponseErrorTypes {
+  [key: string]: string | string[];
+}
+

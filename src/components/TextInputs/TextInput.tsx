@@ -1,4 +1,4 @@
-import React, { RefObject } from 'react'
+import React, { ChangeEvent } from 'react'
 import styled from 'styled-components'
 
 type InputProps = {
@@ -6,9 +6,9 @@ type InputProps = {
     placeholder:string
     label:string
     name:string
-    register:any
     error:any
-    validation:any
+    value:string|number|undefined
+    handleChange:(event: ChangeEvent<HTMLInputElement>) => void
     
     
 }
@@ -17,7 +17,7 @@ type InputStylePropType = {
   error:boolean
   
 }
-const TextInput = ({inputType,placeholder,label,name,register,validation,error}:InputProps) => {
+const TextInput = ({inputType,placeholder,label,name,error,value,handleChange}:InputProps) => {
   return (
     <InputDiv >
         <Label>{label}</Label>
@@ -25,9 +25,9 @@ const TextInput = ({inputType,placeholder,label,name,register,validation,error}:
           placeholder={placeholder} 
           type={inputType} 
           name={name}
-          {...register(name,validation)}
           error={error}
-          
+          value={value}
+          onChange={handleChange}
         />
     </InputDiv >
   )

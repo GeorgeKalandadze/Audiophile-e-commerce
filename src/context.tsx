@@ -4,14 +4,16 @@ import React, { createContext,
     useState, 
     Dispatch, 
     SetStateAction, 
-    useEffect
+    useEffect,
+    ChangeEvent
 } from 'react'
 import { useLocalStorage } from './hooks/UseLocalStorage';
 import axiosClient from './axios-client';
-import { CartItem, MyContext, Product, Props, UserInfo } from './types/types';
+import { CartItem, CustomerTypes, MyContext, Product, Props, ResponseErrorTypes, UserInfo } from './types/types';
 
 
 const AppContext = createContext<MyContext>({} as MyContext);
+
 
 
 export const AppProvider :FunctionComponent<Props> = ({children}) => {
@@ -24,7 +26,10 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
     const [products, setNewProducts] = useState<Product>([]);
     const [user, setUser] = useState<null | {}>({});
     const [cartItems, setCartItems] = useLocalStorage<CartItem[]>('shoping-carts',[]);
-    const [cart, setCart] = useState<CartItem[]>([])
+    const [cart, setCart] = useState<CartItem[]>([]);
+    const [customer,setCustomer] = useState<CustomerTypes>({});
+    const [customerErrors, setCustomerErrors] = useState<ResponseErrorTypes>({});
+
     //working with authentication authorization token
     const setToken = (token: string) => {
         _setToken(token);
@@ -62,69 +67,6 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
     //this function get entire quantity of items
     const getItemQuantity = (id:number) => {
         return cartItems.find(item => item.id === id)?.quantity || 0
-    }
-
-
-    //increase cart quantity
-    // const increaseCartQuantity = (id: number) => {
-    //     setCartItems((currentItems) => {
-    //       const itemIndex = currentItems.findIndex((item) => item.id === id);
-      
-    //       if (itemIndex === -1) {
-    //         return currentItems;
-    //       } else {
-    //         const updatedItem = { ...currentItems[itemIndex], quantity: currentItems[itemIndex].quantity + 1 };
-    //         return [...currentItems.slice(0, itemIndex), updatedItem, ...currentItems.slice(itemIndex + 1)];
-    //       }
-    //     });
-    //   };
-      
-
-      //add to cart function
-      // const addToCart = (id: number) => {
-      //   setCartItems((currentItems) => {
-      //     const itemIndex = currentItems.findIndex((item) => item.id === id);
-      
-      //     if (itemIndex === -1) {
-      //       return [...currentItems, { id, quantity: 1 }];
-      //     } else {
-      //       return currentItems;
-      //     }
-      //   });
-      // };
-      
-      
-    // decrease cart quantity
-    // const decreaseCartQuantity = (id:number) => {
-    //     setCartItems(currentItems => {
-    //         if(currentItems.find(item => item.id === id)?.quantity === 1){
-    //             return currentItems.filter(item => item.id !== id)
-    //         } else {
-    //             return currentItems.map(item => {
-    //                 if(item.id === id){
-    //                     return {...item, quantity: item.quantity - 1}
-    //                 } else {
-    //                     return item
-    //                 }
-    //             })
-    //         }
-    //     })
-    // }
-
-
-   
-
-    // function which calculate total price of cart items
-    // const totalPrice = cartItems.reduce((total, cartItem) => {
-    //     const item = productsData.find(i => i.id === cartItem.id)
-    //     return total + (item?.price || 0) * cartItem.quantity
-    //   },0)
-
-
-
-    
-    const removeAllItems = () => {
-        
     }
 
 
@@ -181,6 +123,28 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
       })
     }
 
+    //make order
+    const makeOrder = () => {
+      axiosClient.post('/customers',customer)
+    .then(response => {
+        console.log(response);
+    })
+    .catch((err) => {
+      const response = err.response;
+      if (response && response.status === 422) {
+          setCustomerErrors(response.data.errors)
+      } else {
+        setCustomerErrors({});
+      }
+    })
+    }
+
+
+    //changehandler for customers data
+    const handleCustomersData = (event: ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = event.target;
+      setCustomer((prevObject) => ({ ...prevObject, [name]: value }));
+    };
 
     return <AppContext.Provider 
     value={{isMenuClicked, 
@@ -190,7 +154,6 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
             cartItems,
             cartQuantity,
             getItemQuantity,
-            removeAllItems,
             setIsShopCartOpen,
             addCartItem,
             handleDecrement,
@@ -207,6 +170,10 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
             isLogoutModal,
             setIsLogoutModal,
             products,
+            makeOrder,
+            customerErrors,
+            handleCustomersData,
+            customer
             }}>
     {children}
     </AppContext.Provider>

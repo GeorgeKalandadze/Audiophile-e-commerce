@@ -5,6 +5,7 @@ import { useGlobalContext } from '../../context'
 import productsData from '../../data.json'
 import { Button } from '../Button/Button'
 import PurchaseModal from '../PurchaseModal/PurchaseModal'
+import axiosClient from '../../axios-client'
 
 type HandleSubmitType = {
   handleSubmit:any
@@ -12,7 +13,7 @@ type HandleSubmitType = {
 }
 const SummaryCard = ({handleSubmit,errors}:HandleSubmitType) => {
 
-  const {cartItems, totalPrice} = useGlobalContext()
+  const {cartItems, makeOrder} = useGlobalContext()
   const [purchaseModal, setPurchaseModal] = useState(false)
 
   const onFormSubmit = () => {
@@ -20,6 +21,8 @@ const SummaryCard = ({handleSubmit,errors}:HandleSubmitType) => {
       setPurchaseModal(true)
     }
   }
+
+  
   
   return (
     <MainDiv>
@@ -45,7 +48,7 @@ const SummaryCard = ({handleSubmit,errors}:HandleSubmitType) => {
       }
       <SummaryDiv>
         <GrayText>TOTAL</GrayText>
-        <BoldText>$ {totalPrice}</BoldText>
+        <BoldText>$ {}</BoldText>
       </SummaryDiv>
       <SummaryDiv>
         <GrayText>SHIPPING</GrayText>
@@ -57,9 +60,9 @@ const SummaryCard = ({handleSubmit,errors}:HandleSubmitType) => {
       </SummaryDiv>
       <SummaryDiv>
         <GrayText>GRAND TOTAL</GrayText>
-        <BoldText>$ {totalPrice + 50}</BoldText>
+        <BoldText>$ { + 50}</BoldText>
       </SummaryDiv>
-      <Button type='submit' bgColor='#D87D4A;' pdng='20px ' width='100%' onClick={handleSubmit(onFormSubmit)}>CONTINUE & PAY</Button>
+      <Button type='submit' bgColor='#D87D4A;' pdng='20px ' width='100%' onClick={makeOrder}>CONTINUE & PAY</Button>
      
     </MainDiv>
   )

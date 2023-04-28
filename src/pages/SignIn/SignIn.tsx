@@ -2,20 +2,19 @@ import {Link, Navigate, useNavigate} from "react-router-dom"
 import { Button } from '../../components/Button/Button';
 import FormInputWave from "../../components/FormInputWave/FormInputWave";
 import axiosClient from "../../axios-client";
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 import { useGlobalContext } from "../../context";
+import { ResponseErrorTypes } from "../../types/types";
 
-interface FormErrors {
-  [key: string]: string | string[];
-}
+
 
 const SignIn = () => {
   const navigate = useNavigate();
 
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
-    const {setUser, setToken,token} = useGlobalContext();
-    const [errors, setErrors] = useState<FormErrors>({});
+    const {setUser, setToken} = useGlobalContext();
+    const [errors, setErrors] = useState<ResponseErrorTypes>({});
     
   const onSubmit = (ev:FormEvent<HTMLFormElement>) => {
     ev.preventDefault()
@@ -33,7 +32,6 @@ const SignIn = () => {
         .catch((err) => {
           const response = err.response;
           if (response && response.status === 422) {
-              console.log(response.data.errors)
               setErrors(response.data.errors)
           } else {
               setErrors({});

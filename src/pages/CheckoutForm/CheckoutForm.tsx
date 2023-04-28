@@ -5,6 +5,8 @@ import PurchaseModal from '../../components/PurchaseModal/PurchaseModal'
 import RadioInput from '../../components/RadioInput.tsx/RadioInput'
 import SummaryCard from '../../components/SummaryCard/SummaryCard'
 import TextInput from '../../components/TextInputs/TextInput'
+import { useGlobalContext } from '../../context'
+
 
 type FormData = {
   name:string
@@ -21,8 +23,9 @@ type FormData = {
 const CheckoutForm = () => {
   const [isOpenPurchase, setOpenPurchase] = useState(false)
   const {register, handleSubmit, formState:{errors}} =useForm<FormData>()
+  const {customerErrors = {},customer,handleCustomersData} = useGlobalContext()
 
-  
+console.log(customer)
   return (
     <MainDiv >
       {isOpenPurchase && <PurchaseModal isShow={isOpenPurchase}/>}
@@ -35,18 +38,20 @@ const CheckoutForm = () => {
           inputType='text' 
           label='name'
           name="name"
-          register={register}
-          error={errors.name}
-          validation={{required:true}}
+          error={customerErrors.name && customerErrors.name[0]}
+          value={customer.name}
+          handleChange={handleCustomersData}
+          
         />
         <TextInput 
           placeholder='alexei@mail.com' 
           inputType='email' 
           label='Email Address'
           name='email'
-          register={register}
-          error={errors.email}
-          validation={{required:true}}
+          error={customerErrors.email && customerErrors.email[0]}
+          value={customer.email}
+          handleChange={handleCustomersData}
+          
           
         />
         </InputContainers>
@@ -54,11 +59,10 @@ const CheckoutForm = () => {
           placeholder='+1 202-555-0136' 
           inputType='number' 
           label='Phone Number'
-          name='phoneNumber'
-          register={register}
-          error={errors.phoneNumber}
-          validation={{required:true}}
-
+          name='phone_number'
+          error={customerErrors.phone_number&& customerErrors.phone_number[0]}
+          value={customer.phone_number}
+          handleChange={handleCustomersData}
           
         />
        
@@ -69,11 +73,10 @@ const CheckoutForm = () => {
           placeholder='1137 Williams Avenue' 
           inputType='text' 
           label='Your Address'
-          name='addres'
-          register={register}
-          error={errors.addres}
-          validation={{required:true}}
-
+          name='address'
+          error={customerErrors.address&& customerErrors.address[0]}
+          value={customer.address}
+          handleChange={handleCustomersData}
           
         />
         <InputContainers>
@@ -81,12 +84,10 @@ const CheckoutForm = () => {
           placeholder='10001' 
           inputType='number' 
           label='ZIP Code'
-          name='zipCode'
-          register={register}
-          error={errors.zipCode}
-          validation={{required:true}}
-
-          
+          name='zip_code'
+          error={customerErrors.zip_code&& customerErrors.zip_code[0]}
+          value={customer.zip_code}
+          handleChange={handleCustomersData}
           
         />
         <TextInput 
@@ -94,9 +95,10 @@ const CheckoutForm = () => {
           inputType='text' 
           label='City'
           name='city'
-          register={register}
-          error={errors.city}
-          validation={{required:true}} 
+          error={customerErrors.city&& customerErrors.city[0]}
+          value={customer.city}
+          handleChange={handleCustomersData}
+          
         />
         </InputContainers>
         <TextInput 
@@ -104,11 +106,9 @@ const CheckoutForm = () => {
           inputType='text' 
           label='Country'
           name='country'
-          register={register}
-          error={errors.country}
-          validation={{required:true}}
-
-          
+          error={customerErrors.country&& customerErrors.country[0]}
+          value={customer.country}
+          handleChange={handleCustomersData}
         />
 
         <FormSectionHeader>payment details</FormSectionHeader>
@@ -119,26 +119,25 @@ const CheckoutForm = () => {
           placeholder='238521993' 
           inputType='number' 
           label='e-Money Number'
-          name='moneyNumber'
-          register={register}
-          error={errors.moneyNumber}
-          validation={{required:true}}
-
-         
+          name='e_money_number'
+          error={customerErrors.e_money_number&& customerErrors.e_money_number[0]}
+          value={customer.e_money_number}
+          handleChange={handleCustomersData}
+          
         />
         <TextInput 
           placeholder='6891' 
           inputType='number' 
           label='e-Money PIN'
-          name='pin'
-          register={register}
-          error={errors.pin}
-          validation={{required:true}}
+          name='e_money_pin'
+          error={customerErrors.e_money_pin&& customerErrors.e_money_pin[0]}
+          value={customer.e_money_pin}
+          handleChange={handleCustomersData}
         />
         </InputContainers>
         
       </InputForm>
-      <SummaryCard handleSubmit={handleSubmit} errors={errors}/>
+      <SummaryCard handleSubmit={handleSubmit} errors={errors} />
     </MainDiv>
   )
 }
@@ -146,6 +145,7 @@ const CheckoutForm = () => {
 export default CheckoutForm
 
 const MainDiv = styled.div`
+
 padding:20px 10px;
 background-color:#f2f2f2;
 @media only screen and (min-width: 1200px){
@@ -157,6 +157,7 @@ background-color:#f2f2f2;
 `
 
 const InputForm = styled.form`
+margin-top: 30px;
 width:100%;
 padding:20px;
 height:auto;

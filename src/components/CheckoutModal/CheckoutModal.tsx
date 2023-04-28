@@ -2,7 +2,6 @@ import styled from 'styled-components'
 import { useGlobalContext } from '../../context'
 import { Button } from '../Button/Button'
 import CheckoutProductEachItem from './CheckoutProductEachItem'
-import { Link} from 'react-router-dom'
 import { useRef, useState,useEffect } from 'react'
 import UseOnClickOutside from '../../hooks/UseOnClickOutside'
 import axiosClient from '../../axios-client'
@@ -21,9 +20,6 @@ interface CartProps {
     cart_image: string
   }
 }
-
-
-
 
 
 
@@ -64,6 +60,16 @@ const CheckoutModal = () => {
       });
   }
 
+  const makeChackout = () => {
+    axiosClient.post('/checkout')
+  .then(response => {
+      console.log(response);
+  })
+  .catch(error => {
+      console.error(error);
+  })
+  }
+
 
   return (
     <MainDiv show={isShopCartOpen}>
@@ -88,7 +94,7 @@ const CheckoutModal = () => {
             <Total>TOTAL</Total>
             <TotalPrice>{totalPrice()} $</TotalPrice>
           </CheckoutCardcontainers>
-          <Link to="/checkoutform"><Button bgColor='#D87D4A;' pdng='20px ' width='100%'>CHECKOUT</Button></Link>
+          <Button bgColor='#D87D4A;' pdng='20px ' width='100%' onClick={makeChackout}>CHECKOUT</Button>
         </CheckoutCard>
     </MainDiv >
   )
@@ -107,8 +113,6 @@ position: fixed;
   display: ${props => props.show ? 'block' : 'none'};
 padding:120px 10px;
 width:100%;
-
-
 `
 
 const CheckoutCard = styled.div`
