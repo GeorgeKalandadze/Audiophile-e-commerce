@@ -10,7 +10,7 @@ type IsShowPurchaseModal = {
     isShow:boolean
 }
 const PurchaseModal = ({isShow}:IsShowPurchaseModal) => {
-  const {cartItems, totalPrice} = useGlobalContext();
+  const {cartItems} = useGlobalContext();
   const [visibleAllCard, setVisibleAllCard] = useState<number>(1);
 
   const showAllItems = () => {
@@ -46,7 +46,7 @@ const PurchaseModal = ({isShow}:IsShowPurchaseModal) => {
             </AllProductContainer>
             <TotalPriceContainer>
                 <GrandTotal>GRAND TOTAL</GrandTotal>
-                <TotalPrice>${totalPrice}</TotalPrice>
+                <TotalPrice>$ </TotalPrice>
             </TotalPriceContainer>
             <Link to="/"><Button width='100%' pdng='15px 25px' bgColor='#D87D4A'>BACK TO HOME</Button></Link>
         </PurchaseCard>
