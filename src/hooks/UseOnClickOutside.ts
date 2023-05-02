@@ -4,23 +4,22 @@ type Event = MouseEvent | TouchEvent;
 
 function UseOnClickOutside<T extends HTMLElement = HTMLElement>(
   ref: RefObject<T>,
-  handler: (event: Event) => void
+  handler: (event: Event) => void,
+  icon: RefObject<any>
 ) {
   useEffect(() => {
-    const listener = (event: Event) => {
-      const el = ref?.current;
-      // Do nothing if clicking ref's element or descendent elements
-      if (!el || el.contains(event.target as Node)) {
-        return;
-      }
-      handler(event);
+    let handlerFunction = (e: Event) => {
+      if (ref.current && !ref.current.contains(e.target as Node) && 
+      icon.current && !icon.current.contains(e.target as Node)) {
+        handler(e);
+      }      
     };
-    document.addEventListener('mousedown', listener);
-    document.addEventListener('touchstart', listener);
+
+    document.addEventListener("mousedown", handlerFunction);
+    
     return () => {
-      document.removeEventListener('mousedown', listener);
-      document.removeEventListener('touchstart', listener);
-    };
+      document.removeEventListener("mousedown", handlerFunction);
+    }
   }, [ref, handler]);
 }
 

@@ -25,14 +25,14 @@ interface CartProps {
 
 
 const CheckoutModal = () => {
-  const {isShopCartOpen,setIsShopCartOpen} = useGlobalContext()
+  const {isShopCartOpen,setIsShopCartOpen,cartIconRef} = useGlobalContext()
   const [cartItems, setCartItems] = useState<CartProps[]>([]);
   const ref = useRef<HTMLDivElement>(null);
   const navigate = useNavigate()
 
   UseOnClickOutside(ref, () => {
     setIsShopCartOpen(false)
-  });
+  },cartIconRef);
 
   const itemQuantities = cartItems.map(item => item.quantity);
   useEffect(() => {

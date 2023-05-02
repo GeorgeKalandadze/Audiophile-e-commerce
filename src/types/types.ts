@@ -44,6 +44,7 @@ export interface MyContext {
     customerErrors:ResponseErrorTypes
     handleCustomersData:(event: ChangeEvent<HTMLInputElement>) => void
     customer:CustomerTypes
+    cartIconRef:React.MutableRefObject<HTMLDivElement | HTMLImageElement | null>
   }
 
   export type Product = {

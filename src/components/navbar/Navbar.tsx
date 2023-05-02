@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from "react";
+import React, {useState,useEffect, useRef} from "react";
 import './navbar.css'
 import Logo from '../../assets/shared/desktop/logo.svg'
 import CartIcon from '../../assets/shared/desktop/icon-cart.svg'
@@ -6,12 +6,14 @@ import { useGlobalContext } from "../../context";
 import CategoriesCards from "../CategoriesCards/CategoriesCards";
 import { Link, useLocation } from "react-router-dom";
 import axiosClient from "../../axios-client";
+import UseOnClickOutside from "../../hooks/UseOnClickOutside";
 
 
 const Navbar = () => {
-    const {isMenuClicked,setIsMenuClicked,openShopCartModal} = useGlobalContext();
+    const {isMenuClicked,setIsMenuClicked,openShopCartModal,setIsShopCartOpen,cartIconRef} = useGlobalContext();
     const className = isMenuClicked ? 'burger-bar clicked' : 'burger-bar';
     const {userInfo, setUserInfo, openLogoutModal} = useGlobalContext();
+   
 
     useEffect(() => {
         axiosClient.get('/user')
@@ -33,6 +35,7 @@ const Navbar = () => {
         setIsMenuClicked(false);
     }, [location.pathname]);
 
+
     return(
         <div style={{width: '100%',zIndex:100,position:"absolute"}}>
             <nav>
@@ -48,12 +51,14 @@ const Navbar = () => {
                     <Link to={"/speakers"} className="styled-link">SPEAKERS</Link>
                     <Link to={"/earphones"} className="styled-link">EARPHONES</Link>
                 </div>
-                <div className="navbar-right">
+                <div className="navbar-right" >
                     
                     <div className="profile-photo" onClick={openLogoutModal}>
                         {userInfo?.avatar_image && <img src={userInfo.avatar_image}/>}
                     </div>
-                    <img src={CartIcon} className="cart-icon" onClick={() => openShopCartModal()}/>
+                    <div ref={cartIconRef} >
+                    <img src={CartIcon}  className="cart-icon" onClick={() => openShopCartModal()}/>
+                    </div>
                 </div>
             </nav>
             <div className={isMenuClicked ? 'sidebar-bar open' : 'side-bar'}>

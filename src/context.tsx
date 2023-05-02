@@ -5,7 +5,8 @@ import React, { createContext,
     Dispatch, 
     SetStateAction, 
     useEffect,
-    ChangeEvent
+    ChangeEvent,
+    useRef
 } from 'react'
 import { useLocalStorage } from './hooks/UseLocalStorage';
 import axiosClient from './axios-client';
@@ -30,6 +31,7 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
     const [cart, setCart] = useState<CartItem[]>([]);
     const [customer,setCustomer] = useState<CustomerTypes>({});
     const [customerErrors, setCustomerErrors] = useState<ResponseErrorTypes>({});
+    const cartIconRef = useRef<HTMLDivElement | HTMLImageElement | null>(null);
 
     //working with authentication authorization token
     const setToken = (token: string) => {
@@ -174,7 +176,8 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
             makeOrder,
             customerErrors,
             handleCustomersData,
-            customer
+            customer,
+            cartIconRef
             }}>
     {children}
     </AppContext.Provider>
