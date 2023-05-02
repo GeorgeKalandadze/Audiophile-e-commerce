@@ -53,7 +53,7 @@ color: #000000;
 const StyledInput = styled.input<InputStylePropType>`
 margin-top:15px;
 margin-bottom:15px;
-border:${(prop) => prop.error ? "1px solid red":"1px solid #CFCFCF"};
+border: 1px solid ${(prop) => prop.error ? "#ff0000" : "#CFCFCF"};
 border-radius: 8px;
 width:100%;
 padding:15px 25px;

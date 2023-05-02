@@ -12,6 +12,7 @@ import axiosClient from './axios-client';
 import { CartItem, CustomerTypes, MyContext, Product, Props, ResponseErrorTypes, UserInfo } from './types/types';
 
 
+
 const AppContext = createContext<MyContext>({} as MyContext);
 
 

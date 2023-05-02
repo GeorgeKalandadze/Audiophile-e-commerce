@@ -1,14 +1,18 @@
 
 import styled from 'styled-components'
+import { useGlobalContext } from '../../context'
 const RadioInput = () => {
+  const {customerErrors = {},customer,handleCustomersData} = useGlobalContext();
+
+  console.log(customer);
   return (
     <div>
         <RadioInputContainer>
-            <Radio type="radio" name='radio'/>
+            <Radio type="radio" name='payment_details' value="e-Money" checked={customer.payment_details === "e-Money"} onChange={handleCustomersData}/>
             <Label>e-Money</Label>
         </RadioInputContainer>
         <RadioInputContainer>
-            <Radio type="radio" name='radio'/>
+            <Radio type="radio" name='payment_details' value="e-Money PIN" checked={customer.payment_details === "e-Money PIN"} onChange={handleCustomersData}/>
             <Label>Cash on Delivery</Label>
         </RadioInputContainer>
     </div>

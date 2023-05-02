@@ -59,9 +59,9 @@ console.log(customer)
           placeholder='+1 202-555-0136' 
           inputType='number' 
           label='Phone Number'
-          name='phone_number'
-          error={customerErrors.phone_number&& customerErrors.phone_number[0]}
-          value={customer.phone_number}
+          name='phone'
+          error={customerErrors.phone_number&& customerErrors.phone[0]}
+          value={customer.phone}
           handleChange={handleCustomersData}
           
         />

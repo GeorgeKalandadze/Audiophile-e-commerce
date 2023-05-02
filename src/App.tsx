@@ -13,9 +13,6 @@ import SignIn from "./pages/SignIn/SignIn";
 function App() {
   const {isShopCartOpen} = useGlobalContext()
 
-  
-  
- 
 
   return (
     <>
@@ -28,7 +25,6 @@ function App() {
             {isShopCartOpen && <CheckoutModal/>}
           </>
         )}
-
         <Routes>
           <Route path="/" element={<SignIn/>}/>
           <Route path="/signup" element={<SignUp/>}/>

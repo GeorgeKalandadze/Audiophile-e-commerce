@@ -5,6 +5,7 @@ import CheckoutProductEachItem from './CheckoutProductEachItem'
 import { useRef, useState,useEffect } from 'react'
 import UseOnClickOutside from '../../hooks/UseOnClickOutside'
 import axiosClient from '../../axios-client'
+import { useNavigate } from 'react-router-dom'
 
 
 type IsShopCartOpenType = {
@@ -27,6 +28,7 @@ const CheckoutModal = () => {
   const {isShopCartOpen,setIsShopCartOpen} = useGlobalContext()
   const [cartItems, setCartItems] = useState<CartProps[]>([]);
   const ref = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate()
 
   UseOnClickOutside(ref, () => {
     setIsShopCartOpen(false)
@@ -37,13 +39,15 @@ const CheckoutModal = () => {
     
     axiosClient.get('/cart/get-carts')
       .then(({data}) => {
-        console.log(data);
+        
         setCartItems(data.data);
       })
       .catch((error) => {
         console.error(error);
       });
-  }, [itemQuantities])
+  },[isShopCartOpen])
+
+
 
 
   const totalPrice = () => {
@@ -63,6 +67,7 @@ const CheckoutModal = () => {
   const makeChackout = () => {
     axiosClient.post('/checkout')
   .then(response => {
+    navigate('/checkoutForm')
       console.log(response);
   })
   .catch(error => {

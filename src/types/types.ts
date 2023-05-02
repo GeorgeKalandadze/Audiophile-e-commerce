@@ -69,13 +69,14 @@ export interface MyContext {
 export type CustomerTypes = {
   name?:string
   email?:string
-  phone_number?:number
+  phone?:number
   address?:string
   zip_code?:number
   city?:string
   country?:string
   e_money_number?:number
   e_money_pin?:number
+  payment_details?:"e-Money" | "e-Money PIN"
 }
 
 
