@@ -2,10 +2,11 @@ import styled from 'styled-components'
 import { useGlobalContext } from '../../context'
 import { Button } from '../Button/Button'
 import CheckoutProductEachItem from './CheckoutProductEachItem'
-import { useRef, useState,useEffect } from 'react'
+import { useRef, useState,useEffect, } from 'react'
 import UseOnClickOutside from '../../hooks/UseOnClickOutside'
 import axiosClient from '../../axios-client'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate,useLocation} from 'react-router-dom'
+
 
 
 type IsShopCartOpenType = {
@@ -29,12 +30,14 @@ const CheckoutModal = () => {
   const [cartItems, setCartItems] = useState<CartProps[]>([]);
   const ref = useRef<HTMLDivElement>(null);
   const navigate = useNavigate()
+  const location = useLocation();
+  console.log(location.pathname)
 
   UseOnClickOutside(ref, () => {
     setIsShopCartOpen(false)
   },cartIconRef);
 
-  const itemQuantities = cartItems.map(item => item.quantity);
+  
   useEffect(() => {
     
     axiosClient.get('/cart/get-carts')
@@ -45,7 +48,7 @@ const CheckoutModal = () => {
       .catch((error) => {
         console.error(error);
       });
-  },[isShopCartOpen])
+  },[isShopCartOpen,cartItems])
 
 
 
@@ -74,6 +77,13 @@ const CheckoutModal = () => {
       console.error(error);
   })
   }
+
+ 
+    useEffect(() => {
+      return () => {
+        setIsShopCartOpen(false);
+      };
+    }, [location.pathname]);
 
 
   return (
