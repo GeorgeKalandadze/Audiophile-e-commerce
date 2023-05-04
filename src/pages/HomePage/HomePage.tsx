@@ -6,16 +6,15 @@ import PersonCard from '../../components/PersonCard/PersonCard';
 import Footer from '../../components/Footer/Footer';
 import CategoriesCards from '../../components/CategoriesCards/CategoriesCards';
 import { Link } from 'react-router-dom';
-import LogoutModal from '../../components/LogoutModal/LogoutModal';
-import { useGlobalContext } from '../../context';
+
 
 const HomePage = () => {
-  const {isLogoutModal} = useGlobalContext();
+
   
   return (
     <div className={"home-page-main-conatiner "}
     >
-      {isLogoutModal && <LogoutModal/>}
+    
       <div className="home-page">
         <div className='home-page-texts'>
           <h2>NEW PRODUCT</h2>

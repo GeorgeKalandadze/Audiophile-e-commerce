@@ -31,7 +31,7 @@ const CheckoutModal = () => {
   const ref = useRef<HTMLDivElement>(null);
   const navigate = useNavigate()
   const location = useLocation();
-  console.log(location.pathname)
+  
 
   UseOnClickOutside(ref, () => {
     setIsShopCartOpen(false)
@@ -71,7 +71,7 @@ const CheckoutModal = () => {
     axiosClient.post('/checkout')
   .then(response => {
     navigate('/checkoutForm')
-      console.log(response);
+      
   })
   .catch(error => {
       console.error(error);

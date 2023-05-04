@@ -4,6 +4,7 @@ import { Button } from '../Button/Button'
 import axiosClient from '../../axios-client'
 import {FormEvent} from 'react'
 import { useNavigate } from 'react-router-dom'
+import LogoutICon from '../../assets/logout icon.png'
 type IsLogoutModalOpen = {
     show:boolean
   }
@@ -23,11 +24,14 @@ const onLogout = (ev:any) => {
   return (
     <MainDiv show={isLogoutModal}>
         <LogoutDiv>
-            <UserImageDiv >
-                <UserImage src={userInfo.avatar_image}/>
-            </UserImageDiv>
-            <Name>{userInfo.name}</Name>
-            <Button bgColor='#D87D4A' width='100%' onClick={onLogout}>Log Out</Button>
+            <LogoutTextDiv>
+                <Name>Are you sure {userInfo.name} , that you Want Log out?</Name>
+                <LogoutImage src={LogoutICon}/>
+            </LogoutTextDiv>
+            <ButtonsDiv>
+                <Button bgColor='#D87D4A' width='45%' brdRadius='6px' onClick={onLogout}>Log Out</Button>
+                <Button bgColor='transparent' brdRadius='6px' hover='#D87D4A' onClick={() => setIsLogoutModal(false)}  width='45%' color='black' >Cancel</Button>
+            </ButtonsDiv>
         </LogoutDiv>
     </MainDiv>
   )
@@ -53,28 +57,32 @@ const LogoutDiv = styled.div`
     position: fixed;
     left: 70%;
     background: #FFFFFF;
-    padding:20px 50px;
+    padding:20px 30px;
     border-radius:5px;
     display:flex;
     flex-direction:column;
-    align-items:center;
+    
     gap:20px;
 `
 
-const UserImage = styled.img`
-    width:100%;
-`
-
-const UserImageDiv = styled.div`
-    width: 9.3rem;
-    aspect-ratio: 1/1;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 3px solid #fff;
-    
-`
 
 const Name = styled.h1`
     font-family:sans-serif;
-    font-size:20px;
+    font-size:17px;
+`
+
+const ButtonsDiv = styled.div`
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+`
+
+const LogoutImage = styled.img`
+    width:25px;
+`
+
+const LogoutTextDiv = styled.div`
+    display:flex;
+    align-items:center;
+    gap:10px
 `

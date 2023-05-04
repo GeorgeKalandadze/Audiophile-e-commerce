@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { UseFormHandleSubmit } from 'react-hook-form'
 import styled from 'styled-components'
 import { useGlobalContext } from '../../context'
@@ -15,6 +15,7 @@ const SummaryCard = ({handleSubmit,errors}:HandleSubmitType) => {
 
   const {cartItems, makeOrder} = useGlobalContext()
   const [purchaseModal, setPurchaseModal] = useState(false)
+  const [ordersData, setOrdersData] = useState({})
 
   const onFormSubmit = () => {
     if(errors = {}){
@@ -22,33 +23,39 @@ const SummaryCard = ({handleSubmit,errors}:HandleSubmitType) => {
     }
   }
 
-  
+  useEffect(() => {
+    axiosClient.get('/orders')
+  .then(({data}) => {
+    console.log(data)
+    setOrdersData(data)
+    
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+  },[])
+
+  console.log(ordersData)
   
   return (
     <MainDiv>
       {purchaseModal && <PurchaseModal isShow={purchaseModal}/>}
       <Header>summary</Header>
-      {
-        cartItems.map((items) => {
-          const item = productsData.find((item) => item.id === items.id)
-          return(
-            <SummaryDiv key={item?.id}>
-            <ProductDiv>
-              <ProductImage src={item?.image.desktop}/>
-              <div>
-                <ProductName>{item?.name}</ProductName>
-                <Price>$ {item?.price}</Price>
-              </div>
-            </ProductDiv>
-            <Quantity>{items.quantity} x</Quantity>
-          </SummaryDiv>
-          )
-       
-        })
-      }
+      {/* {ordersData && ordersData.items.map((item) => (
+        <SummaryDiv key={item?.id}>
+          <ProductDiv>
+            <ProductImage src={`${import.meta.env.VITE_API_BASE_URL}/${item.product.cart_image}`}/>
+            <div>
+              <ProductName>{item.product.name}</ProductName>
+              <Price>$ {item.unit_price}</Price>
+            </div>
+          </ProductDiv>
+          <Quantity>{item.quantity} x</Quantity>
+        </SummaryDiv>
+      ))} */}
       <SummaryDiv>
         <GrayText>TOTAL</GrayText>
-        <BoldText>$ {}</BoldText>
+        <BoldText>$ {ordersData.total_price}</BoldText>
       </SummaryDiv>
       <SummaryDiv>
         <GrayText>SHIPPING</GrayText>
@@ -60,9 +67,9 @@ const SummaryCard = ({handleSubmit,errors}:HandleSubmitType) => {
       </SummaryDiv>
       <SummaryDiv>
         <GrayText>GRAND TOTAL</GrayText>
-        <BoldText>$ { + 50}</BoldText>
+        <BoldText>$ {Number(ordersData.total_price) + 50}</BoldText>
       </SummaryDiv>
-      <Button type='submit' bgColor='#D87D4A;' pdng='20px ' width='100%' onClick={makeOrder}>CONTINUE & PAY</Button>
+      <Button type='submit' bgColor='#D87D4A;' pdng='12px ' width='100%' onClick={makeOrder}>CONTINUE & PAY</Button>
      
     </MainDiv>
   )

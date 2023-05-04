@@ -7,6 +7,7 @@ interface ButtonStyleProps {
     color?:string
     width?:string
     brdRadius?:string
+    hover?:string
 }
 
 const ButtonStyle = styled.button<ButtonStyleProps>`
@@ -24,6 +25,10 @@ font-size: 13px;
 font-weight: 700;
 letter-spacing: 1px;
 line-height: 18px;
+transition:0.2s;
+&:hover {
+    background-color:${prop => prop.hover || ""};;
+  }
 `
 
 export const Button = ButtonStyle

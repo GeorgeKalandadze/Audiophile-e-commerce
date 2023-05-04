@@ -9,9 +9,10 @@ import HomePage from "./pages/HomePage/HomePage"
 import ProductsPage from "./pages/ProductsPage/ProductsPage";
 import SignUp from "./pages/SignUp/SignUp";
 import SignIn from "./pages/SignIn/SignIn";
+import LogoutModal from "./components/LogoutModal/LogoutModal";
 
 function App() {
-  const {isShopCartOpen} = useGlobalContext()
+  const {isShopCartOpen,isLogoutModal} = useGlobalContext()
 
 
   return (
@@ -23,6 +24,7 @@ function App() {
             <ScrollToTop/>
             <Navbar/>
             {isShopCartOpen && <CheckoutModal/>}
+            {isLogoutModal && <LogoutModal/>}
           </>
         )}
         <Routes>
