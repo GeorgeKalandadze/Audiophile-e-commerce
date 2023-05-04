@@ -32,6 +32,7 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
     const [customer,setCustomer] = useState<CustomerTypes>({});
     const [customerErrors, setCustomerErrors] = useState<ResponseErrorTypes>({});
     const cartIconRef = useRef<HTMLDivElement | HTMLImageElement | null>(null);
+    const logoutIconRef = useRef<HTMLDivElement | HTMLImageElement | null>(null);
 
     //working with authentication authorization token
     const setToken = (token: string) => {
@@ -177,7 +178,8 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
             customerErrors,
             handleCustomersData,
             customer,
-            cartIconRef
+            cartIconRef,
+            logoutIconRef 
             }}>
     {children}
     </AppContext.Provider>

@@ -10,7 +10,7 @@ import UseOnClickOutside from "../../hooks/UseOnClickOutside";
 
 
 const Navbar = () => {
-    const {isMenuClicked,setIsMenuClicked,openShopCartModal,setIsShopCartOpen,cartIconRef} = useGlobalContext();
+    const {isMenuClicked,setIsMenuClicked,openShopCartModal,setIsShopCartOpen,cartIconRef,logoutIconRef} = useGlobalContext();
     const className = isMenuClicked ? 'burger-bar clicked' : 'burger-bar';
     const {userInfo, setUserInfo, openLogoutModal} = useGlobalContext();
    
@@ -53,7 +53,7 @@ const Navbar = () => {
                 </div>
                 <div className="navbar-right" >
                     
-                    <div className="profile-photo" onClick={openLogoutModal}>
+                    <div className="profile-photo" onClick={openLogoutModal} ref={logoutIconRef}>
                         {userInfo?.avatar_image && <img src={userInfo.avatar_image}/>}
                     </div>
                     <div ref={cartIconRef} >
