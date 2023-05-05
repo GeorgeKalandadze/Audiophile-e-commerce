@@ -74,7 +74,7 @@ console.log(customer)
           inputType='text' 
           label='Your Address'
           name='address'
-          error={customerErrors.address&& customerErrors.address[0]}
+          error={customerErrors.address && customerErrors.address[0]}
           value={customer.address}
           handleChange={handleCustomersData}
           
@@ -85,7 +85,7 @@ console.log(customer)
           inputType='number' 
           label='ZIP Code'
           name='zip_code'
-          error={customerErrors.zip_code&& customerErrors.zip_code[0]}
+          error={customerErrors.zip_code && customerErrors.zip_code[0]}
           value={customer.zip_code}
           handleChange={handleCustomersData}
           
@@ -95,7 +95,7 @@ console.log(customer)
           inputType='text' 
           label='City'
           name='city'
-          error={customerErrors.city&& customerErrors.city[0]}
+          error={customerErrors.city && customerErrors.city[0]}
           value={customer.city}
           handleChange={handleCustomersData}
           
@@ -106,7 +106,7 @@ console.log(customer)
           inputType='text' 
           label='Country'
           name='country'
-          error={customerErrors.country&& customerErrors.country[0]}
+          error={customerErrors.country && customerErrors.country[0]}
           value={customer.country}
           handleChange={handleCustomersData}
         />
@@ -120,7 +120,7 @@ console.log(customer)
           inputType='number' 
           label='e-Money Number'
           name='e_money_number'
-          error={customerErrors.e_money_number&& customerErrors.e_money_number[0]}
+          error={customerErrors.e_money_number && customerErrors.e_money_number[0]}
           value={customer.e_money_number}
           handleChange={handleCustomersData}
           
@@ -130,7 +130,7 @@ console.log(customer)
           inputType='number' 
           label='e-Money PIN'
           name='e_money_pin'
-          error={customerErrors.e_money_pin&& customerErrors.e_money_pin[0]}
+          error={customerErrors.e_money_pin && customerErrors.e_money_pin[0]}
           value={customer.e_money_pin}
           handleChange={handleCustomersData}
         />

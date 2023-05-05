@@ -2,9 +2,10 @@ import { Link, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { useGlobalContext } from '../../context'
 import { Button } from '../Button/Button'
+import { ToastContainer,toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css"
 import axiosClient from '../../axios-client'
-import { useEffect, useState } from 'react'
-
+import { FaCheckCircle } from 'react-icons/fa';
 
 
 interface CartItem {
@@ -16,9 +17,49 @@ interface CartItem {
 const EachProductPage = () => {
 
   const {ProductName} = useParams()
-  const {products,addCartItem,handleDecrement,handleIncrement} = useGlobalContext()
+  const {products,handleDecrement,handleIncrement} = useGlobalContext()
 
+ 
+  const ERROR_TOAST_THEME = {
+    background: "#FED7D7",
+    text: "#9B2C2C",
+  };
 
+  const addCartItem = (id: number) => {
+    axiosClient
+      .post("/cart/add", {
+        product_id: id,
+        quantity: 1,
+      })
+      .then((response) => {
+        if (response && response.data && response.data.message) {
+          toast.success(response.data.message, {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            theme: "light",
+            progressStyle: { backgroundColor: "#D87D4A" },
+            icon: <FaCheckCircle style={{ color: "#D87D4A" }} />,
+          });
+        }
+       
+      })
+      .catch((error) => {
+        toast.error(error.message, {
+          position: "top-left",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          progressStyle: { backgroundColor: "red" }
+          });
+      });
+  };
   // useEffect(() => {
   //   // find the cart item for the current product
   //   const cartItem = cartAddedItems.find(item => item.product.slug === ProductName)
@@ -30,6 +71,19 @@ const EachProductPage = () => {
 
   return (
     <MainContainer >
+      <ToastContainer
+      position="top-center"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      toastStyle={{top:70}}
+      theme="dark"
+      />
       <Link to="/"><GoBackButton>Go Back</GoBackButton></Link>
       {
         products.filter((product) => product.slug == ProductName).map((fullProduct) => (
@@ -68,7 +122,7 @@ const EachProductPage = () => {
                   ))}
                   </div>
                 </BoxDiv>
-                
+                    
                 <Images>
                     {fullProduct.product_images.map((image) => (
                        <ProductImage src={`${import.meta.env.VITE_API_BASE_URL}/${image.image_path}`}/>
