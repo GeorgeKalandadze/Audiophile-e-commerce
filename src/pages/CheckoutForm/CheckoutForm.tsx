@@ -60,7 +60,7 @@ console.log(customer)
           inputType='number' 
           label='Phone Number'
           name='phone'
-          error={customerErrors.phone_number&& customerErrors.phone[0]}
+          error={customerErrors.phone && customerErrors.phone[0]}
           value={customer.phone}
           handleChange={handleCustomersData}
           

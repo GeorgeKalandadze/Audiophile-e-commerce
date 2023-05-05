@@ -1,4 +1,4 @@
-import React, {useState,useEffect, useRef} from "react";
+import  {useEffect} from "react";
 import './navbar.css'
 import Logo from '../../assets/shared/desktop/logo.svg'
 import CartIcon from '../../assets/shared/desktop/icon-cart.svg'
@@ -6,7 +6,6 @@ import { useGlobalContext } from "../../context";
 import CategoriesCards from "../CategoriesCards/CategoriesCards";
 import { Link, useLocation } from "react-router-dom";
 import axiosClient from "../../axios-client";
-import UseOnClickOutside from "../../hooks/UseOnClickOutside";
 
 
 const Navbar = () => {

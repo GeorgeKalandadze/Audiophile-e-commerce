@@ -11,11 +11,43 @@ type HandleSubmitType = {
   handleSubmit:any
   errors:any
 }
+
+interface OrderTypes {
+  created_at: string;
+  created_by: number;
+  id: number;
+  items: {
+    id: number;
+    order_id: number;
+    product_id: number;
+    quantity: number;
+    unit_price: string;
+    product:Product
+  }[];
+  status: string;
+  total_price: string;
+  updated_at: string;
+  updated_by: number;
+}
+
+interface Product {
+  cart_image: string;
+  category_id: number;
+  created_at: string | null;
+  description: string;
+  features: string;
+  id: number;
+  name: string;
+  new: number;
+  price: string;
+  slug: string;
+  updated_at: string | null;
+}
 const SummaryCard = ({handleSubmit,errors}:HandleSubmitType) => {
 
   const {cartItems, makeOrder} = useGlobalContext()
   const [purchaseModal, setPurchaseModal] = useState(false)
-  const [ordersData, setOrdersData] = useState({})
+  const [ordersData, setOrdersData] = useState<OrderTypes>({} as OrderTypes)
 
   const onFormSubmit = () => {
     if(errors = {}){
@@ -31,7 +63,7 @@ const SummaryCard = ({handleSubmit,errors}:HandleSubmitType) => {
     
   })
   .catch((error) => {
-    console.error(error);
+    
   });
   },[])
 
@@ -41,7 +73,7 @@ const SummaryCard = ({handleSubmit,errors}:HandleSubmitType) => {
     <MainDiv>
       {purchaseModal && <PurchaseModal isShow={purchaseModal}/>}
       <Header>summary</Header>
-      {/* {ordersData && ordersData.items.map((item) => (
+      {ordersData.items && ordersData.items.map((item) => (
         <SummaryDiv key={item?.id}>
           <ProductDiv>
             <ProductImage src={`${import.meta.env.VITE_API_BASE_URL}/${item.product.cart_image}`}/>
@@ -52,7 +84,7 @@ const SummaryCard = ({handleSubmit,errors}:HandleSubmitType) => {
           </ProductDiv>
           <Quantity>{item.quantity} x</Quantity>
         </SummaryDiv>
-      ))} */}
+      ))}
       <SummaryDiv>
         <GrayText>TOTAL</GrayText>
         <BoldText>$ {ordersData.total_price}</BoldText>
@@ -94,9 +126,10 @@ margin-top:30px;
 padding:15px;
 background: #FFFFFF;
 border-radius: 8px;
+height:auto;
 @media only screen and (min-width: 1200px){
-   padding:70px;
-  height:612px;
+   padding:20px 30px ;
+    width:550px;
   }
 
 `
@@ -106,6 +139,7 @@ display:flex;
 align-items:center;
 justify-content:space-between;
 margin-bottom:20px;
+
 @media only screen and (min-width: 1200px){
    padding:5px;
   }

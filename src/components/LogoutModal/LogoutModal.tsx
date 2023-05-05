@@ -12,7 +12,6 @@ type IsLogoutModalOpen = {
 const LogoutModal = () => {
 const {isLogoutModal,userInfo,setToken,setIsLogoutModal,logoutIconRef} = useGlobalContext();
 const navigate = useNavigate()
-const location = useLocation();
 const ref = useRef<HTMLDivElement>(null);
 
 UseOnClickOutside(ref, () => {
