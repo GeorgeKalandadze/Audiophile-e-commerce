@@ -32,7 +32,8 @@ const EachProductPage = () => {
         quantity: 1,
       })
       .then((response) => {
-        if (response && response.data && response.data.message) {
+        console.log(response)
+        if(response.status === 201){
           toast.success(response.data.message, {
             position: "top-center",
             autoClose: 5000,
@@ -45,17 +46,17 @@ const EachProductPage = () => {
             icon: <FaCheckCircle style={{ color: "#D87D4A" }} />,
           });
         }
-       
       })
       .catch((error) => {
-        toast.error(error.message, {
-          position: "top-left",
+        toast.error("Cart Already added", {
+          position: "top-center",
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
+          theme: "light",
           progressStyle: { backgroundColor: "red" }
           });
       });
