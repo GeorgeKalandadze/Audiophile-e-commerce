@@ -15,7 +15,7 @@ const Footer = () => {
       <img src={Logo}/>
       <LinksContainer>
         <StyledLink to="/home">Home</StyledLink>
-        <StyledLink to="/headpones">HEADPHONES</StyledLink>
+        <StyledLink to="/headphones">HEADPHONES</StyledLink>
         <StyledLink to="/speakers">SPEAKERS</StyledLink>
         <StyledLink to="/earphones">EARPHONES</StyledLink>
       </LinksContainer>

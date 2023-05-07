@@ -9,8 +9,6 @@ type ProductPagePropTypes = {
   productType:string
 }
 
-
-
 const ProductsPage = ({productType}:ProductPagePropTypes) => {
   const {products} = useGlobalContext()
   const productsList = products.filter((product) =>product.category === productType )
@@ -21,7 +19,6 @@ const ProductsPage = ({productType}:ProductPagePropTypes) => {
       <div className='boxes'>
       {
        productsList.map((item) => (
-          
           <ItemCard
             slug={item.slug}
             isNew={item.new}
@@ -38,6 +35,7 @@ const ProductsPage = ({productType}:ProductPagePropTypes) => {
       <PersonCard/>
       <Footer/>
     </>
+    
   )
 }
 

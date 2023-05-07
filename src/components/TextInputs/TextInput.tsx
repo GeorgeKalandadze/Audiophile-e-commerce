@@ -1,5 +1,5 @@
 import React, { ChangeEvent } from 'react'
-import styled from 'styled-components'
+import styled,{keyframes,css} from 'styled-components'
 import { useGlobalContext } from '../../context'
 
 type InputProps = {
@@ -14,7 +14,6 @@ type InputProps = {
 
 type InputStylePropType = {
   error:boolean
-  
 }
 const TextInput = ({inputType,placeholder,label,name,error,value,handleChange}:InputProps) => {
   const {customerErrors} = useGlobalContext()
@@ -59,5 +58,30 @@ border: 1px solid ${(prop) => prop.error ? "#ff0000" : "#CFCFCF"};
 border-radius: 8px;
 width:100%;
 padding:15px 25px;
+${(prop) =>
+    prop.error &&
+    css`
+      animation: ${shakeAnimation} 0.4s linear ;
+      animation-fill-mode: forwards; /* Retain styles after animation finishes */
+    `};
 `
-
+const shakeAnimation = keyframes`
+  0% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-10px);
+  }
+  40% {
+    transform: translateX(10px);
+  }
+  60% {
+    transform: translateX(-10px);
+  }
+  80% {
+    transform: translateX(10px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+`;
