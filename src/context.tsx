@@ -131,15 +131,15 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
     const makeOrder = () => {
       axiosClient.post('/customers',customer)
     .then(response => {
-        console.log(response);
+        if(response.status === 201){
+          setCustomerErrors({});
+        }
     })
     .catch((err) => {
       const response = err.response;
       if (response && response.status === 422) {
           setCustomerErrors(response.data.errors)
-      } else {
-        setCustomerErrors({});
-      }
+      } 
     })
     }
 

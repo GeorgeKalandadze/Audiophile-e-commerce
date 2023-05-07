@@ -17,13 +17,9 @@ interface CartItem {
 const EachProductPage = () => {
 
   const {ProductName} = useParams()
-  const {products,handleDecrement,handleIncrement} = useGlobalContext()
+  const {products} = useGlobalContext()
 
  
-  const ERROR_TOAST_THEME = {
-    background: "#FED7D7",
-    text: "#9B2C2C",
-  };
 
   const addCartItem = (id: number) => {
     axiosClient

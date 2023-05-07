@@ -25,7 +25,6 @@ const CheckoutForm = () => {
   const {register, handleSubmit, formState:{errors}} =useForm<FormData>()
   const {customerErrors = {},customer,handleCustomersData} = useGlobalContext()
 
-console.log(customer)
   return (
     <MainDiv >
       {isOpenPurchase && <PurchaseModal isShow={isOpenPurchase}/>}

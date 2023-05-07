@@ -1,5 +1,6 @@
 import React, { ChangeEvent } from 'react'
 import styled from 'styled-components'
+import { useGlobalContext } from '../../context'
 
 type InputProps = {
     inputType:string
@@ -9,8 +10,6 @@ type InputProps = {
     error:any
     value:string|number|undefined
     handleChange:(event: ChangeEvent<HTMLInputElement>) => void
-    
-    
 }
 
 type InputStylePropType = {
@@ -18,6 +17,9 @@ type InputStylePropType = {
   
 }
 const TextInput = ({inputType,placeholder,label,name,error,value,handleChange}:InputProps) => {
+  const {customerErrors} = useGlobalContext()
+  console.log(customerErrors)
+  const errorFiled =  Object.keys(customerErrors).length > 0 && error
   return (
     <InputDiv >
         <Label>{label}</Label>
@@ -25,7 +27,7 @@ const TextInput = ({inputType,placeholder,label,name,error,value,handleChange}:I
           placeholder={placeholder} 
           type={inputType} 
           name={name}
-          error={error}
+          error={errorFiled}
           value={value}
           onChange={handleChange}
         />
