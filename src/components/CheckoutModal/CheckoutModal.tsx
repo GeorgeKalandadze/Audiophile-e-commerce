@@ -85,6 +85,7 @@ const CheckoutModal = () => {
       };
     }, [location.pathname]);
 
+   
 
   return (
     <MainDiv show={isShopCartOpen}>

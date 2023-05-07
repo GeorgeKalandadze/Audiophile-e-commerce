@@ -10,12 +10,14 @@ type IsShowPurchaseModal = {
     isShow:boolean
 }
 const PurchaseModal = ({isShow}:IsShowPurchaseModal) => {
-  const {cartItems} = useGlobalContext();
+  const {ordersData} = useGlobalContext();
   const [visibleAllCard, setVisibleAllCard] = useState<number>(1);
 
   const showAllItems = () => {
-    setVisibleAllCard(cartItems.length)
+    setVisibleAllCard(ordersData.items.length)
   }
+
+  console.log(ordersData.items)
 
   return (
     <MainDiv isShow={isShow}>
@@ -25,28 +27,28 @@ const PurchaseModal = ({isShow}:IsShowPurchaseModal) => {
             <SmallText>You will receive an email confirmation shortly.</SmallText>
             <AllProductContainer >
             {
-                cartItems.slice(0, visibleAllCard).map((items) => {
-                    const item = productsData.find((item) => item.id === items.id)
+                ordersData.items.slice(0, visibleAllCard).map((item) => {
+                    
                     return (
                         <MainProductDiv>
                             <ProductDiv >
-                                <Img src={item?.image.desktop}/>
+                                <Img src={`${import.meta.env.VITE_API_BASE_URL}/${item.product.cart_image}`}/>
                                 <div>
-                                    <Title>{item?.name}</Title>
-                                    <Price>{item?.price}</Price>
+                                    <Title>{item.product.name}</Title>
+                                    <Price>{item.product.price}</Price>
                                 </div>
                             </ProductDiv>
-                            <ProductQuantity>{items.quantity} x</ProductQuantity>
+                            <ProductQuantity>{item.quantity} x</ProductQuantity>
                         </MainProductDiv>
                         
                     )
                 })
             }
-            <ShowAllBtn onClick={() => showAllItems()}>and {cartItems.length !== 0 ? cartItems.length - 1:0} other item(s)</ShowAllBtn>
+            <ShowAllBtn onClick={() => showAllItems()}>and {ordersData.items.length !== 0 ? ordersData.items.length - 1:0} other item(s)</ShowAllBtn>
             </AllProductContainer>
             <TotalPriceContainer>
                 <GrandTotal>GRAND TOTAL</GrandTotal>
-                <TotalPrice>$ </TotalPrice>
+                <TotalPrice>{ordersData.total_price} $</TotalPrice>
             </TotalPriceContainer>
             <Link to="/"><Button width='100%' pdng='15px 25px' bgColor='#D87D4A'>BACK TO HOME</Button></Link>
         </PurchaseCard>
@@ -186,6 +188,7 @@ letter-spacing: -0.214286px;
 color: #000000;
 mix-blend-mode: normal;
 opacity: 0.5;
+cursor: pointer;
 `
 
 const TotalPriceContainer = styled.div`

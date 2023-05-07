@@ -21,14 +21,15 @@ type FormData = {
 }
 
 const CheckoutForm = () => {
-  const [isOpenPurchase, setOpenPurchase] = useState(false)
+ 
   const {register, handleSubmit, formState:{errors}} =useForm<FormData>()
-  const {customerErrors = {},customer,handleCustomersData} = useGlobalContext()
+  const {customerErrors = {},customer,handleCustomersData,isOpenPurchase} = useGlobalContext()
 
+  
   return (
     <MainDiv >
       {isOpenPurchase && <PurchaseModal isShow={isOpenPurchase}/>}
-      <InputForm onSubmit={() => setOpenPurchase(true)}>
+      <InputForm >
         <FormHeader>CHECKOUT</FormHeader>
         <FormSectionHeader>Billing details</FormSectionHeader>
         <InputContainers>

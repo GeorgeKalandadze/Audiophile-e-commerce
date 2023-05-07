@@ -46,6 +46,9 @@ export interface MyContext {
     customer:CustomerTypes
     cartIconRef:React.MutableRefObject<HTMLDivElement | HTMLImageElement | null>
     logoutIconRef:React.MutableRefObject<HTMLDivElement | HTMLImageElement | null>
+    isOpenPurchase:boolean
+    setOpenPurchase:Dispatch<SetStateAction<boolean>>
+    ordersData:OrderTypes
   }
 
   export type Product = {
@@ -86,3 +89,35 @@ export interface ResponseErrorTypes {
   [key: string]: string | string[];
 }
 
+
+export interface OrderTypes {
+  created_at: string;
+  created_by: number;
+  id: number;
+  items: {
+    id: number;
+    order_id: number;
+    product_id: number;
+    quantity: number;
+    unit_price: string;
+    product:OrderProduct
+  }[];
+  status: string;
+  total_price: string;
+  updated_at: string;
+  updated_by: number;
+}
+
+interface OrderProduct {
+  cart_image: string;
+  category_id: number;
+  created_at: string | null;
+  description: string;
+  features: string;
+  id: number;
+  name: string;
+  new: number;
+  price: string;
+  slug: string;
+  updated_at: string | null;
+}

@@ -1,53 +1,21 @@
 import React, { useState,useEffect } from 'react'
-import { UseFormHandleSubmit } from 'react-hook-form'
 import styled from 'styled-components'
 import { useGlobalContext } from '../../context'
-import productsData from '../../data.json'
 import { Button } from '../Button/Button'
 import PurchaseModal from '../PurchaseModal/PurchaseModal'
-import axiosClient from '../../axios-client'
+
 
 type HandleSubmitType = {
   handleSubmit:any
   errors:any
 }
 
-interface OrderTypes {
-  created_at: string;
-  created_by: number;
-  id: number;
-  items: {
-    id: number;
-    order_id: number;
-    product_id: number;
-    quantity: number;
-    unit_price: string;
-    product:Product
-  }[];
-  status: string;
-  total_price: string;
-  updated_at: string;
-  updated_by: number;
-}
 
-interface Product {
-  cart_image: string;
-  category_id: number;
-  created_at: string | null;
-  description: string;
-  features: string;
-  id: number;
-  name: string;
-  new: number;
-  price: string;
-  slug: string;
-  updated_at: string | null;
-}
 const SummaryCard = ({handleSubmit,errors}:HandleSubmitType) => {
 
-  const {cartItems, makeOrder} = useGlobalContext()
+  const { makeOrder,ordersData} = useGlobalContext()
   const [purchaseModal, setPurchaseModal] = useState(false)
-  const [ordersData, setOrdersData] = useState<OrderTypes>({} as OrderTypes)
+ 
 
   const onFormSubmit = () => {
     if(errors = {}){
@@ -55,17 +23,6 @@ const SummaryCard = ({handleSubmit,errors}:HandleSubmitType) => {
     }
   }
 
-  useEffect(() => {
-    axiosClient.get('/orders')
-  .then(({data}) => {
-    console.log(data)
-    setOrdersData(data)
-    
-  })
-  .catch((error) => {
-    
-  });
-  },[])
 
   console.log(ordersData)
   

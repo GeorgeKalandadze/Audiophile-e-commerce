@@ -10,7 +10,7 @@ import React, { createContext,
 } from 'react'
 import { useLocalStorage } from './hooks/UseLocalStorage';
 import axiosClient from './axios-client';
-import { CartItem, CustomerTypes, MyContext, Product, Props, ResponseErrorTypes, UserInfo } from './types/types';
+import { CartItem, CustomerTypes, MyContext, OrderTypes, Product, Props, ResponseErrorTypes, UserInfo } from './types/types';
 
 
 
@@ -22,6 +22,7 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
     const [isMenuClicked, setIsMenuClicked] = useState<boolean>(false);
     const [isShopCartOpen, setIsShopCartOpen] = useState<boolean>(false);
     const [isLogoutModal, setIsLogoutModal] = useState<boolean>(false);
+    const [isOpenPurchase, setOpenPurchase] = useState(false)
     const [token, _setToken] = useState<string|null>(localStorage.getItem('ACCESS_TOKEN'));
     const [notification, _setNotification] = useState('');
     const [userInfo, setUserInfo] = useState<UserInfo>({name:"", avatar_image:""});
@@ -30,9 +31,11 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
     const [cartItems, setCartItems] = useLocalStorage<CartItem[]>('shoping-carts',[]);
     const [cart, setCart] = useState<CartItem[]>([]);
     const [customer,setCustomer] = useState<CustomerTypes>({});
+    const [ordersData, setOrdersData] = useState<OrderTypes>({} as OrderTypes)
     const [customerErrors, setCustomerErrors] = useState<ResponseErrorTypes>({});
     const cartIconRef = useRef<HTMLDivElement | HTMLImageElement | null>(null);
     const logoutIconRef = useRef<HTMLDivElement | HTMLImageElement | null>(null);
+
 
     //working with authentication authorization token
     const setToken = (token: string) => {
@@ -133,6 +136,7 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
     .then(response => {
         if(response.status === 201){
           setCustomerErrors({});
+          setOpenPurchase(true)
         }
     })
     .catch((err) => {
@@ -149,6 +153,19 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
       const { name, value } = event.target;
       setCustomer((prevObject) => ({ ...prevObject, [name]: value }));
     };
+
+    //get users order
+    useEffect(() => {
+      axiosClient.get('/orders')
+    .then(({data}) => {
+  
+      setOrdersData(data)
+      
+    })
+    .catch((error) => {
+      
+    });
+    },[])
 
     return <AppContext.Provider 
     value={{isMenuClicked, 
@@ -179,7 +196,10 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
             handleCustomersData,
             customer,
             cartIconRef,
-            logoutIconRef 
+            logoutIconRef,
+            isOpenPurchase,
+            setOpenPurchase,
+            ordersData
             }}>
     {children}
     </AppContext.Provider>
