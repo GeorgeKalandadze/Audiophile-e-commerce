@@ -1,4 +1,4 @@
-import { BrowserRouter as Router,Routes,Route} from "react-router-dom"
+import { BrowserRouter as Router,Routes,Route,useLocation} from "react-router-dom"
 import CheckoutModal from "./components/CheckoutModal/CheckoutModal";
 import EachProductPage from "./components/EachProductPage/EachProductPage";
 import Navbar from "./components/navbar/Navbar"
@@ -13,20 +13,18 @@ import LogoutModal from "./components/LogoutModal/LogoutModal";
 
 function App() {
   const {isShopCartOpen,isLogoutModal} = useGlobalContext()
-
+  const location = useLocation();
 
   return (
     <>
-      <Router>
-        
-      {(window.location.pathname !== '/' && window.location.pathname !== '/signup') && (
-          <>
-            <ScrollToTop/>
-            <Navbar/>
-            {isShopCartOpen && <CheckoutModal/>}
-            {isLogoutModal && <LogoutModal/>}
-          </>
-        )}
+      {(location.pathname !== '/' && location.pathname !== '/signup') && (
+        <>
+          <ScrollToTop/>
+          <Navbar/>
+          {isShopCartOpen && <CheckoutModal/>}
+          {isLogoutModal && <LogoutModal/>}
+        </>
+      )}
         <Routes>
           <Route path="/" element={<SignIn/>}/>
           <Route path="/signup" element={<SignUp/>}/>
@@ -37,7 +35,6 @@ function App() {
           <Route path=":categoryName/:ProductName" element={<EachProductPage />} />
           <Route path="checkoutform" element={<CheckoutForm />} />
         </Routes>
-      </Router>
     </>
   )
 }
