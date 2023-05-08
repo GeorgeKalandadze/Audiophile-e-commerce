@@ -8,9 +8,11 @@ import React, { createContext,
     ChangeEvent,
     useRef
 } from 'react'
-import { useLocalStorage } from './hooks/UseLocalStorage';
+
 import axiosClient from './axios-client';
-import { CartItem, CustomerTypes, MyContext, OrderTypes, Product, Props, ResponseErrorTypes, UserInfo } from './types/types';
+import { CartItem, CartProps, CustomerTypes, MyContext, OrderTypes, Product, Props, ResponseErrorTypes, UserInfo } from './types/types';
+import { toast } from 'react-toastify';
+import { FaCheckCircle } from 'react-icons/fa';
 
 
 
@@ -28,14 +30,13 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
     const [userInfo, setUserInfo] = useState<UserInfo>({name:"", avatar_image:""});
     const [products, setNewProducts] = useState<Product>([]);
     const [user, setUser] = useState<null | {}>({});
-    const [cartItems, setCartItems] = useLocalStorage<CartItem[]>('shoping-carts',[]);
     const [cart, setCart] = useState<CartItem[]>([]);
     const [customer,setCustomer] = useState<CustomerTypes>({});
     const [ordersData, setOrdersData] = useState<OrderTypes>({} as OrderTypes)
     const [customerErrors, setCustomerErrors] = useState<ResponseErrorTypes>({});
     const cartIconRef = useRef<HTMLDivElement | HTMLImageElement | null>(null);
     const logoutIconRef = useRef<HTMLDivElement | HTMLImageElement | null>(null);
-
+    const [cartItems, setCartItems] = useState<CartProps[]>([]);
 
     //working with authentication authorization token
     const setToken = (token: string) => {
@@ -66,15 +67,6 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
         
     }
 
-    //cart quantity reducer
-    const cartQuantity = cartItems.reduce(
-        (quantity, item) => item.quantity + quantity, 0
-    )
-
-    //this function get entire quantity of items
-    const getItemQuantity = (id:number) => {
-        return cartItems.find(item => item.id === id)?.quantity || 0
-    }
 
 
     //get all products from server
@@ -93,19 +85,57 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
     },[])
 
 
-    const addCartItem = (id:number) => {
-      axiosClient.post('/cart/add', {
-        product_id: id,
-        quantity: 1
-    })
-    .then(response => {
-        console.log(response.data);
-    })
-    .catch(error => {
-        console.error(error);
-    })
+    //add product in cart
+    const addCartItem = (id: number) => {
+      axiosClient
+        .post("/cart/add", {
+          product_id: id,
+          quantity: 1,
+        })
+        .then((response) => {
+          console.log(response)
+          if(response.status === 201){
+            toast.success(response.data.message, {
+              position: "top-center",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              theme: "light",
+              progressStyle: { backgroundColor: "#D87D4A" },
+              icon: <FaCheckCircle style={{ color: "#D87D4A" }} />,
+            });
+            setCartItems(response.data.data)
+          }
+        })
+        .catch((error) => {
+          toast.error("Cart Already added", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            progressStyle: { backgroundColor: "red" }
+            });
+        });
+    };
+
+    //remove all cart item 
+    const removeAllItems = () => {
+      axiosClient.delete('/cart/delete-cart')
+        .then(({data}) => {
+         setCartItems([])
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     }
   
+ 
     const handleDecrement = (cart_id:number) => {
       setCart(cart => 
         cart.map((item) => 
@@ -126,7 +156,7 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
     const updateCartQuantity = (cart_id: number, scope: string) => {
       axiosClient.put(`/cart/update-quantity/${cart_id}/${scope}`)
       .then(response => {
-        console.log(response.data);
+        setCartItems(response.data.data)
       })
     }
 
@@ -167,14 +197,23 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
     });
     },[])
 
+      
+  useEffect(() => {
+    axiosClient.get('/cart/get-carts')
+      .then(({data}) => {
+
+        setCartItems(data.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  },[])
+
     return <AppContext.Provider 
     value={{isMenuClicked, 
             setIsMenuClicked, 
             openShopCartModal,
             isShopCartOpen,
-            cartItems,
-            cartQuantity,
-            getItemQuantity,
             setIsShopCartOpen,
             addCartItem,
             handleDecrement,
@@ -199,7 +238,9 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
             logoutIconRef,
             isOpenPurchase,
             setOpenPurchase,
-            ordersData
+            ordersData,
+            cartItems,
+            removeAllItems
             }}>
     {children}
     </AppContext.Provider>

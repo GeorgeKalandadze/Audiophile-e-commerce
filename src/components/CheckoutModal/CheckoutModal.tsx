@@ -6,7 +6,7 @@ import { useRef, useState,useEffect, } from 'react'
 import UseOnClickOutside from '../../hooks/UseOnClickOutside'
 import axiosClient from '../../axios-client'
 import { useNavigate,useLocation} from 'react-router-dom'
-
+import { ToastContainer,toast } from 'react-toastify';
 
 
 type IsShopCartOpenType = {
@@ -26,8 +26,7 @@ interface CartProps {
 
 
 const CheckoutModal = () => {
-  const {isShopCartOpen,setIsShopCartOpen,cartIconRef} = useGlobalContext()
-  const [cartItems, setCartItems] = useState<CartProps[]>([]);
+  const {isShopCartOpen,setIsShopCartOpen,cartIconRef,cartItems,removeAllItems} = useGlobalContext()
   const ref = useRef<HTMLDivElement>(null);
   const navigate = useNavigate()
   const location = useLocation();
@@ -37,18 +36,7 @@ const CheckoutModal = () => {
     setIsShopCartOpen(false)
   },cartIconRef);
 
-  
-  useEffect(() => {
-    
-    axiosClient.get('/cart/get-carts')
-      .then(({data}) => {
-        
-        setCartItems(data.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  },[isShopCartOpen,cartItems])
+
 
 
 
@@ -57,20 +45,24 @@ const CheckoutModal = () => {
     return cartItems.reduce((accum, next) => accum + next.product.price * next.quantity, 0).toFixed(2)
   }
 
-  const removeAllItems = () => {
-    axiosClient.delete('/cart/delete-cart')
-      .then(({data}) => {
-       console.log(data)
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
-
   const makeChackout = () => {
     axiosClient.post('/checkout')
   .then(response => {
-    navigate('/checkoutForm')
+    if(cartItems.length == 0){
+      toast.warn("Nothing has been added to the cart", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
+    }else{
+      navigate('/checkoutForm')
+    }
+   
       
   })
   .catch(error => {

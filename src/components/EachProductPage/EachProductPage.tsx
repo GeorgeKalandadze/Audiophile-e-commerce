@@ -17,46 +17,9 @@ interface CartItem {
 const EachProductPage = () => {
 
   const {ProductName} = useParams()
-  const {products} = useGlobalContext()
+  const {products,addCartItem} = useGlobalContext()
 
  
-
-  const addCartItem = (id: number) => {
-    axiosClient
-      .post("/cart/add", {
-        product_id: id,
-        quantity: 1,
-      })
-      .then((response) => {
-        console.log(response)
-        if(response.status === 201){
-          toast.success(response.data.message, {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            theme: "light",
-            progressStyle: { backgroundColor: "#D87D4A" },
-            icon: <FaCheckCircle style={{ color: "#D87D4A" }} />,
-          });
-        }
-      })
-      .catch((error) => {
-        toast.error("Cart Already added", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          progressStyle: { backgroundColor: "red" }
-          });
-      });
-  };
   // useEffect(() => {
   //   // find the cart item for the current product
   //   const cartItem = cartAddedItems.find(item => item.product.slug === ProductName)

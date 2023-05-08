@@ -19,7 +19,6 @@ export interface UserInfo  {
 export interface MyContext {
     isMenuClicked: boolean;
     isShopCartOpen: boolean;
-    getItemQuantity: (id: number) => number;
     setIsMenuClicked: Dispatch<SetStateAction<boolean>>;
     setIsShopCartOpen: Dispatch<SetStateAction<boolean>>;
     openShopCartModal: () => void;
@@ -38,8 +37,6 @@ export interface MyContext {
     user:null | {}
     setToken: (token: string) => void;
     setNotification: Dispatch<SetStateAction<string>>;
-    cartItems: CartItem[];
-    cartQuantity: number;
     products:Product;
     customerErrors:ResponseErrorTypes
     handleCustomersData:(event: ChangeEvent<HTMLInputElement>) => void
@@ -49,6 +46,8 @@ export interface MyContext {
     isOpenPurchase:boolean
     setOpenPurchase:Dispatch<SetStateAction<boolean>>
     ordersData:OrderTypes
+    cartItems:CartProps[]
+    removeAllItems:() => void
   }
 
   export type Product = {
@@ -121,3 +120,14 @@ interface OrderProduct {
   slug: string;
   updated_at: string | null;
 }
+
+export interface CartProps {
+  id: number
+  quantity: number
+  product:{
+    name:string
+    price: number
+    cart_image: string
+  }
+}
+
