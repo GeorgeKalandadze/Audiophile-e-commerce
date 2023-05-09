@@ -13,71 +13,27 @@ type IsShopCartOpenType = {
   show:boolean
 }
 
-interface CartProps {
-  id: number
-  quantity: number
-  product:{
-    name:string
-    price: number
-    cart_image: string
-  }
-}
-
 
 
 const CheckoutModal = () => {
-  const {isShopCartOpen,setIsShopCartOpen,cartIconRef,cartItems,removeAllItems} = useGlobalContext()
+  const {isShopCartOpen,setIsShopCartOpen,cartIconRef,cartItems,removeAllItems,makeCheckout} = useGlobalContext()
   const ref = useRef<HTMLDivElement>(null);
-  const navigate = useNavigate()
   const location = useLocation();
   
-
   UseOnClickOutside(ref, () => {
     setIsShopCartOpen(false)
   },cartIconRef);
 
 
-
-
-
-
   const totalPrice = () => {
-    return cartItems.reduce((accum, next) => accum + next.product.price * next.quantity, 0).toFixed(2)
+    return cartItems.reduce((accum, next) => accum + next.product.price * next.quantity, 0)
   }
-
-  const makeChackout = () => {
-    axiosClient.post('/checkout')
-  .then(response => {
-    if(cartItems.length == 0){
-      toast.warn("Nothing has been added to the cart", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        });
-    }else{
-      navigate('/checkoutForm')
-    }
-   
-      
-  })
-  .catch(error => {
-      console.error(error);
-  })
-  }
-
- 
     useEffect(() => {
       return () => {
         setIsShopCartOpen(false);
       };
     }, [location.pathname]);
 
-   
 
   return (
     <MainDiv show={isShopCartOpen}>
@@ -97,12 +53,11 @@ const CheckoutModal = () => {
                 
               />
             ))}
-         
           <CheckoutCardcontainers>
             <Total>TOTAL</Total>
             <TotalPrice>{totalPrice()} $</TotalPrice>
           </CheckoutCardcontainers>
-          <Button bgColor='#D87D4A;' pdng='20px ' width='100%' onClick={makeChackout}>CHECKOUT</Button>
+          <Button bgColor='#D87D4A;' pdng='20px ' width='100%' onClick={makeCheckout}>CHECKOUT</Button>
         </CheckoutCard>
     </MainDiv >
   )

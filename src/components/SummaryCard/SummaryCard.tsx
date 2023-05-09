@@ -5,26 +5,14 @@ import { Button } from '../Button/Button'
 import PurchaseModal from '../PurchaseModal/PurchaseModal'
 
 
-type HandleSubmitType = {
-  handleSubmit:any
-  errors:any
-}
 
 
-const SummaryCard = ({handleSubmit,errors}:HandleSubmitType) => {
+
+const SummaryCard = () => {
 
   const { makeOrder,ordersData} = useGlobalContext()
   const [purchaseModal, setPurchaseModal] = useState(false)
  
-
-  const onFormSubmit = () => {
-    if(errors = {}){
-      setPurchaseModal(true)
-    }
-  }
-
-
-  console.log(ordersData)
   
   return (
     <MainDiv>

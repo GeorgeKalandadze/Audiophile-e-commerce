@@ -48,6 +48,7 @@ export interface MyContext {
     ordersData:OrderTypes
     cartItems:CartProps[]
     removeAllItems:() => void
+    makeCheckout:() => void
   }
 
   export type Product = {

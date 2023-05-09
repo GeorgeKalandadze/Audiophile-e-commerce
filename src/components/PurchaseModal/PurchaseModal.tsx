@@ -1,22 +1,25 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import IconConfirmation from '../../assets/checkout/icon-order-confirmation.svg'
 import { useGlobalContext } from '../../context'
-import productsData from '../../data.json'
 import { Button } from '../Button/Button'
 
 type IsShowPurchaseModal = {
     isShow:boolean
 }
 const PurchaseModal = ({isShow}:IsShowPurchaseModal) => {
-  const {ordersData} = useGlobalContext();
+  const {ordersData,setOpenPurchase} = useGlobalContext();
   const [visibleAllCard, setVisibleAllCard] = useState<number>(1);
-
+  const navigate = useNavigate()
   const showAllItems = () => {
     setVisibleAllCard(ordersData.items.length)
   }
 
+  const returnBack = () => {
+    navigate('/home')
+    setOpenPurchase(false)
+  }
   console.log(ordersData.items)
 
   return (
@@ -50,7 +53,7 @@ const PurchaseModal = ({isShow}:IsShowPurchaseModal) => {
                 <GrandTotal>GRAND TOTAL</GrandTotal>
                 <TotalPrice>{ordersData.total_price} $</TotalPrice>
             </TotalPriceContainer>
-            <Link to="/"><Button width='100%' pdng='15px 25px' bgColor='#D87D4A'>BACK TO HOME</Button></Link>
+            <Button onClick={returnBack} width='100%' pdng='15px 25px' bgColor='#D87D4A'>BACK TO HOME</Button>
         </PurchaseCard>
     </MainDiv>
   )

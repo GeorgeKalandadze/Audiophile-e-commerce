@@ -13,6 +13,7 @@ import axiosClient from './axios-client';
 import { CartItem, CartProps, CustomerTypes, MyContext, OrderTypes, Product, Props, ResponseErrorTypes, UserInfo } from './types/types';
 import { toast } from 'react-toastify';
 import { FaCheckCircle } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -37,6 +38,7 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
     const cartIconRef = useRef<HTMLDivElement | HTMLImageElement | null>(null);
     const logoutIconRef = useRef<HTMLDivElement | HTMLImageElement | null>(null);
     const [cartItems, setCartItems] = useState<CartProps[]>([]);
+    const navigate = useNavigate()
 
     //working with authentication authorization token
     const setToken = (token: string) => {
@@ -188,8 +190,11 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
     useEffect(() => {
       axiosClient.get('/orders')
     .then(({data}) => {
-  
-      setOrdersData(data)
+      console.log(data)
+     
+        setOrdersData(data.data)
+      
+      
       
     })
     .catch((error) => {
@@ -201,7 +206,7 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
   useEffect(() => {
     axiosClient.get('/cart/get-carts')
       .then(({data}) => {
-
+        console.log(data)
         setCartItems(data.data);
       })
       .catch((error) => {
@@ -209,6 +214,32 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
       });
   },[])
 
+  //make checkout
+  const makeCheckout = () => {
+    axiosClient.post('/checkout')
+  .then(response => {
+    console.log(response,"responseeeeeeeeee")
+    if(cartItems.length == 0){
+      toast.warn("Nothing has been added to the cart", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
+    }else{
+      setOrdersData(response.data)
+      navigate('/checkoutForm')
+      setCartItems([])
+    } 
+  })
+  .catch(error => {
+      console.error(error);
+  })
+  }
     return <AppContext.Provider 
     value={{isMenuClicked, 
             setIsMenuClicked, 
@@ -240,7 +271,8 @@ export const AppProvider :FunctionComponent<Props> = ({children}) => {
             setOpenPurchase,
             ordersData,
             cartItems,
-            removeAllItems
+            removeAllItems,
+            makeCheckout
             }}>
     {children}
     </AppContext.Provider>

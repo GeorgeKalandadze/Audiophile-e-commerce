@@ -137,7 +137,7 @@ const CheckoutForm = () => {
         </InputContainers>
         
       </InputForm>
-      <SummaryCard handleSubmit={handleSubmit} errors={errors} />
+      <SummaryCard />
     </MainDiv>
   )
 }
